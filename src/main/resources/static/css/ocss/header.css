@@ -52,10 +52,9 @@
         text-decoration:none;
         color:white;
         }
-               .sticky {
-                    position: sticky;
-                    top: 0; /* 화면 상단에 고정될 위치 지정 */
-                    background-color: #fff; /* 고정된 상태에서의 배경색 */
-                    border-bottom: 1px solid #ccc; /* 아래 테두리 추가 */
-                    z-index: 100; /* 다른 요소 위에 나타나도록 z-index 설정 */
-                }
+        .sticky {
+        position: sticky;
+        top: 0;
+        border-bottom: 1px solid #ccc;
+        z-index: 100;
+       }
