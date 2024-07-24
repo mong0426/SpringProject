@@ -5,7 +5,8 @@
     <title>Header</title>
 </head>
 <body>
-<div class="Main">
+<div class="MainLine sticky">
+    <div class="InnerLine">
     <a th:href="@{/Main}" class="Logo">배달의 만족</a>
     <div class="MenuStyle">
         <a th:href="@{/Login}">
@@ -17,6 +18,7 @@
         <a th:href="@{/}">
             <img class="ImageStyle" th:src="@{/images/CartIcon.png}"/>
         </a>
+    </div>
     </div>
 </div>
 </body>
