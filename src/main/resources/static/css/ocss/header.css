@@ -4,57 +4,74 @@
         }
         .MainLine {
             background-color: #F986BD;
-            height: 70px;
+            height: 6rem;
             display: flex;
-            padding:15px;
-            align-items: center;
+            padding: 2rem;
         }
         .InnerLine{
              display:flex;
              justify-content: space-between;
              width:100%;
-             margin-left:50px;
-             margin-right:50px;
+             margin-left:4rem;
+             margin-right:4rem;
+             align-items: center;
         }
         .MenuStyle{
-            width:150px;
+            width:10rem;
             display:flex;
             justify-content: space-between;
         }
         .Logo {
             color: white;
-            font-size: 26px;
+            font-size: 2rem;
             font-weight: 600;
             text-decoration:none;
         }
         .ImageStyle{
-            width:30px;
+            width:2rem;
         }
         .BannerStyle{
-        width:100%;
-        height:500px;
+            width:100%;
+            height:40rem;
         }
         .carousel-control-prev-icon,
         .carousel-control-next-icon {
-         width: 50px; /* 너비 설정 */
-         height: 50px; /* 높이 설정 */
+         width: 3rem;
+         height: 3rem;
         }
         .SubContentsDiv{
         display:flex;
-        justify-content:
-        space-between; padding:100px;
+        justify-content:space-between;
+        padding:10rem;
         }
         .SubContents{
-        width:300px;
-        height:150px;
+        width:18rem;
+        height:12rem;
         }
         .MiniTitle{
         text-decoration:none;
         color:white;
         }
-        .sticky {
+        .StickyHeader {
         position: sticky;
         top: 0;
-        border-bottom: 1px solid #ccc;
         z-index: 100;
+       }
+       .CardContainerDiv{
+        display:flex;
+       }
+       .BrandCard{
+        min-width:24rem;
+        height:20rem;
+        margin:4rem;
+       }
+       .StickyBtn{
+        position: sticky;
+        right: 0;
+        z-index: 100;
+       }
+       .ScrollBtn{
+       width:2rem;
+       border:none;
+       background-color:white;
        }
