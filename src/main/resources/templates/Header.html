@@ -8,6 +8,12 @@
 <div class="MainLine StickyHeader">
     <div class="InnerLine">
     <a th:href="@{/Main}" class="Logo">배달의 만족</a>
+        <div class="SearchDiv">
+            <input class="SearchText" type="text"></input>
+            <button class="SearchBtn">
+                <img class="ImageStyle" th:src="@{/images/SearchIcon.png}"/>
+            </button>
+        </div>
     <div class="MenuStyle">
         <a th:href="@{/Login}">
             <img class="ImageStyle" th:src="@{/images/LoginIcon.png}"/>

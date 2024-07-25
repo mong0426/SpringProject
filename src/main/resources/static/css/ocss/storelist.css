@@ -1,0 +1,23 @@
+.FilteringDiv{
+    display:flex;
+    width: 60%;
+    justify-content:space-evenly;
+    margin-bottom:5rem;
+    }
+.StoreListDiv{
+    width:90%;
+    height:150px;
+    display:flex;
+    border-bottom:1px solid #e9ecef;
+    justify-content: space-evenly
+    margin:10px;
+    }
+.StoreThumbnail{
+    max-width:100%;
+    max-height:100%;
+    }
+.Thumbnail{
+    width: 100%;
+    height: 100%;
+    display: block;
+}
