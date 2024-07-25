@@ -13,4 +13,8 @@ public class MainController {
         return "MainPage";
     }
 
+    @GetMapping("/StoreList")
+    public String storeList(){
+        return "StoreList";
+    }
 }
