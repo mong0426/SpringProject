@@ -1,6 +1,14 @@
         body {
-            user-select: none;
-            margin:0px;
+          margin: 0;
+          padding: 0;
+          overflow-x: hidden;
+      }
+        .container{
+        min-width:1920px;
+        height:100%;
+        margin:0px;
+        padding:0px;
+
         }
         .MainLine {
             background-color: #F986BD;
@@ -28,8 +36,8 @@
             font-weight: 600;
             text-decoration:none;
         }
-        .ImageStyle{
-            width:1.5rem;
+        .ScrollBtnImage{
+            width:2rem;
         }
         .BannerStyle{
             width:100%;
@@ -67,9 +75,13 @@
         color:white;
         }
         .StickyHeader {
+        width: 1920px;
         position: sticky;
         top: 0;
         z-index: 100;
+       }
+       .HeaderMenuImage{
+       width:1.5rem;
        }
        .CardContainerDiv{
         display:flex;
@@ -79,19 +91,20 @@
         height:16rem;
         margin:3rem;
        }
-       .StickyBtn{
-        position: sticky;
-        right: 0;
-        z-index: 95;
-       }
        .ScrollBtn{
-       width:3rem;
+       position: sticky;
+       left:0;
+       right: 30px;
+       z-index: 95;
+       width:2rem;
        border:none;
-       background-color:white;
+       background-color:transparent;
        }
        .FooterMain{
+       width:1920px;
+       height:100%;
+       position:relative;
        padding:4rem;
-       text-align:center;
        }
        .FooterTopFont{
        text-decoration: underline;
@@ -99,12 +112,20 @@
        font-size:2rem;
        }
        .FooterDiv{
+       width:1200px;
        display:flex;
-       justify-content:center;
+       justify-content: space-evenly;
        margin-top:2rem;
        }
        .FooterContents{
         text-align:left;
+       }
+       .FooterLine{
+       display:flex;
+       justify-content:center;
+       }
+       .BlankSpace{
+       min-width:340px;
        }
        .SloganFont{
        font-weight:600;

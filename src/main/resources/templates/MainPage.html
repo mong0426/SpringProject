@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!DOCTYPE html >
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
@@ -7,10 +7,11 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <title>배달의 만족</title>
     <link th:href="@{/css/ocss/mainpage.css}" rel="stylesheet" />
-    <script th:src="@{/js/ojs/main.js}"/></script>
+    <script th:src="@{/js/ojs/main.js}"></script>
 </head>
 <body>
 <header th:replace="~{Header :: body}"></header>
+<div class="container">
 <div id="carouselMain" class="carousel slide" data-bs-ride="carousel">
     <div class="carousel-indicators">
         <button type="button" data-bs-target="#carouselMain" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
@@ -61,11 +62,12 @@
 </div>
 
 <div style="display:flex;">
-    <button class="ScrollBtn" id="btnLeft">
-        <img class="ImageStyle" th:src="@{/images/LeftArrowIcon.png}" alt="..."/>
-    </button>
+
 
     <div style="display:flex; justify-content:space-between;  overflow-x: hidden; flex:1;" id="cardContainer">
+        <button class="ScrollBtn" id="btnLeft">
+            <img class="ScrollBtnImage" th:src="@{/images/LeftArrowIcon.png}" alt="..."/>
+        </button>
     <div class="card BrandCard" style="display:flex; justify-content=center;">
         <img th:src="@{/images/CardItem1.png}" class="card-img-top" alt="..." style="height:200px;">
         <div class="card-body">
@@ -115,12 +117,10 @@
                 <p class="card-text">39 ~ 54분 배달팁 무료 <br> 최소주문 13,000원</p>
             </div>
         </div>
-
-
-    </div>
-        <button class="StickyBtn ScrollBtn" id="btnRight">
-            <img class="ImageStyle" th:src="@{/images/RightArrowIcon.png}" alt="..."/>
+        <button class="ScrollBtn" id="btnRight">
+            <img class="ScrollBtnImage" th:src="@{/images/RightArrowIcon.png}" alt="..."/>
         </button>
+    </div>
 </div>
     <div class="MainLine">
         <div class="InnerLine">
@@ -136,6 +136,7 @@
             <button class="SubContents">c</button>
             <button class="SubContents">d</button>
         </div>
+</div>
 </div>
 <div th:replace="~{Footer :: body}"></div>
 </body>

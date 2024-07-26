@@ -11,7 +11,15 @@
 <body>
 <header th:replace="~{Header :: body}"></header>
 <div class="container">
-    <div class="row" style="display:center; justify-content:center; padding:6rem;">
+    <div class="row" style="justify-content:center;">
+        <div class="StoreCategory" style="">
+            <a th:href="@{/}">
+            <img class="CategoryIcon" th:src="@{/images/FoodCate_Pizza.png}" alt="..."/>
+            </a>
+        </div>
+    </div>
+
+    <div class="StoreDiv">
         <div class="FilteringDiv">
             <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                 기본순
@@ -57,14 +65,17 @@
             </ul>
         </div>
 
-        <div class="StoreListDiv" style="display:flex;">
-            <div class="col-md-3 StoreThumbnail">
+        <div class="StoreListDiv">
+            <div class="StoreThumbnail">
                 <img class="Thumbnail" th:src="@{/images/CardItem1.png}" alt="..."/>
             </div>
-            <div class="col-md-7 StoreInfo">
-                머시기 육회dsaaaaaaaaaaaa
+            <div class="StoreInfo">
+                <h2>가게 이름</h2><br/>
+                평점 & 추천메뉴?<br/>
+                배달시간 & 배달팁<br/>
+                최소주문
             </div>
-            <div class="col-md-1">
+            <div class="SubInfo">
                 SubInfo
             </div>
 
