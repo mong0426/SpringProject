@@ -158,7 +158,7 @@ input {
     font-size: 17px;
 }
 
-.login__link+.login__link {
+.login__link+.login__link+.login__link {
     margin-right: 0;
     padding-right: 0;
     border-right: 0;
