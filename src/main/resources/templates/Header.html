@@ -7,22 +7,22 @@
 <body>
 <div class="MainLine StickyHeader">
     <div class="InnerLine">
-    <a th:href="@{/Main}" class="Logo">배달의 만족</a>
+    <a th:href="@{/}" class="Logo">배달의 만족</a>
         <div class="SearchDiv">
             <input class="SearchText" type="text">
             <button class="SearchBtn">
-                <img class="HeaderMenuImage" th:src="@{/images/SearchIcon.png}" alt=""/>
+                <img class="HeaderMenuImage" th:src="@{/img/headerimg/SearchIcon.png}" alt=""/>
             </button>
         </div>
     <div class="MenuStyle">
         <a th:href="@{/Login}">
-            <img class="HeaderMenuImage" th:src="@{/images/LoginIcon.png}" alt=""/>
-        </a>
-        <a th:href="@{/Main/StoreList}">
-            <img class="HeaderMenuImage" th:src="@{/images/NoticeIcon.png}" alt=""/>
+            <img class="HeaderMenuImage" th:src="@{/img/headerimg/LoginIcon.png}" alt=""/>
         </a>
         <a th:href="@{/}">
-            <img class="HeaderMenuImage" th:src="@{/images/CartIcon.png}" alt=""/>
+            <img class="HeaderMenuImage" th:src="@{/img/headerimg/NoticeIcon.png}" alt=""/>
+        </a>
+        <a th:href="@{/}">
+            <img class="HeaderMenuImage" th:src="@{/img/headerimg/CartIcon.png}" alt=""/>
         </a>
     </div>
     </div>
