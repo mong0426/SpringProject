@@ -8,7 +8,43 @@
     width:100%;
     height:20rem;
 }
-.carouselDetail{
+.CarouselDetail{
     width:1200px;
     height:20rem;
+}
+.StoreContent{
+    padding:40px;
+}
+.ContentHeader{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+.StoreRatingDiv{
+    margin:5px;
+    display:flex;
+    align-items:center;
+}
+.StoreName{
+    font-size:50px;
+    font-weight:700;
+}
+.StarIcon{
+    width:25px;
+}
+.StarRating{
+    font-size:20px;
+    font-weight:700;
+}
+.LikesBtn{
+    background-color:transparent;
+    border:none;
+}
+.LikesIcon{
+    width:40px;
+    height:40px;
+}
+.MinOrderFont{
+    color:#8b8b8b;
+    font-weight:400;
 }

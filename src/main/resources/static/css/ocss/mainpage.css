@@ -91,13 +91,19 @@
        .HeaderMenuImage{
        width:1.5rem;
        }
+       .CardAtagStyle{
+       text-decoration:none;
+       color:black;
+       }
+
        .CardContainerDiv{
         display:flex;
+        justify-content:space-between;
+        overflow-x: hidden;
        }
        .BrandCard{
-        min-width:20rem;
-        height:16rem;
         margin:3rem;
+        width:320px;
        }
        .ScrollBtn{
        position: sticky;
