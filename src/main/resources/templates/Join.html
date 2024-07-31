@@ -3,190 +3,374 @@
 <head>
     <meta charset="UTF-8">
     <title>배달의 만족 - 회원가입</title>
-    <link th:href="@{/css/ocss/join.css}" rel="stylesheet"/>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
     <link th:href="@{/css/ocss/mainpage.css}" rel="stylesheet"/>
+    <link th:href="@{/css/ocss/join.css}" rel="stylesheet"/>
+    <script type="text/javascript">
+        (function() {
+            var name = 'spc.app.FLASH_MAPS';
+            if( get_cookie( name ) ) {
+                document.cookie = name + "=;path=/;expires=Thu, 01 Jan 1970 00:00:01 GMT";
+            }
+            function get_cookie(name){
+                return document.cookie.split(';').some(function(c) {
+                    return c.trim().startsWith(name + '=');
+                });
+            }
+        })();
+
+    </script>
 
 </head>
-<body>
+<body class="">
+
 <header th:replace="~{Header :: body}"></header>
+<!-- #wrap -->
+<div id="wrap">
+    <!-- #container -->
+    <div id="container">
 
-<div class="member-content join-content join-form-content newform">
-    <!-- 페이지 네비게이션 -->
-    <div class="page-navigation">
-        <div class="inner">
-            <span class="path"><a href="javascript:void(0);">HOME</a></span>
-            <span class="path"><a href="javascript:void(0);">회원가입</a></span>
+        <div class="layer_popup" id="agreement"></div>
 
-        </div>
-    </div>
-    <!-- //페이지 네비게이션 -->
-    <div class="section-inner">
-        <div class="subpage-title-area">
-            <h2 class="title" tabindex="0">회원정보 입력</h2>
-        </div>
-        <div class="medium-layout-inner">
-            <!-- 필수 회원정보 -->
-            <form action="/page/join/optional-form.spc" method="POST" name="joinForm" id="joinForm">
-                <input type="hidden" name="regPath" value="PC">
-                <input type="hidden" name="reqChnl" value="pc">
-                <input type="hidden" name="email" id="verifyEmail" value="">
-                <input type="hidden" name="checkIdResult" id="checkIdResult" value="">
-                <input type="hidden" name="postInput" id="inputZipcode" title="우편번호">
-                <input type="hidden" name="mktPush" id="mktPush" value="N">
-                <input type="hidden" name="flagPassEmailCheck" value="Y"><div class="info-text" tabindex="0">기본정보</div>
+        <form name="headerForm" id="headerForm" method="post" action="/page/alliance/gate-check.spc" target="_blank">
+            <input type="hidden" name="code" id="code">
+            <input type="hidden" name="storeCd" id="storeCd">
+            <input type="hidden" name="W_RURL" id="W_RURL">
+            <input type="hidden" name="W_MEMBER_NO" value="">
+            <input type="hidden" name="W_USER_ID" value="">
+            <input type="hidden" name="pageCd" id="pageCd">
+        </form>
 
-                <div class="member-join-form">
-                    <fieldset class="fieldset">
-                        <legend>필드셋</legend>
 
-                        <div class="field areaUserId on-error on-focus">
-                            <div class="label" tabindex="0"><label for="inputUserId" class="userIdLabel labelGray" tabindex="0">아이디</label></div>
-                            <div class="insert">
-                                <div class="line_btn">
-                                    <div class="input-wrapper input-btn">
-                                        <div class="input-cover userId gray black">
-                                            <input type="text1" id="inputUserId" name="userId" placeholder="6~12자, 영소문자, 숫자" title="아이디 입력" maxlength="12" autocomplete="username">
-                                            <div class="input-element">
-                                                <button type="button" class="btn-value-delete userId">ID</button>
-                                            </div>
-                                        </div>
-                                        <div class="checkbtn">
-                                            <a href="javascript:void(0);" class="btn xlarge slightly linebtn" id="btnCheckId">중복확인</a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="etc" id="descUserId" tabindex="0"><p class="em warning"></p></div>
-                                <div class="find" style="display:none;">
-                                    <p><a href="javascript:void(0);" id="gotologin">로그인 &gt;</a> <a href="javascript:void(0);" id="gotofindpw">비밀번호 찾기 &gt;</a></p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="field areaPassword on-error">
-                            <div class="label" tabindex="0"><label for="label0102" class="pwdLabel labelGray" tabindex="0">비밀번호</label></div>
-                            <div class="insert">
-                                <div class="input-cover pwd gray">
-                                    <!-- 입력값 삭제 버튼 없을경우 no-delete추가 -->
-                                    <input type="password" id="label0102" name="pwd" placeholder="8~16자리 숫자, 영문자, 특수문자 중 2개 조합" title="비밀번호 입력" maxlength="16" autocomplete="new-password">
-                                    <div class="input-element">
-                                        <button type="button" class="btn-value-delete pwd">PW</button>
-                                    </div>
-                                </div>
-                                <div class="etc" id="descPwd" style="display: none;">
-                                    <p class="em x2 warning" tabindex="0"><span class="x2t"></span>영문/숫자/특수문자 2가지 이상 조합(8~16자)</p>
-                                    <p class="em x1 warning" tabindex="0"><span class="x1t"></span>" + / ＼ ; : * _ ^ &amp; ( ) &lt; &gt; 사용불가</p>
-                                    <p class="em x3 warning" tabindex="0"><span class="x3t"></span>3개 이상 연속되거나 동일한 문자/숫자 제외</p>
-                                    <p class="em x4 warning" tabindex="0"><span class="x4t"></span>아이디 제외</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="field">
-                            <div class="label" tabindex="0"><label for="label0103" class="confirmPwdLabel labelGray" tabindex="0">비밀번호 확인</label></div>
-                            <div class="insert">
-                                <div class="input-cover input-covers confirmPwd gray">
-                                    <!-- 입력값 삭제 버튼 없을경우 no-delete추가 -->
-                                    <input type="password" id="label0103" name="confirmPwd" placeholder="비밀번호 재입력" title="비밀번호 재입력" maxlength="16" autocomplete="new-password">
+        <!-- #content -->
+        <div id="content" class="content">
 
-                                    <div class="input-element">
-                                        <button type="button" class="btn-value-delete confirmPwd">PW</button>
-                                    </div>
-                                </div>
-                                <div class="etc" id="descConfirmPwd" tabindex="0"><p class="em warning"></p></div>
-                            </div>
-                        </div>
-                        <div class="field areaAddress">
-                            <div class="label no-space" tabindex="0"><label for="label0104" class="inputAddr1Label" tabindex="0">주소</label></div>
-                            <div class="insert">
-                                <div class="row">
-                                    <div class="input-cover addrinput gray p-12">
-                                        <div class="addressWrap">
-                                            <label id="labelAddress">주소 입력<input type="text1" name="labelAddress" value="" onkeypress="if(event.keyCode==13){findZipcodeNewIframe()}"></label>
-                                        </div>
-                                        <input type="hidden" name="homeRoadNmAddr1" id="homeRoadNmAddr1">
-                                        <input type="hidden" name="homeRoadNmAddr2" id="homeRoadNmAddr2">
-                                        <div class="input-element">
-                                            <button type="button" class="btn-value-delete addrinput">PW</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+            <link rel="stylesheet" href="/assets/pc/css/join.css?v=2024073112">
+            <style>
 
-                        <!-- 주소 찾기 Iframe -->
-                        <div id="findZipCodeArea" style="display: none; border: 1px solid; width: 672px; height: 444px; max-height: 466px; margin: 5px 0px; position: relative;">
-                            <img src="//t1.daumcdn.net/postcode/resource/images/close.png" id="btnFoldWrap" style="cursor:pointer;position:absolute;right:0px;top:-1px;z-index:1" onclick="foldDaumPostcode()" alt="접기 버튼" tabindex="0">
-                            <div id="__daum__layer_1" style="position: relative; width: 100%; height: 100%; background-color: rgb(255, 255, 255); z-index: 0; overflow: hidden; min-width: 300px; margin: 0px; padding: 0px;"><iframe frameborder="0" title="우편번호서비스 레이어 프레임" src="about:blank" style="position: absolute; left: 0px; top: 0px; width: 100%; height: 100%; border: 0px none; margin: 0px; padding: 0px; overflow: hidden; min-width: 300px;"></iframe></div></div>
+            </style>
 
-                        <div class="field areaEmail on-error">
-                            <div class="label" tabindex="0"><label for="label223" class="mailIdLabel labelGray" tabindex="0">이메일</label></div>
-                            <div class="insert">
-                                <div class="line_btn">
-                                    <div class="input-wrapper input-btn">
-                                        <div class="input-cover email-cover email mailId gray">
-                                            <input type="text1" id="mailId" name="mailId" placeholder="이메일 입력" title="이메일 아이디 입력" class="email-id" value="null">
 
-                                            <div class="input-element">
-                                                <button type="button" class="btn-value-delete mailId on">Email</button>
-                                            </div>
-                                        </div>
-                                        <div class="checkbtn">
-                                            <a href="javascript:void(0);" class="btn xlarge slightly linebtn" id="btnCheckEmail">중복확인</a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="etc" id="descConfirmEmail" tabindex="0"><p class="em warning"></p></div>
-                            </div>
-                        </div>
-                    </fieldset>
+            <!-- 회원가입 -->
+            <div class="member-content join-content join-form-content newform">
+                <!-- 페이지 네비게이션 -->
+                <div class="page-navigation">
+                    <div class="inner">
+                        <span class="path"><a href="javascript:void(0);">HOME</a></span>
+                        <span class="path"><a href="javascript:void(0);">회원가입</a></span>
 
-                    <!-- 14세 미만 가입자 -->
-                    <input type="hidden" id="juniorYn" name="juniorYn" value="N"> <!-- 주니어 회원가입여부 기본값 N-->
-                    <!-- //14세 미만 가입자 -->
-
-                    <!-- 개인정보 수신 및 마케팅 활용 동의 -->
-                    <div class="field areaMarketing member-agree-content">
-                        <div class=""><label class="marketing-title" tabindex="0">[선택] 개인정보 수신 및 마케팅 활용 동의</label></div>
-                        <div class="insert select-container all-check-area">
-                            <div class="all-check">
-                                <div class="selector-wrap">
-                                    <div class="asset">
-                                        <div class="checker" id="uniform-checkAllAgree" tabindex="0"><span class=""><input type="checkbox" name="allcheck01" id="checkAllAgree"></span></div> <span class="label" tabindex="0"><label for="checkAllAgree" tabindex="0" class="">전체동의</label></span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="select-list">
-                                <div class="selector-wrap" id="marketingCheckWrap">
-                                    <div class="asset">
-                                        <div class="checker" id="uniform-marketing01" tabindex="0"><span class=""><input type="checkbox" name="mktEmail" id="marketing01" value="Y"></span></div> <span class="label" tabindex="0"><label for="marketing01" tabindex="0" class="">이메일</label></span>
-                                    </div>
-                                    <div class="asset">
-                                        <div class="checker" id="uniform-marketing02" tabindex="0"><span class=""><input type="checkbox" name="mktSms" id="marketing02" value="Y"></span></div> <span class="label" tabindex="0"><label for="marketing02" tabindex="0" class="">문자메세지</label></span>
-                                    </div>
-                                    <!-- <div class="asset">
-                                        <input type="checkbox" name="mktPush" id="marketing03" value="Y" > <span class="label"><label for="marketing03">앱 푸시</label></span>
-                                    </div> -->
-                                    <div class="asset">
-                                        <div class="checker" id="uniform-marketing04" tabindex="0"><span class=""><input type="checkbox" name="mktDm" id="marketing04" value="Y"></span></div> <span class="label" tabindex="0"><label for="marketing04" tabindex="0" class="">우편물</label></span>
-                                    </div>
-                                    <div class="asset">
-                                        <div class="checker" id="uniform-marketing05" tabindex="0"><span class=""><input type="checkbox" name="mktTm" id="marketing05" value="Y"></span></div> <span class="label" tabindex="0"><label for="marketing05" tabindex="0" class="">전화</label></span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <ul class="info-text" tabindex="0">
-                            <li tabindex="0"><span class="list-dot"></span>쿠폰 및 할인혜택 제공, 새로운 서비스 및 신상품, 이벤트 정보 안내, 기타 마케팅 정보 제공</li>
-                            <li tabindex="0"><span class="list-dot"></span>결제/교환/환불안내, 약관 및 서비스 관리 정책 변경, VOC등 광고성 정보가 아닌 경우 수신동의 여부와 관계없이 발송됩니다.</li>
-                        </ul>
-                    </div>
-                    <!-- //개인정보 수신 및 마케팅 활용 동의 -->
-                    <div class="btn-group half">
-                        <button type="button" class="btn medium slightly" id="joinBtn" onclick="page.nextStep()">가입하기</button>
                     </div>
                 </div>
-            </form>
+                <!-- //페이지 네비게이션 -->
+                <div class="section-inner">
+                    <div class="subpage-title-area">
+                        <h2 class="title" tabindex="0">회원정보 입력</h2>
+                    </div>
+                    <div class="medium-layout-inner">
+                        <!-- 필수 회원정보 -->
+                        <form action="/page/join/optional-form.spc" method="POST" name="joinForm" id="joinForm">
+                            <input type="hidden" name="regPath" value="PC">
+                            <input type="hidden" name="reqChnl" value="pc">
+                            <input type="hidden" name="email" id="verifyEmail" value="">
+                            <input type="hidden" name="checkIdResult" id="checkIdResult" value="">
+                            <input type="hidden" name="postInput" id="inputZipcode" title="우편번호">
+                            <input type="hidden" name="mktPush" id="mktPush" value="N">
+                            <input type="hidden" name="flagPassEmailCheck" value="Y"><div class="info-text" tabindex="0">기본정보</div>
+
+                            <div class="member-join-form">
+                                <fieldset class="fieldset">
+                                    <legend>필드셋</legend>
+
+                                    <div class="field areaUserId on-focus">
+                                        <div class="label" tabindex="0"><label for="inputUserId" class="userIdLabel labelGray" tabindex="0">아이디</label></div>
+                                        <div class="insert">
+                                            <div class="line_btn">
+                                                <div class="input-wrapper input-btn">
+                                                    <div class="input-cover userId gray black">
+                                                        <input type="text" id="inputUserId" name="userId" placeholder="6~12자, 영소문자, 숫자" title="아이디 입력" maxlength="12" autocomplete="username">
+                                                        <div class="input-element">
+                                                            <button type="button" class="btn-value-delete userId">ID</button>
+                                                        </div>
+                                                    </div>
+                                                    <div class="checkbtn">
+                                                        <a href="javascript:void(0);" class="btn xlarge linebtn slightly" id="btnCheckId">중복확인</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="etc" id="descUserId" tabindex="0"><p class="em warning"></p></div>
+                                            <div class="find" style="display:none;">
+                                                <p><a href="javascript:void(0);" id="gotologin">로그인 &gt;</a> <a href="javascript:void(0);" id="gotofindpw">비밀번호 찾기 &gt;</a></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="field areaPassword on-error">
+                                        <div class="label" tabindex="0"><label for="label0102" class="pwdLabel labelGray" tabindex="0">비밀번호</label></div>
+                                        <div class="insert">
+                                            <div class="input-cover pwd gray">
+                                                <!-- 입력값 삭제 버튼 없을경우 no-delete추가 -->
+                                                <input type="password" id="label0102" name="pwd" placeholder="8~16자리 숫자, 영문자, 특수문자 중 2개 조합" title="비밀번호 입력" maxlength="16" autocomplete="new-password">
+                                                <div class="input-element">
+                                                    <button type="button" class="btn-value-delete pwd on">PW</button>
+                                                </div>
+                                            </div>
+                                            <div class="etc" id="descPwd" style="display: none;">
+                                                <p class="em x2 warning" tabindex="0"><span class="x2t"></span>영문/숫자/특수문자 2가지 이상 조합(8~16자)</p>
+                                                <p class="em x1 success" tabindex="0"><span class="x1t"></span>" + / ＼ ; : * _ ^ &amp; ( ) &lt; &gt; 사용불가</p>
+                                                <p class="em x3 success" tabindex="0"><span class="x3t"></span>3개 이상 연속되거나 동일한 문자/숫자 제외</p>
+                                                <p class="em x4 success" tabindex="0"><span class="x4t"></span>아이디 제외</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="field on-error">
+                                        <div class="label" tabindex="0"><label for="label0103" class="confirmPwdLabel labelGray" tabindex="0">비밀번호 확인</label></div>
+                                        <div class="insert">
+                                            <div class="input-cover input-covers confirmPwd gray">
+                                                <!-- 입력값 삭제 버튼 없을경우 no-delete추가 -->
+                                                <input type="password" id="label0103" name="confirmPwd" placeholder="비밀번호 재입력" title="비밀번호 재입력" maxlength="16" autocomplete="new-password">
+
+                                                <div class="input-element">
+                                                    <button type="button" class="btn-value-delete confirmPwd on">PW</button>
+                                                </div>
+                                            </div>
+                                            <div class="etc" id="descConfirmPwd" tabindex="0"><p class="em warning"></p></div>
+                                        </div>
+                                    </div>
+                                    <div class="field areaAddress">
+                                        <div class="label no-space" tabindex="0"><label for="label0104" class="inputAddr1Label" tabindex="0">주소</label></div>
+                                        <div class="insert">
+                                            <div class="row">
+                                                <div class="input-cover addrinput gray p-12">
+                                                    <div class="addressWrap">
+                                                        <label id="labelAddress">주소 입력<input type="text" name="labelAddress" value="" onkeypress="if(event.keyCode==13){findZipcodeNewIframe()}"></label>
+                                                    </div>
+                                                    <input type="hidden" name="homeRoadNmAddr1" id="homeRoadNmAddr1">
+                                                    <input type="hidden" name="homeRoadNmAddr2" id="homeRoadNmAddr2">
+                                                    <div class="input-element">
+                                                        <button type="button" class="btn-value-delete addrinput">PW</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- 주소 찾기 Iframe -->
+                                    <div id="findZipCodeArea" style="display: none; border: 1px solid; width: 672px; height: 444px; max-height: 466px; margin: 5px 0px; position: relative;">
+                                        <img src="//t1.daumcdn.net/postcode/resource/images/close.png" id="btnFoldWrap" style="cursor:pointer;position:absolute;right:0px;top:-1px;z-index:1" onclick="foldDaumPostcode()" alt="접기 버튼" tabindex="0">
+                                        <div id="__daum__layer_7" style="position: relative; width: 100%; height: 100%; background-color: rgb(255, 255, 255); z-index: 0; overflow: hidden; min-width: 300px; margin: 0px; padding: 0px;"><iframe frameborder="0" title="우편번호서비스 레이어 프레임" src="about:blank" style="position: absolute; left: 0px; top: 0px; width: 100%; height: 100%; border: 0px none; margin: 0px; padding: 0px; overflow: hidden; min-width: 300px;"></iframe></div></div>
+
+                                    <div class="field areaEmail on-error">
+                                        <div class="label" tabindex="0"><label for="label223" class="mailIdLabel labelGray" tabindex="0">이메일</label></div>
+                                        <div class="insert">
+                                            <div class="line_btn">
+                                                <div class="input-wrapper input-btn">
+                                                    <div class="input-cover email-cover email mailId gray">
+                                                        <input type="text" id="mailId" name="mailId" placeholder="이메일 입력" title="이메일 아이디 입력" class="email-id" value="null">
+
+                                                        <div class="input-element">
+                                                            <button type="button" class="btn-value-delete mailId">Email</button>
+                                                        </div>
+                                                    </div>
+                                                    <div class="checkbtn">
+                                                        <a href="javascript:void(0);" class="btn xlarge slightly linebtn" id="btnCheckEmail">중복확인</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="etc" id="descConfirmEmail" tabindex="0"><p class="em warning"></p></div>
+                                        </div>
+                                    </div>
+                                </fieldset>
+
+                                <!-- 14세 미만 가입자 -->
+                                <input type="hidden" id="juniorYn" name="juniorYn" value="N"> <!-- 주니어 회원가입여부 기본값 N-->
+                                <!-- //14세 미만 가입자 -->
+
+                                <!-- 개인정보 수신 및 마케팅 활용 동의 -->
+                                <div class="field areaMarketing member-agree-content">
+                                    <div class=""><label class="marketing-title" tabindex="0">[선택] 개인정보 수신 및 마케팅 활용 동의</label></div>
+                                    <div class="insert select-container all-check-area">
+                                        <div class="all-check">
+                                            <div class="selector-wrap">
+                                                <div class="asset">
+                                                    <div class="checker" id="uniform-checkAllAgree" tabindex="0"><span class=""><input type="checkbox" name="allcheck01" id="checkAllAgree"></span></div> <span class="label" tabindex="0"><label for="checkAllAgree" tabindex="0" class="">전체동의</label></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="select-list">
+                                            <div class="selector-wrap" id="marketingCheckWrap">
+                                                <div class="asset">
+                                                    <div class="checker" id="uniform-marketing01" tabindex="0"><span class=""><input type="checkbox" name="mktEmail" id="marketing01" value="Y"></span></div> <span class="label" tabindex="0"><label for="marketing01" tabindex="0" class="">이메일</label></span>
+                                                </div>
+                                                <div class="asset">
+                                                    <div class="checker" id="uniform-marketing02" tabindex="0"><span class=""><input type="checkbox" name="mktSms" id="marketing02" value="Y"></span></div> <span class="label" tabindex="0"><label for="marketing02" tabindex="0" class="">문자메세지</label></span>
+                                                </div>
+                                                <!-- <div class="asset">
+                                                    <input type="checkbox" name="mktPush" id="marketing03" value="Y" > <span class="label"><label for="marketing03">앱 푸시</label></span>
+                                                </div> -->
+                                                <div class="asset">
+                                                    <div class="checker" id="uniform-marketing04" tabindex="0"><span class=""><input type="checkbox" name="mktDm" id="marketing04" value="Y"></span></div> <span class="label" tabindex="0"><label for="marketing04" tabindex="0" class="">우편물</label></span>
+                                                </div>
+                                                <div class="asset">
+                                                    <div class="checker" id="uniform-marketing05" tabindex="0"><span class=""><input type="checkbox" name="mktTm" id="marketing05" value="Y"></span></div> <span class="label" tabindex="0"><label for="marketing05" tabindex="0" class="">전화</label></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <ul class="info-text" tabindex="0">
+                                        <li tabindex="0"><span class="list-dot"></span>쿠폰 및 할인혜택 제공, 새로운 서비스 및 신상품, 이벤트 정보 안내, 기타 마케팅 정보 제공</li>
+                                        <li tabindex="0"><span class="list-dot"></span>결제/교환/환불안내, 약관 및 서비스 관리 정책 변경, VOC등 광고성 정보가 아닌 경우 수신동의 여부와 관계없이 발송됩니다.</li>
+                                    </ul>
+                                </div>
+                                <!-- //개인정보 수신 및 마케팅 활용 동의 -->
+                                <div class="btn-group half">
+                                    <button type="button" class="btn medium slightly" id="joinBtn" onclick="page.nextStep()">가입하기</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <!-- //회원가입 -->
+
+            <div class="layer-popup basic-popup terms-popup" id="popupDtlAddr">
+                <form>
+                    <div class="popup-wrapper">
+                        <div class="popup-inner">
+                            <div class="popup-head">
+                                <h2 class="title" tabindex="0">주소검색</h2>
+                                <button type="button" class="btn btn-close">닫기</button>
+                            </div>
+                            <div class="popup-body">
+                                <div class="popup-content">
+                                    <!-- 상세주소 입력 -->
+                                    <div class="table-vertical badge-reward">
+                                        <div class="cell">
+                                            <div class="row">
+                                                <div class="input-cover">
+                                                    <input type="text" id="inputAddr11" name="homeRoadNmAddr11" title="주소 입력" value="" readonly="" required="">
+                                                </div>
+                                            </div>
+                                            <div class="row term">
+                                                <div class="input-cover">
+                                                    <input type="text" id="inputAddr12" name="homeRoadNmAddr12" placeholder="상세주소 입력" title="상세주소 입력" value="" required="" maxlength="100">
+                                                    <div class="input-element">
+                                                        <a href="javascript:void(0);" class="btn-value-delete">PADDR</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="btn-group btn-flex radius">
+                                                <a href="javascript:void(0);" class="confirmbtn btn large normal btn-close " style="display:none">확인</a>
+                                                <a href="javascript:void(0);" class="unconfirmbtn btn large slightly">확인</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <form name="form1" action="" method="post" style="display: none;"></form>
         </div>
-    </div>
-</div>
+
+
+<script>
+    var $global_kakaotalk_key = "6bf8f689f98cba453ea9052ff57dad14";
+</script>
+<script src="/assets/shared/js/plugins/jquery-3.2.0/jquery-3.2.0.min.js"></script>
+<script src="/assets/shared/js/plugins/jquery.selectric-1.11.1/jquery.selectric.min.js"></script>
+<script src="/assets/shared/js/plugins/jquery.uniform-2.2.0/jquery.uniform.min.js"></script>
+<script src="/assets/shared/js/plugins/swiper/swiper.min.js"></script>
+<script src="/assets/shared/js/plugins/slick-1.8.0/slick.js"></script>
+
+<script src="/assets/pc/js/plugins/datepicker-1.0.9/datepicker.min.js"></script>
+<script src="/assets/pc/js/plugins/datepicker-1.0.9/datepicker.ko-KR.js"></script>
+<script src="/assets/pc/js/plugins/bluebird/bluebird.js"></script>
+
+<script src="/assets/pc/js/ui/common.ui.js?v=2024073112"></script>
+<script src="/assets/pc/js/ui/common.ui.dev.js?v=2024073112"></script>
+
+<script src="/assets/shared/js/unvus/unvus.js?v=2024073112"></script>
+<script src="/assets/shared/js/unvus/unvus.jq.js?v=2024073112"></script>
+<script src="/assets/shared/js/unvus/unvus.util.js?v=2024073112"></script>
+<script src="/assets/shared/js/unvus/unvus.upload.js?v=2024073112"></script>
+<script>
+    var rootContext = '';
+    var sessionUserId = null;
+    var chatboot_ico = true;
+    $(function () {
+        var token = $("meta[name='_csrf']").attr('content');
+        var header = $("meta[name='_csrf_header']").attr('content');
+        if(token && header) {
+            $(document).ajaxSend(function(event, xhr, options) {
+                xhr.setRequestHeader(header, token);
+            });
+        }
+        $.ajaxSetup({
+            contentType: "application/json",
+            dataType: "json"
+        });
+
+    });
+
+    // 연속된 비밀번호 체크 (true=연속됨)
+    // 3개 연속 말고는 체크 할 수 없는 함수.
+    function checkPwRepeat($text, $length) {
+        if ($length == undefined || $length == null || $length == "") {
+            $length = 3;
+        }
+
+        if ($text == undefined || $text == null || $text.length < 3) {
+            return false;
+        }
+        var $textA, $textB, $textC;
+        for (var ii = 0; ii < $text.length - 2; ii++) {
+            $textA = $text.substr(ii + 0, 1);
+            $textB = $text.substr(ii + 1, 1);
+            $textC = $text.substr(ii + 2, 1);
+            if ($textA == $textB && $textB == $textC) {
+                return true;
+            }
+            // abc, 123, ABC
+            if ($textA.charCodeAt()+1 == $textB.charCodeAt() && $textB.charCodeAt()+1 == $textC.charCodeAt()) {
+                return true;
+            }
+            // cba, 321, CBA 거꾸로 연속된 경우
+            if ($textA.charCodeAt()-1 == $textB.charCodeAt() && $textB.charCodeAt()-1 == $textC.charCodeAt()) {
+                return true;
+            }
+        }
+
+        return false;
+
+        // 이하 주석은 동일+연속문자까지 체크함
+// 		if (!$length)
+// 			$length = 4; // 글자수를 지정하지 않으면 4로 지정
+// 		var i, j, k, x, y;
+// 		var buff = [ "0123456789", "abcdefghijklmnopqrstuvwxyz",
+// 				"ABCDEFGHIJKLMNOPQRSTUVWXYZ" ];
+// 		//~!@#$%*={}[],.
+// 		var src, src2, ptn = "";
+// 		for (i = 0; i < buff.length; i++) {
+// 			src = buff[i]; // 0123456789
+// 			src2 = buff[i] + buff[i]; // 01234567890123456789
+// 			for (j = 0; j < src.length; j++) {
+// 				x = src.substr(j, 1); // 0
+// 				y = src2.substr(j, $length); // 0123
+// 				ptn += "[" + x + "]{" + $length + ",}|"; // [0]{4,}|0123|[1]{4,}|1234|...
+// 				ptn += y + "|";
+// 			}
+// 		}
+// 		console.log(ptn);
+// 		console.log(ptn.replace(/.$/, ""));
+// 		ptn = new RegExp(ptn.replace(/.$/, "")); // 맨마지막의 글자를 하나 없애고 정규식으로 만든다.
+// 		if (ptn.test($length))
+// 			return true;
+// 		return false;
+    }
+</script>
+<script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script type="text/javascript" src="/assets/shared/js/common/findZipcode.js?v=202110142206"></script>
 <script type="text/javascript">
     //<![CDATA[
     var page = {};
@@ -1199,6 +1383,179 @@
         }
     }
     isNoidEmail('C');
-</script>
+</script><script type="text/javascript">
+    //<![CDATA[
+    var headerPage = {};
+
+    (function () {
+        // init
+        $(function () {
+            // 나의 포인트 조회
+            headerPage.tabIndex();
+        });
+
+        // functions
+        headerPage = {
+            goLogin: function (url) {
+                if (confirm("로그인 후 이용 가능해요. 로그인 하시겠어요?")) {
+                    document.location.href = url;
+                } else {
+                    return false;
+                }
+            },
+            layer_popup_1: function (url, code, storeCd, agree_title, agree_item, pageCd) {
+                console.log("layerpopup1 함수");
+
+                $('#W_RURL').val(url);
+                $('#storeCd').val(storeCd);
+                $("#pageCd").val(pageCd);
+                $("#code").val(code);
+                $("#guide").css("display", "block");		// 제휴 쇼핑몰 안내 레이어 팝업
+
+                headerPage.layer_popup_2(url, code, storeCd, agree_title, agree_item);		//실질적인 레이어 팝업 실행
+                popupBase.layerPopup('#popupPartnerShopping');
+            },
+            layer_popup_2: function (url, code, storeCd, agree_title, agree_item) {
+                console.log("layerpopup2 함수");
+
+                $('#code').val(code);
+                $.ajax({
+                    type:"post",
+                    url:"/page/alliance/agree",
+                    data: JSON.stringify({"storeCd":storeCd, "code":code, "agree_item":agree_item, "url":url, "agree_title":agree_title}),
+                    dataType: 'html',
+                    success:function(data){
+                        if (data !== '' && data != null) {
+                            $('#popupPersnalInfo').remove();
+                            var $agreement = $('#agreement');
+                            $agreement.empty();
+                            $agreement.append(data);		// 정보 제공 동의 팝업에 띄울 값들 세팅하여 DOM 객체 가져옴
+                        }
+                    },
+                    error: function(trequest,status,error) {
+                        console.log("trequest:" + trequest);
+                        console.log("status:" + status);
+                        console.log("error:" + error);
+
+                    }
+                });
+            },
+            layer_popup_3: function () {
+                console.log("layerpopup3 함수");
+
+                popupBase.closePopup('#popupPartnerShopping');		//제휴 쇼핑묠 안내 레이어 팝업은 가려주고
+
+                if("Y" === $('#code').val()) {
+                    console.log('code==Y');
+                    // 일전에 동의 했다면
+                    headerPage.onSubmit();
+                }else{
+                    console.log('code==N || code==null');
+                    // 일전에 동의 하지않았다면 동의 팝업을 보여준다.
+                    popupBase.layerPopup('#popupPersnalInfo');
+                }
+
+            },
+            onSubmit: function (obj) {
+                if(obj !== undefined && obj.url !== undefined) {
+                    $('#W_RURL').val(obj.url);
+                }
+                if(obj !== undefined && obj.storeCd !== undefined) {
+                    $('#storeCd').val(obj.storeCd);
+                }
+                if ('OILBANK' == $('#storeCd').val()) {
+                    window.open($('#W_RURL').val());
+                } else {
+                    $('#headerForm').submit();	// 제출
+                }
+
+            },
+            agree: function () {
+                console.log('agree click');
+                $('#agreeForm').submit();
+            },
+            goVoc: function () {
+                if (false) {
+                    var popOption = 'width=920, height=700, resizable=no, scrollbars=no, status=no;';
+                    window.open('/page/customer/voc.spc', '', popOption);
+                } else {
+                    headerPage.goLogin('/sso/login.jsp');
+                }
+            },
+            goWithEncodeUrl: function(url){
+                location.href=encodeURI(url);
+            },
+            showSubGnb: function(e){
+                var $this = $(e);
+                $this.parent().find('.sub-gnb').show();
+            },
+            tabIndex: function (){
+                // PC 공통 tabindex
+                $("h1, h2, h3, h4, h5, img, th, td, radio").attr("tabindex",0);
+                $(".header-logo").attr("tabindex",-1);
+                $(".img, .title, .sub-text, .sub-info, .text, .article, .date, .subtitle1, .subtitle2, .info, .type, .thumbnail-area, .label, .d-day, .title-area.row, .info-text, .description, .question").attr("tabindex",0);
+            }
+        };
+    })();
+
+    // 로그인 화면에서 로그인 버튼 연타 방지
+    var flagMoveLoginPage = false;
+    function fn_moveLoginPage() {
+        if (flagMoveLoginPage) {
+            return;
+        }
+        flagMoveLoginPage = true;
+        var nowUri = window.location.pathname;
+        if (nowUri == '/sso/login.jsp') {
+            setTimeout(function() {
+                location.href = '/sso/login.jsp?returnUrl=/page/join/form.spc';
+            }, 1000);
+        } else {
+            location.href = '/sso/login.jsp?returnUrl=/page/join/form.spc';
+        }
+        setTimeout(function() {
+            flagMoveLoginPage = false;
+        }, 1000);
+    }
+    //]]>
+</script><script type="text/javascript" src="/assets/pc/hyundai-oil-bank/js/jquery.cookie.js"></script>
+<script type="text/javascript">
+    //<![CDATA[
+    var footerPage = {};
+
+    (function () {
+        // init
+        $(function () {
+            $('#family').on('change', footerPage.move);
+            $('.chatboot').on('click',footerPage.chatboot);
+            $('.close_btn').click(function () {
+                document.cookie = "chatboot_flag=b246a8484af085df06050d29da90c49aebcca983e6f8cf98a9b7b36239da1ac1261b6ee47c3b7659cac54ffda846a101;path=/page;secure";
+                $('.chatboot_ico').hide();
+            });
+            $('.chatboot_ico').show();
+
+            $('.chatboot_ico img').click(function () {
+                footerPage.chatboot();
+            });
+            footerPage.tabIndex();
+        });
+
+        // functions
+        footerPage = {
+            move: function () {
+                var url = $('#family option:selected').val()
+                window.open(url);
+            },
+            chatboot:function(){
+                window.location.href="https://answerny.ai/chatbot/projects/stn/chatbot_stn.html";
+            },
+            tabIndex: function (){
+                $(".number, .time>span, .company-info>span").attr("tabindex",0);
+            }
+
+        };
+    })();
+    //]]>
+</script><!-- 90일 비밀번호 변경 팝업 -->
 </body>
 </html>
