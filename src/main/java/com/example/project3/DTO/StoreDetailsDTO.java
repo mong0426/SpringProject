@@ -1,6 +1,6 @@
 package com.example.project3.DTO;
 
-import com.example.project3.Entity.StoreImage;
+import com.example.project3.Entity.StoreImages;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -23,8 +23,8 @@ public class StoreDetailsDTO {
     private String closedDays;
     private String minOrder;
     private String deliTime;
-    private String deleTip;
+    private String deliTip;
     private Integer likes;
-    private List<StoreImage> images;
+    private List<StoreImages> images;
 
 }

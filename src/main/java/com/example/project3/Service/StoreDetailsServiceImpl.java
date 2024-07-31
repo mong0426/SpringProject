@@ -3,6 +3,7 @@ package com.example.project3.Service;
 import com.example.project3.DTO.StoreDetailsDTO;
 import com.example.project3.Entity.Stores;
 import com.example.project3.Repository.StoresRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
@@ -17,9 +18,9 @@ public class StoreDetailsServiceImpl implements StoreDetailsService {
     private final StoresRepository repository;
 
     @Override
+    @Transactional
     public StoreDetailsDTO showStore(Long sno) {
         Optional<Stores> result = repository.findById(sno);
-
         return result.isPresent() ? entityToDto(result.get()) : null;
     }
 }

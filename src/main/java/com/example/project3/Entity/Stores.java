@@ -11,7 +11,6 @@ import java.util.List;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString
 public class Stores {
 
     @Id
@@ -43,11 +42,11 @@ public class Stores {
     private String deliTime;
 
     @Column
-    private String deleTip;
+    private String deliTip;
 
     @Column
     private Integer likes;
 
     @OneToMany(mappedBy = "store", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<StoreImage> images;
+    private List<StoreImages> images;
 }

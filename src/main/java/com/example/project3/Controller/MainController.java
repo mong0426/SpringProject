@@ -2,6 +2,7 @@ package com.example.project3.Controller;
 
 import com.example.project3.DTO.StoreDetailsDTO;
 import com.example.project3.Service.StoreDetailsService;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Controller;
@@ -23,9 +24,11 @@ public class MainController {
     }
 
     @GetMapping("/StoreDetails")
+    @Transactional
     public String storeDetails(long sno, Model model) {
 
         StoreDetailsDTO dto = service.showStore(sno);
+        System.out.println(dto.getImages().get(0).getImageUrl());
         model.addAttribute("storeDetails", dto);
         return "StoreDetails";
     }

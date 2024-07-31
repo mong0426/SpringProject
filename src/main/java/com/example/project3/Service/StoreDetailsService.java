@@ -18,8 +18,9 @@ public interface StoreDetailsService {
                 .closedDays(dto.getClosedDays())
                 .minOrder(dto.getMinOrder())
                 .deliTime(dto.getDeliTime())
-                .deleTip(dto.getDeleTip())
+                .deliTip(dto.getDeliTip())
                 .likes(dto.getLikes())
+                .images(dto.getImages())
                 .build();
         return entity;
     }
@@ -36,10 +37,10 @@ public interface StoreDetailsService {
                 .closedDays(entity.getClosedDays())
                 .minOrder(entity.getMinOrder())
                 .deliTime(entity.getDeliTime())
-                .deleTip(entity.getDeleTip())
+                .deliTip(entity.getDeliTip())
                 .likes(entity.getLikes())
+                .images(entity.getImages())
                 .build();
-
         return dto;
     }
 }
