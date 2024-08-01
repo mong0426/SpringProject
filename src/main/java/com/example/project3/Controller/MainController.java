@@ -26,9 +26,7 @@ public class MainController {
     @GetMapping("/StoreDetails")
     @Transactional
     public String storeDetails(long sno, Model model) {
-
         StoreDetailsDTO dto = service.showStore(sno);
-        System.out.println(dto.getImages().get(0).getImageUrl());
         model.addAttribute("storeDetails", dto);
         return "StoreDetails";
     }

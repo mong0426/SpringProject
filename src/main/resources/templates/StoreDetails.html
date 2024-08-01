@@ -25,7 +25,7 @@
                     data-bs-target="#CarouselDetail"
                     th:data-bs-slide-to="${iter.index}"
                     th:attr="aria-current=${iter.index == 0} ? 'true' : 'false'"
-                    >
+            >
             </button>
         </div>
         <div class="carousel-inner">
@@ -58,21 +58,18 @@
                 &nbsp;&nbsp;
                 <span class="StarRating">리뷰 243개 ></span>
             </div>
-            <div>
-                가게정보
-            </div>
         </div>
         <hr>
-        <div style="display:flex;">
-            <div style="width:120px;">
+        <div class="ContentDiv">
+            <div class="LeftContent">
                 <span class="MinOrderFont">최소주문금액</span>
             </div>
             <div>
                 <span th:text="${storeDetails.minOrder}"></span>원<br/>
             </div>
         </div>
-        <div style="display:flex;">
-            <div style="width:120px;">
+        <div class="ContentDiv">
+            <div class="LeftContent">
                 <span class="MinOrderFont">배달</span>
             </div>
             <div>
@@ -81,7 +78,67 @@
             </div>
         </div>
     </div>
+    <div class="TopMenuDiv">
+        <div class="TopMenuStyle SelectMenu" id="FoodMenuBtn">
+           <span class="TopMenuFont">메뉴</span>
+        </div>
+        <div class="TopMenuStyle" id="StoreInfoBtn">
+            <span class="TopMenuFont">가게 정보</span>
+        </div>
+        <div class="TopMenuStyle" id="ReviewBtn">
+            <span class="TopMenuFont">리뷰</span>
+        </div>
+    </div>
+
+    <div th:each="food : ${storeDetails.foods}" class="FoodMenuDiv">
+        <div class="FoodContentDiv">
+            <span class="FoodNameFont" th:text="${food.food}">음식 이름</span><br/>
+            <span class="FoodDescFont" th:text="${food.description}">음식 설명</span><br/>
+            <span class="FoodPriceFont" th:text="${food.price}+원">가격</span><br/>
+        </div>
+        <div>
+            <img class="FoodImage" th:src="@{${food.imageUrl}}" alt="Food Image"/>
+        </div>
+    </div>
 </div>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const foodMenuBtn = document.getElementById("FoodMenuBtn");
+        const storeInfoBtn = document.getElementById("StoreInfoBtn");
+        const reviewBtn = document.getElementById("ReviewBtn");
+
+        function handleClick(section) {
+            console.log(`Clicked on ${section}`);
+            document.querySelectorAll('.TopMenuStyle').forEach(btn => btn.classList.remove('SelectMenu'));
+            this.classList.add('SelectMenu');
+
+            switch (section) {
+                case "FoodMenu":
+                    // Add your logic for the "메뉴" button here
+                    break;
+                case "StoreInfo":
+                    // Add your logic for the "가게 정보" button here
+                    break;
+                case "Review":
+                    // Add your logic for the "리뷰" button here
+                    break;
+            }
+        }
+
+        // Attach event listeners to each button
+        foodMenuBtn.addEventListener("click", function() {
+            handleClick.call(this, "FoodMenu");
+        });
+
+        storeInfoBtn.addEventListener("click", function() {
+            handleClick.call(this, "StoreInfo");
+        });
+
+        reviewBtn.addEventListener("click", function() {
+            handleClick.call(this, "Review");
+        });
+    });
+</script>
 <div th:replace="~{Footer :: body}"></div>
 </body>
 </html>

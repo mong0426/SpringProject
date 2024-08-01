@@ -1,5 +1,6 @@
 package com.example.project3.DTO;
 
+import com.example.project3.Entity.Foods;
 import com.example.project3.Entity.StoreImages;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -26,5 +27,6 @@ public class StoreDetailsDTO {
     private String deliTip;
     private Integer likes;
     private List<StoreImages> images;
+    private List<Foods> foods;
 
 }

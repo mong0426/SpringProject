@@ -47,6 +47,9 @@ public class Stores {
     @Column
     private Integer likes;
 
-    @OneToMany(mappedBy = "store", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "store", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<StoreImages> images;
+
+    @OneToMany(mappedBy = "store", fetch = FetchType.EAGER,  cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Foods> foods;
 }

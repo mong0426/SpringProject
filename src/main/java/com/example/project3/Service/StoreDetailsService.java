@@ -21,6 +21,7 @@ public interface StoreDetailsService {
                 .deliTip(dto.getDeliTip())
                 .likes(dto.getLikes())
                 .images(dto.getImages())
+                .foods(dto.getFoods())
                 .build();
         return entity;
     }
@@ -40,6 +41,7 @@ public interface StoreDetailsService {
                 .deliTip(entity.getDeliTip())
                 .likes(entity.getLikes())
                 .images(entity.getImages())
+                .foods(entity.getFoods())
                 .build();
         return dto;
     }

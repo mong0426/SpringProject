@@ -11,7 +11,7 @@
         }
         .MainLine {
           background-color: #F986BD;
-          height: 5rem;
+          height: 60px;
           display: flex;
           padding: 2rem;
         }
@@ -83,6 +83,7 @@
         }
         .StickyHeader {
         width: 100%;
+        height: 60px;
         min-width:1500px;
         position: sticky;
         top: 0;
