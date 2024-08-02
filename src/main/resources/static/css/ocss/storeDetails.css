@@ -14,9 +14,8 @@
 }
 
 .StoreContent{
-    margin-bottom:30px;
     padding:40px;
-    box-shadow:0 4px 8px rgba(0, 0, 0, 0.15)
+    box-shadow: 0px -3px 5px rgba(0, 0, 0, 0.15);
 }
 .ContentHeader{
     display:flex;
@@ -98,6 +97,9 @@ margin-bottom:0px;
     padding:15px;
     border-bottom: 1px solid #dddddd;
 }
+.FoodMenuDiv:hover {
+    background-color: #f5f5f5;
+}
 .FoodContentDiv{
     padding:10px;
 }
@@ -119,7 +121,7 @@ margin-bottom:0px;
 .TopMenuDiv{
     display:flex;
     justify-content:space-between;
-    margin-bottom:30px;
+    margin-bottom:5px;
 }
 .TopMenuStyle{
     display:flex;
@@ -128,10 +130,23 @@ margin-bottom:0px;
     width:400px;
     height:50px;
     cursor:pointer;
+    box-shadow: 0px 5px 8px 0px rgba(0, 0, 0, 0.1);
 }
 .TopMenuFont{
     font-size:18px;
 }
 .SelectMenu {
-    box-shadow: 0 -3px 8px 0px rgba(0, 0, 0, 0.1);
+    box-shadow: 0px -5px 8px 0px rgba(0, 0, 0, 0.1)
+ }
+ .DynamicContent{
+ box-shadow:0px 5px 8px 1px rgba(0, 0, 0, 0.1)
+ }
+ .StoreInfoDiv{
+    padding:40px;
+    display:none;
+ }
+ .StoreInfoCate{
+    display:inline-flex;
+    width:150px;
+    color:grey;
  }
