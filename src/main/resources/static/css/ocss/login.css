@@ -232,3 +232,15 @@ body, button, dl, dt, dd, figure, h1, h2, h3, h4, h5, h6, ol, ul, li, p, table, 
     height: 55px;
     width: 55px;
 }
+
+.social-container a social1 {
+    border: 1px solid #DDDDDD;
+    border-radius: 50%;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 40px 0 54px;
+    height: 55px;
+    width: 55px;
+}
+
