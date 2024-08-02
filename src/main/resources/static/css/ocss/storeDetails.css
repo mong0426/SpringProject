@@ -1,0 +1,137 @@
+.StoreDetails{
+    width:100%;
+    min-width:1500px;
+    display:grid;
+    justify-content:center;
+}
+.StoreImage{
+    width:100%;
+    height:20rem;
+}
+.CarouselDetail{
+    width:1200px;
+    height:20rem;
+}
+
+.StoreContent{
+    margin-bottom:30px;
+    padding:40px;
+    box-shadow:0 4px 8px rgba(0, 0, 0, 0.15)
+}
+.ContentHeader{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+.RatingAndInfoDiv{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+.StoreRatingDiv{
+    margin:5px;
+    display:flex;
+    align-items:center;
+}
+.StoreName{
+    font-size:46px;
+    font-weight:700;
+}
+.StarIcon{
+    width:25px;
+}
+.StarRating{
+    font-size:18px;
+    font-weight:700;
+}
+.LikesBtn{
+    background-color:transparent;
+    border:none;
+}
+.LikesIcon{
+    width:36px;
+    height:36px;
+}
+.MinOrderFont{
+    color:#8b8b8b;
+    font-weight:400;
+}
+.ContentDiv{
+    display:flex;
+}
+.LeftContent{
+    width: 120px;
+}
+.DeliTipTitle{
+   font-weight:600;
+}
+
+.carousel .carousel-indicators button {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: #fff;
+    border: none !important;
+    transition: background-color 0.3s;
+}
+.carousel-item {
+    width: 100%;
+    height: 350px;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    position: relative;
+}
+
+.carousel-item img {
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.carousel-indicators{
+margin-bottom:0px;
+}
+.FoodMenuDiv{
+    display:flex;
+    justify-content:space-between;
+    padding:15px;
+    border-bottom: 1px solid #dddddd;
+}
+.FoodContentDiv{
+    padding:10px;
+}
+.FoodNameFont{
+    font-size: 26px;
+    font-weight: 600;
+}
+.FoodDescFont{
+    font-size: 14px;
+    color: darkgrey;
+}
+.FoodPriceFont{
+    font-size: 20px;
+    font-weight: 600;
+}
+.FoodImage{
+    width:200px;
+}
+.TopMenuDiv{
+    display:flex;
+    justify-content:space-between;
+    margin-bottom:30px;
+}
+.TopMenuStyle{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    width:400px;
+    height:50px;
+    cursor:pointer;
+}
+.TopMenuFont{
+    font-size:18px;
+}
+.SelectMenu {
+    box-shadow: 0 -3px 8px 0px rgba(0, 0, 0, 0.1);
+ }

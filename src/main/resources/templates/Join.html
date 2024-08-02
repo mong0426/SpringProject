@@ -1,0 +1,1561 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>배달의 만족 - 회원가입</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <link th:href="@{/css/ocss/mainpage.css}" rel="stylesheet"/>
+    <link th:href="@{/css/ocss/join.css}" rel="stylesheet"/>
+    <script type="text/javascript">
+        (function() {
+            var name = 'spc.app.FLASH_MAPS';
+            if( get_cookie( name ) ) {
+                document.cookie = name + "=;path=/;expires=Thu, 01 Jan 1970 00:00:01 GMT";
+            }
+            function get_cookie(name){
+                return document.cookie.split(';').some(function(c) {
+                    return c.trim().startsWith(name + '=');
+                });
+            }
+        })();
+
+    </script>
+
+</head>
+<body class="">
+
+<header th:replace="~{Header :: body}"></header>
+<!-- #wrap -->
+<div id="wrap">
+    <!-- #container -->
+    <div id="container">
+
+        <div class="layer_popup" id="agreement"></div>
+
+        <form name="headerForm" id="headerForm" method="post" action="/page/alliance/gate-check.spc" target="_blank">
+            <input type="hidden" name="code" id="code">
+            <input type="hidden" name="storeCd" id="storeCd">
+            <input type="hidden" name="W_RURL" id="W_RURL">
+            <input type="hidden" name="W_MEMBER_NO" value="">
+            <input type="hidden" name="W_USER_ID" value="">
+            <input type="hidden" name="pageCd" id="pageCd">
+        </form>
+
+
+        <!-- #content -->
+        <div id="content" class="content">
+
+            <link rel="stylesheet" href="/assets/pc/css/join.css?v=2024073112">
+            <style>
+
+            </style>
+
+
+            <!-- 회원가입 -->
+            <div class="member-content join-content join-form-content newform">
+                <!-- 페이지 네비게이션 -->
+                <div class="page-navigation">
+                    <div class="inner">
+                        <span class="path"><a href="javascript:void(0);">HOME</a></span>
+                        <span class="path"><a href="javascript:void(0);">회원가입</a></span>
+
+                    </div>
+                </div>
+                <!-- //페이지 네비게이션 -->
+                <div class="section-inner">
+                    <div class="subpage-title-area">
+                        <h2 class="title" tabindex="0">회원정보 입력</h2>
+                    </div>
+                    <div class="medium-layout-inner">
+                        <!-- 필수 회원정보 -->
+                        <form action="/page/join/optional-form.spc" method="POST" name="joinForm" id="joinForm">
+                            <input type="hidden" name="regPath" value="PC">
+                            <input type="hidden" name="reqChnl" value="pc">
+                            <input type="hidden" name="email" id="verifyEmail" value="">
+                            <input type="hidden" name="checkIdResult" id="checkIdResult" value="">
+                            <input type="hidden" name="postInput" id="inputZipcode" title="우편번호">
+                            <input type="hidden" name="mktPush" id="mktPush" value="N">
+                            <input type="hidden" name="flagPassEmailCheck" value="Y"><div class="info-text" tabindex="0">기본정보</div>
+
+                            <div class="member-join-form">
+                                <fieldset class="fieldset">
+                                    <legend>필드셋</legend>
+
+                                    <div class="field areaUserId on-focus">
+                                        <div class="label" tabindex="0"><label for="inputUserId" class="userIdLabel labelGray" tabindex="0">아이디</label></div>
+                                        <div class="insert">
+                                            <div class="line_btn">
+                                                <div class="input-wrapper input-btn">
+                                                    <div class="input-cover userId gray black">
+                                                        <input type="text" id="inputUserId" name="userId" placeholder="6~12자, 영소문자, 숫자" title="아이디 입력" maxlength="12" autocomplete="username">
+                                                        <div class="input-element">
+                                                            <button type="button" class="btn-value-delete userId">ID</button>
+                                                        </div>
+                                                    </div>
+                                                    <div class="checkbtn">
+                                                        <a href="javascript:void(0);" class="btn xlarge linebtn slightly" id="btnCheckId">중복확인</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="etc" id="descUserId" tabindex="0"><p class="em warning"></p></div>
+                                            <div class="find" style="display:none;">
+                                                <p><a href="javascript:void(0);" id="gotologin">로그인 &gt;</a> <a href="javascript:void(0);" id="gotofindpw">비밀번호 찾기 &gt;</a></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="field areaPassword on-error">
+                                        <div class="label" tabindex="0"><label for="label0102" class="pwdLabel labelGray" tabindex="0">비밀번호</label></div>
+                                        <div class="insert">
+                                            <div class="input-cover pwd gray">
+                                                <!-- 입력값 삭제 버튼 없을경우 no-delete추가 -->
+                                                <input type="password" id="label0102" name="pwd" placeholder="8~16자리 숫자, 영문자, 특수문자 중 2개 조합" title="비밀번호 입력" maxlength="16" autocomplete="new-password">
+                                                <div class="input-element">
+                                                    <button type="button" class="btn-value-delete pwd on">PW</button>
+                                                </div>
+                                            </div>
+                                            <div class="etc" id="descPwd" style="display: none;">
+                                                <p class="em x2 warning" tabindex="0"><span class="x2t"></span>영문/숫자/특수문자 2가지 이상 조합(8~16자)</p>
+                                                <p class="em x1 success" tabindex="0"><span class="x1t"></span>" + / ＼ ; : * _ ^ &amp; ( ) &lt; &gt; 사용불가</p>
+                                                <p class="em x3 success" tabindex="0"><span class="x3t"></span>3개 이상 연속되거나 동일한 문자/숫자 제외</p>
+                                                <p class="em x4 success" tabindex="0"><span class="x4t"></span>아이디 제외</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="field on-error">
+                                        <div class="label" tabindex="0"><label for="label0103" class="confirmPwdLabel labelGray" tabindex="0">비밀번호 확인</label></div>
+                                        <div class="insert">
+                                            <div class="input-cover input-covers confirmPwd gray">
+                                                <!-- 입력값 삭제 버튼 없을경우 no-delete추가 -->
+                                                <input type="password" id="label0103" name="confirmPwd" placeholder="비밀번호 재입력" title="비밀번호 재입력" maxlength="16" autocomplete="new-password">
+
+                                                <div class="input-element">
+                                                    <button type="button" class="btn-value-delete confirmPwd on">PW</button>
+                                                </div>
+                                            </div>
+                                            <div class="etc" id="descConfirmPwd" tabindex="0"><p class="em warning"></p></div>
+                                        </div>
+                                    </div>
+                                    <div class="field areaAddress">
+                                        <div class="label no-space" tabindex="0"><label for="label0104" class="inputAddr1Label" tabindex="0">주소</label></div>
+                                        <div class="insert">
+                                            <div class="row">
+                                                <div class="input-cover addrinput gray p-12">
+                                                    <div class="addressWrap">
+                                                        <label id="labelAddress">주소 입력<input type="text" name="labelAddress" value="" onkeypress="if(event.keyCode==13){findZipcodeNewIframe()}"></label>
+                                                    </div>
+                                                    <input type="hidden" name="homeRoadNmAddr1" id="homeRoadNmAddr1">
+                                                    <input type="hidden" name="homeRoadNmAddr2" id="homeRoadNmAddr2">
+                                                    <div class="input-element">
+                                                        <button type="button" class="btn-value-delete addrinput">PW</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- 주소 찾기 Iframe -->
+                                    <div id="findZipCodeArea" style="display: none; border: 1px solid; width: 672px; height: 444px; max-height: 466px; margin: 5px 0px; position: relative;">
+                                        <img src="//t1.daumcdn.net/postcode/resource/images/close.png" id="btnFoldWrap" style="cursor:pointer;position:absolute;right:0px;top:-1px;z-index:1" onclick="foldDaumPostcode()" alt="접기 버튼" tabindex="0">
+                                        <div id="__daum__layer_7" style="position: relative; width: 100%; height: 100%; background-color: rgb(255, 255, 255); z-index: 0; overflow: hidden; min-width: 300px; margin: 0px; padding: 0px;"><iframe frameborder="0" title="우편번호서비스 레이어 프레임" src="about:blank" style="position: absolute; left: 0px; top: 0px; width: 100%; height: 100%; border: 0px none; margin: 0px; padding: 0px; overflow: hidden; min-width: 300px;"></iframe></div></div>
+
+                                    <div class="field areaEmail on-error">
+                                        <div class="label" tabindex="0"><label for="label223" class="mailIdLabel labelGray" tabindex="0">이메일</label></div>
+                                        <div class="insert">
+                                            <div class="line_btn">
+                                                <div class="input-wrapper input-btn">
+                                                    <div class="input-cover email-cover email mailId gray">
+                                                        <input type="text" id="mailId" name="mailId" placeholder="이메일 입력" title="이메일 아이디 입력" class="email-id" value="null">
+
+                                                        <div class="input-element">
+                                                            <button type="button" class="btn-value-delete mailId">Email</button>
+                                                        </div>
+                                                    </div>
+                                                    <div class="checkbtn">
+                                                        <a href="javascript:void(0);" class="btn xlarge slightly linebtn" id="btnCheckEmail">중복확인</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="etc" id="descConfirmEmail" tabindex="0"><p class="em warning"></p></div>
+                                        </div>
+                                    </div>
+                                </fieldset>
+
+                                <!-- 14세 미만 가입자 -->
+                                <input type="hidden" id="juniorYn" name="juniorYn" value="N"> <!-- 주니어 회원가입여부 기본값 N-->
+                                <!-- //14세 미만 가입자 -->
+
+                                <!-- 개인정보 수신 및 마케팅 활용 동의 -->
+                                <div class="field areaMarketing member-agree-content">
+                                    <div class=""><label class="marketing-title" tabindex="0">[선택] 개인정보 수신 및 마케팅 활용 동의</label></div>
+                                    <div class="insert select-container all-check-area">
+                                        <div class="all-check">
+                                            <div class="selector-wrap">
+                                                <div class="asset">
+                                                    <div class="checker" id="uniform-checkAllAgree" tabindex="0"><span class=""><input type="checkbox" name="allcheck01" id="checkAllAgree"></span></div> <span class="label" tabindex="0"><label for="checkAllAgree" tabindex="0" class="">전체동의</label></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="select-list">
+                                            <div class="selector-wrap" id="marketingCheckWrap">
+                                                <div class="asset">
+                                                    <div class="checker" id="uniform-marketing01" tabindex="0"><span class=""><input type="checkbox" name="mktEmail" id="marketing01" value="Y"></span></div> <span class="label" tabindex="0"><label for="marketing01" tabindex="0" class="">이메일</label></span>
+                                                </div>
+                                                <div class="asset">
+                                                    <div class="checker" id="uniform-marketing02" tabindex="0"><span class=""><input type="checkbox" name="mktSms" id="marketing02" value="Y"></span></div> <span class="label" tabindex="0"><label for="marketing02" tabindex="0" class="">문자메세지</label></span>
+                                                </div>
+                                                <!-- <div class="asset">
+                                                    <input type="checkbox" name="mktPush" id="marketing03" value="Y" > <span class="label"><label for="marketing03">앱 푸시</label></span>
+                                                </div> -->
+                                                <div class="asset">
+                                                    <div class="checker" id="uniform-marketing04" tabindex="0"><span class=""><input type="checkbox" name="mktDm" id="marketing04" value="Y"></span></div> <span class="label" tabindex="0"><label for="marketing04" tabindex="0" class="">우편물</label></span>
+                                                </div>
+                                                <div class="asset">
+                                                    <div class="checker" id="uniform-marketing05" tabindex="0"><span class=""><input type="checkbox" name="mktTm" id="marketing05" value="Y"></span></div> <span class="label" tabindex="0"><label for="marketing05" tabindex="0" class="">전화</label></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <ul class="info-text" tabindex="0">
+                                        <li tabindex="0"><span class="list-dot"></span>쿠폰 및 할인혜택 제공, 새로운 서비스 및 신상품, 이벤트 정보 안내, 기타 마케팅 정보 제공</li>
+                                        <li tabindex="0"><span class="list-dot"></span>결제/교환/환불안내, 약관 및 서비스 관리 정책 변경, VOC등 광고성 정보가 아닌 경우 수신동의 여부와 관계없이 발송됩니다.</li>
+                                    </ul>
+                                </div>
+                                <!-- //개인정보 수신 및 마케팅 활용 동의 -->
+                                <div class="btn-group half">
+                                    <button type="button" class="btn medium slightly" id="joinBtn" onclick="page.nextStep()">가입하기</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <!-- //회원가입 -->
+
+            <div class="layer-popup basic-popup terms-popup" id="popupDtlAddr">
+                <form>
+                    <div class="popup-wrapper">
+                        <div class="popup-inner">
+                            <div class="popup-head">
+                                <h2 class="title" tabindex="0">주소검색</h2>
+                                <button type="button" class="btn btn-close">닫기</button>
+                            </div>
+                            <div class="popup-body">
+                                <div class="popup-content">
+                                    <!-- 상세주소 입력 -->
+                                    <div class="table-vertical badge-reward">
+                                        <div class="cell">
+                                            <div class="row">
+                                                <div class="input-cover">
+                                                    <input type="text" id="inputAddr11" name="homeRoadNmAddr11" title="주소 입력" value="" readonly="" required="">
+                                                </div>
+                                            </div>
+                                            <div class="row term">
+                                                <div class="input-cover">
+                                                    <input type="text" id="inputAddr12" name="homeRoadNmAddr12" placeholder="상세주소 입력" title="상세주소 입력" value="" required="" maxlength="100">
+                                                    <div class="input-element">
+                                                        <a href="javascript:void(0);" class="btn-value-delete">PADDR</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="btn-group btn-flex radius">
+                                                <a href="javascript:void(0);" class="confirmbtn btn large normal btn-close " style="display:none">확인</a>
+                                                <a href="javascript:void(0);" class="unconfirmbtn btn large slightly">확인</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <form name="form1" action="" method="post" style="display: none;"></form>
+        </div>
+
+
+<script>
+    var $global_kakaotalk_key = "6bf8f689f98cba453ea9052ff57dad14";
+</script>
+<script src="/assets/shared/js/plugins/jquery-3.2.0/jquery-3.2.0.min.js"></script>
+<script src="/assets/shared/js/plugins/jquery.selectric-1.11.1/jquery.selectric.min.js"></script>
+<script src="/assets/shared/js/plugins/jquery.uniform-2.2.0/jquery.uniform.min.js"></script>
+<script src="/assets/shared/js/plugins/swiper/swiper.min.js"></script>
+<script src="/assets/shared/js/plugins/slick-1.8.0/slick.js"></script>
+
+<script src="/assets/pc/js/plugins/datepicker-1.0.9/datepicker.min.js"></script>
+<script src="/assets/pc/js/plugins/datepicker-1.0.9/datepicker.ko-KR.js"></script>
+<script src="/assets/pc/js/plugins/bluebird/bluebird.js"></script>
+
+<script src="/assets/pc/js/ui/common.ui.js?v=2024073112"></script>
+<script src="/assets/pc/js/ui/common.ui.dev.js?v=2024073112"></script>
+
+<script src="/assets/shared/js/unvus/unvus.js?v=2024073112"></script>
+<script src="/assets/shared/js/unvus/unvus.jq.js?v=2024073112"></script>
+<script src="/assets/shared/js/unvus/unvus.util.js?v=2024073112"></script>
+<script src="/assets/shared/js/unvus/unvus.upload.js?v=2024073112"></script>
+<script>
+    var rootContext = '';
+    var sessionUserId = null;
+    var chatboot_ico = true;
+    $(function () {
+        var token = $("meta[name='_csrf']").attr('content');
+        var header = $("meta[name='_csrf_header']").attr('content');
+        if(token && header) {
+            $(document).ajaxSend(function(event, xhr, options) {
+                xhr.setRequestHeader(header, token);
+            });
+        }
+        $.ajaxSetup({
+            contentType: "application/json",
+            dataType: "json"
+        });
+
+    });
+
+    // 연속된 비밀번호 체크 (true=연속됨)
+    // 3개 연속 말고는 체크 할 수 없는 함수.
+    function checkPwRepeat($text, $length) {
+        if ($length == undefined || $length == null || $length == "") {
+            $length = 3;
+        }
+
+        if ($text == undefined || $text == null || $text.length < 3) {
+            return false;
+        }
+        var $textA, $textB, $textC;
+        for (var ii = 0; ii < $text.length - 2; ii++) {
+            $textA = $text.substr(ii + 0, 1);
+            $textB = $text.substr(ii + 1, 1);
+            $textC = $text.substr(ii + 2, 1);
+            if ($textA == $textB && $textB == $textC) {
+                return true;
+            }
+            // abc, 123, ABC
+            if ($textA.charCodeAt()+1 == $textB.charCodeAt() && $textB.charCodeAt()+1 == $textC.charCodeAt()) {
+                return true;
+            }
+            // cba, 321, CBA 거꾸로 연속된 경우
+            if ($textA.charCodeAt()-1 == $textB.charCodeAt() && $textB.charCodeAt()-1 == $textC.charCodeAt()) {
+                return true;
+            }
+        }
+
+        return false;
+
+        // 이하 주석은 동일+연속문자까지 체크함
+// 		if (!$length)
+// 			$length = 4; // 글자수를 지정하지 않으면 4로 지정
+// 		var i, j, k, x, y;
+// 		var buff = [ "0123456789", "abcdefghijklmnopqrstuvwxyz",
+// 				"ABCDEFGHIJKLMNOPQRSTUVWXYZ" ];
+// 		//~!@#$%*={}[],.
+// 		var src, src2, ptn = "";
+// 		for (i = 0; i < buff.length; i++) {
+// 			src = buff[i]; // 0123456789
+// 			src2 = buff[i] + buff[i]; // 01234567890123456789
+// 			for (j = 0; j < src.length; j++) {
+// 				x = src.substr(j, 1); // 0
+// 				y = src2.substr(j, $length); // 0123
+// 				ptn += "[" + x + "]{" + $length + ",}|"; // [0]{4,}|0123|[1]{4,}|1234|...
+// 				ptn += y + "|";
+// 			}
+// 		}
+// 		console.log(ptn);
+// 		console.log(ptn.replace(/.$/, ""));
+// 		ptn = new RegExp(ptn.replace(/.$/, "")); // 맨마지막의 글자를 하나 없애고 정규식으로 만든다.
+// 		if (ptn.test($length))
+// 			return true;
+// 		return false;
+    }
+</script>
+<script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script type="text/javascript" src="/assets/shared/js/common/findZipcode.js?v=202110142206"></script>
+<script type="text/javascript">
+    //<![CDATA[
+    var page = {};
+
+    (function () {
+        // init
+        $(function () {
+            var $form = $('#joinForm');
+
+            function activeInputForm() {
+
+                var obj = $(this);
+                while (!obj.hasClass('field')) {
+                    obj = obj.parent()
+                }
+                // 아이디 영역 이외 클릭
+                if ($(obj).has('input[name=userId]').length == 0) {
+                    page.inputDesc('descUserId', null, null);
+                }
+                // 비밀번호 영역 클릭
+                if ($(obj).has('input[name=pwd]').length == 0) {
+                    $('#descPwd').hide();
+                } else {
+                    $('#descPwd').show();
+                    $('input[name=pwd]').trigger('input');
+                }
+                // 비밀번호 확인 영역 이외 클릭
+                if ($(obj).has('input[name=confirmPwd]').length == 0) {
+                    page.inputDesc('descConfirmPwd', null, null);
+                }
+                // 이메일 영역 벗어나면 메시지 제거
+                if ($(obj).has('input[name=mailId]').length == 0) {
+                    page.inputDesc('descConfirmEmail', null, null);
+                }
+                $('.newform .input-cover').addClass('gray').removeClass('black');
+                if (!$(obj).find('.input-cover').hasClass("red")) {
+                    $(obj).find('.input-cover').addClass('black');
+                }
+                // 최상단 field 클래스에 해당 input form에 focus있을 때 on-focus 클래스 추가
+                $('.field').removeClass('on-focus');
+                $(obj).addClass('on-focus');
+            }
+            $('.field').on('click', activeInputForm);
+            $('.field input').on('focus', activeInputForm);
+
+            // 첫 input 영역에 활성 표시
+            $($('.field')[0]).trigger('click');
+            // 첫 input에 text에 focus
+            $($('.field')[0]).find('input[type=text]').focus();
+
+            // selectric 선택 했을 때에 title 색 변경
+            $('div.selectric').on('click', function() {
+                $(this).parent().parent().parent().parent().trigger('click');
+            });
+
+            $('#P_userName').on('focus', function() {
+                var pnm=$('#P_userName').val()
+                page.iconImgChange(3, 'P_userName');
+            });
+
+            $('#P_userName').on('blur', function() {
+                var pnm=$('#P_userName').val()
+                if(pnm.length > 1){
+                    page.iconImgChange(1, 'P_userName');
+                } else {
+                    page.iconImgChange(0, 'P_userName');
+                }
+            });
+
+            // 아이디 수정하면 중복검사 결과 초기화
+            $('#inputUserId').on('keyup', function () {
+                var value = $(this).val().toLowerCase();
+                $(this).val(value);
+                var result = false, desc = '아이디는 6~12자로 영소문자, 숫자만 사용 가능합니다.';
+                $('#checkIdResult').val('');
+                $('.find').hide();
+                if (value != null && value.length >= 6) {
+                    if (/^[a-z0-9]{6,12}$/.test(value)) {
+                        result = true;
+                        desc = '';
+                    }
+                    // 아이디 중복체크 버튼 활성화
+                    page.iconImgChange(result ? 3 : result, 'userId');
+                    if ($('input[name=pwd]').val() != '') {
+                        page.iconImgChange(page.checkPassword($('input[name=pwd]').val()), 'pwd');
+                    }
+                    if (value.length > 12) {
+                        $(this).val(value.substring(0,12));
+                    }
+                } else if (value != null && value.length < 6) {
+                    if (/^[a-z0-9]{0,5}$/.test(value)) {
+                        desc = '';
+                        page.iconImgChange(3, 'userId');
+                    } else {
+                        page.iconImgChange(result ? 3 : result, 'userId');
+                    }
+                } else {
+                    desc = '';
+                    page.iconImgChange(3, 'userId');
+                }
+                page.inputDesc('descUserId', result, desc);
+                page.btnActivation(result,'#btnCheckId');
+            });
+
+            // 아이디 중복체크
+            $('#btnCheckId').on('click', function () {
+                // 버튼 비활성화
+                if ($('#btnCheckId').hasClass('slightly')) {
+                    return;
+                }
+                page.checkIdDupl($('#inputUserId').val());
+            });
+
+            // 비밀번호 입력 이벤트 - 유효성 검사
+            $('input[name=pwd]').on('input keyup', function(){
+                page.iconImgChange(page.checkPassword($('input[name=pwd]').val()), 'pwd');
+                page.checkPasswordConfirm('ignore');
+            });
+            // 비밀번호 focus 아웃시 완료 체크 후 표시 변경
+            $('input[name=pwd]').on('blur', function() {
+                page.iconImgChange(page.checkPassword($('input[name=pwd]').val()), 'pwd');
+            });
+            // 비밀번호 확인 입력 이벤트 - 비번과 일치하는지 검사
+            $('input[name=confirmPwd]').on('input keyup', page.checkPasswordConfirm);
+
+            $('.input-cover.addrinput').on('click', function() {
+                findZipcodeNewIframe();
+            });
+            // 상세주소 입력 체크
+            $('#inputAddr12').on('input keyup', function (){
+                var value = $.trim($(this).val());
+                var $byte = getByteStr($.trim($('#inputAddr11').val())) + getByteStr($.trim($('#inputAddr12').val()));
+                if (!value && ($byte >= 30 && $byte <= 400)) {
+                    $('.confirmbtn').hide();
+                    $('.unconfirmbtn').show();
+                }else{
+                    $('.confirmbtn').show();
+                    $('.unconfirmbtn').hide();
+                }
+            });
+            // 주소입력완료
+            $('.confirmbtn').on('click', function () {
+                var addr1 = $('#inputAddr11').val();
+                var addr2 = $('#inputAddr12').val();
+                $('#labelAddress').text(addr1+" "+addr2);
+                $('#homeRoadNmAddr1').val(addr1);
+                $('#homeRoadNmAddr2').val(addr2);
+                page.iconImgChange(1,'homeRoadNmAddr1');
+                $(".areaEmail .insert").trigger('click');
+                $("#mailId").focus();
+
+                isNoidEmail('A');
+
+            });
+
+            // 이메일 체크
+            $('#mailId').on('keyup', function () {
+                // 데이터 변경되면 초기화
+                $('#verifyEmail').val('');
+                page.checkEmaildata();
+            });
+
+            //이메일 중복 체크
+            $('#btnCheckEmail').on('click', function() {
+                if ($('#btnCheckEmail').hasClass('slightly')) {
+                    return;
+                }
+                var user = page.getData();
+                var result = true;
+                if (page.checkEmaildata() != 1) {
+                    page.iconImgChange(0, 'mailId');
+                    return
+                }
+
+
+                // 아이디 없는 회원의 이메일 중복체크 시 기존 이메일주소일 경우 PASS
+                if (isNoidEmail('B')) {
+                    $('input[name="flagPassEmailCheck"]').val('Y'); // flagPassEmailCheck=Y >> 가입 시 이메일 중복체크 한번 더 안함
+                    return false;
+                }
+                $('input[name="flagPassEmailCheck"]').val('N'); // flagPassEmailCheck=N >> 가입 시 이메일 중복체크 한번 진행
+
+                page.checkEmail(user.userId, user.mailId).done(function (res) {
+                    if (res.code == '00' && res.useFlag == 'Y') {
+                        // 중복확인 버튼 비활성화
+                        page.btnActivation(false,'#btnCheckEmail');
+                        // 중복확인 완료된 이메일만 데이터 입력
+                        $('#verifyEmail').val(user.mailId);
+                        page.iconImgChange(true, 'mailId');
+                        page.inputDesc('descConfirmEmail', null, null);
+                        // 개인정보 수신 및 마케팅 활용 동의 글 활성화 시키기
+                        setTimeout(function(){$(".areaMarketing .insert").trigger('click');}, 100);
+                        // $(".areaMarketing .insert").trigger('click');
+                    } else {
+                        $('#verifyEmail').val('');
+                        page.inputDesc('descConfirmEmail', false, res.message);
+                        page.iconImgChange(false, 'mailId');
+                    }
+                });
+            });
+
+            //핸드폰 번호 입력
+            $('#rowLabel0202').on('change', checkPhoneValidate);
+            $('#hp01').on('input',checkPhoneValidate);
+            function checkPhoneValidate() {
+                var pn=$('#hp01').val().replace(/-/g,'');
+                $('#hp01').val(page.formatPhoneNm(pn));
+                // 인증된 전화번호 초기화
+                $('#verifyTelNo').val('');
+                // 전화번호 변경 시 인증번호 창 숨김
+                $(".areaPhoneAuth").hide();
+                $("#btnMobileOwnerCheckSend").text('인증요청');
+                $sendLock = 0;
+                if (pn.length >= 10 && $('#rowLabel0202').val() != '') {
+                    page.btnActivation(true, '#btnMobileOwnerCheckSend');
+                } else {
+                    page.btnActivation(false, '#btnMobileOwnerCheckSend');
+                }
+            }
+
+            $('.btn-value-delete').on('click', function () {
+                if ($(this).hasClass('phone01')) {
+                    // 전화번호 삭제 시 인증번호 창 숨김
+                    $(".areaPhoneAuth").hide();
+                    $('#hp01').trigger('input');
+                    $('#hp01').prop('readonly', 0);
+                    $('.checkbtn.phone01').show();
+                    $("#authNoEncrypt").val('');
+                    $('#rowLabel0202').val('');
+                    $('#rowLabel0202').data('selectric').state.enabled = true;
+                    $('#rowLabel0202').data('selectric').refresh();
+                    $("#btnMobileOwnerCheckSend").html("인증요청");
+                    page.iconImgChange(2, 'phone01');
+                }
+            });
+
+            //인증번호 입력
+            $('#mobileOwnerCheckValue').on('keyup', function (){
+                if ($(this).val().trim().length > 5) {
+                    page.btnActivation(true,'#btnMobileOwnerCheck');
+                } else {
+                    page.btnActivation(false,'#btnMobileOwnerCheck');
+                }
+            });
+
+            // 보호자 핸드폰 번호 입력
+            $('#P_birthYYYY').on('change', checkParentInfo);
+            $('#P_birthMM').on('change', checkParentInfo);
+            $('#P_birthDD').on('change', checkParentInfo);
+            $('#P_telecom').on('change', checkParentInfo);
+            $('#P_userName').on('keyup', checkParentInfo);
+            $('#P_phone01').on('keyup', checkParentInfo);
+            function checkParentInfo() {
+                if($("#P_authYn").val() == "Y"){
+                    return;
+                }
+                var pn=$('#P_phone01').val().replace(/-/g,'');
+                $('#P_phone01').val( page.formatPhoneNm(pn));
+                var name = $('#P_userName').val();
+                var birth = $('#P_birthYYYY').val() + $('#P_birthMM').val() + $('#P_birthDD').val();
+
+                if(pn.length > 10 && name.length > 2 && birth.length == 8) {
+                    page.btnActivation(true,'#authBtnTxt');
+                }else{
+                    page.btnActivation(false,'#authBtnTxt');
+                }
+                if(name.length > 2){
+                    page.iconImgChange(1, 'P_userName');
+                }else{
+                    page.iconImgChange(3, 'P_userName');
+                }
+                $("#authBtnTxt").text("인증요청");
+                $('.areaPhoneAuthf').hide();
+            }
+
+            $('#gotologin').on('click', function () {
+                location.href = '/sso/login.jsp?returnUrl=/page/presentation/point.spc';
+            });
+            $('#gotofindpw').on('click', function () {
+                location.href = '/page/member-info/find-id-pw-form.spc?findType=pw';
+            });
+
+            $('input[type=checkbox]').on('change', function() {
+                // // 마케팅 활용 동의 체크 변경 시 타이틀 on/off
+                // var checkedCount = $('input[type=checkbox]:checked');
+                // if (checkedCount.length > 0) {
+                //     $('.areaMarketing').addClass('on');
+                // } else {
+                //     $('.areaMarketing').removeClass('on');
+                // }
+                // 마케팅 활용 동의 체크 변경 시 본인 label 색 변경
+                if($(this).prop('checked')){
+                    $('label[for=' + $(this).prop('id')).addClass('labelForceBlack');
+                } else {
+                    $('label[for=' + $(this).prop('id')).removeClass('labelForceBlack');
+                }
+            });
+
+            $('input').on('input keyup', page.validateCheck);
+
+            $('.selectric-wrapper select').on('change', function() {
+                var value = $(this).val();
+                var el = $(this).parent().parent().find('div.selectric');
+                if (value != '') {
+                    $(el).children().addClass('notEmpty');
+                } else {
+                    $(el).children().removeClass('notEmpty');
+                }
+            });
+            UIUtils.setToggleAllCheck('#checkAllAgree', '#marketingCheckWrap input[type=checkbox]', true);
+
+            page.tabIndex();
+        });
+
+        // functions
+        page = {
+            /**
+             * @return form data object
+             */
+            getData: function () {
+                return unvus.util.formToJson($('#joinForm'));
+            },
+            /**
+             * 회원가입 취소
+             */
+            cancel: function () {
+                if (confirm('회원가입을 취소하시겠습니까?')) {
+                    location.href = '/sso/login.jsp';
+                }
+            },
+            /**
+             * 다음 단계
+             */
+            nextStep: function () {
+
+                var user = page.getData();
+
+                if (!page.validate(user)) return false;
+
+                $('#joinForm').submit();
+            },
+            validate: function(user) {
+                if ($("#certType").val() == "ipin" && user.telNo == "") {
+                    alert('휴대폰 인증을 진행해 주세요.');
+                    $("#hp01").focus();
+                    return false;
+                }
+
+                if (!user.userId) {
+                    alert('아이디를 입력해 주세요.');
+                    page.iconImgChange(false,'userId',1);
+                    return false;
+                }
+
+                if (!/^[a-z0-9]{6,12}$/.test(user.userId)) {
+                    alert('아이디는 6~12자로 영소문자, 숫자만 사용 가능합니다.');
+                    page.iconImgChange(false,'userId',1);
+                    return false;
+                }
+
+                if (!user.checkIdResult) {
+                    alert('아이디 중복 체크해 주세요.');
+                    page.iconImgChange(false,'userId',1);
+                    return false;
+                }
+
+                if (!/^01([0|1|6|7|8|9])-?([0-9]{3,4})-?([0-9]{4})$/gi.test(user.telNo)) {
+                    alert('휴대전화번호를 올바르게 입력해 주세요.');
+                    $("#hp01").focus();
+                    return false;
+                }
+
+                if (!user.pwd) {
+                    alert('비밀번호를 입력해 주세요.');
+                    page.iconImgChange(false,'pwd',1);
+                    return false;
+                }
+
+                if (!user.confirmPwd) {
+                    alert('비밀번호 확인을 입력해 주세요.');
+                    page.iconImgChange(false,'confirmPwd',1);
+                    return false;
+                }
+
+                if (user.pwd !== user.confirmPwd) {
+                    alert("비밀번호와 비밀번호 확인이 일치하지 않습니다.");
+                    page.iconImgChange(false,'pwd');
+                    page.iconImgChange(false,'confirmPwd',1);
+                    return false;
+                }
+
+                if (!page.chkPwdCombination(user.pwd)) {
+                    alert("비밀번호는 영문, 숫자, 특수문자 중 2가지 이상의 조합으로 \n8~16자리 이내로 설정해주세요.");
+                    page.iconImgChange(false,'pwd',1);
+                    return false;
+                }
+
+                if (checkPwRepeat(user.pwd, 3)) {
+                    alert("3개 이상 연속되거나 동일한 문자/숫자 제외.");
+                    page.iconImgChange(false,'pwd',1);
+                    return false;
+                }
+
+                if (!page.idandpwCk(user.pwd)) {
+                    alert("비밀번호에 ID가 포함되었습니다.");
+                    page.iconImgChange(false,'pwd',1);
+                    return false;
+                }
+
+                if (!user.postInput || !user.homeRoadNmAddr1) {
+                    alert('주소 정보를 입력해 주세요.');
+                    page.iconImgChange(false,'addrinput',1);
+                    return false;
+                }
+
+                if (user.juniorYn == 'Y' && user.P_authYn !== 'Y') {
+                    alert('보호자 동의를 해주세요.');
+                    page.iconImgChange(false,'P_userName',1);
+                    return false;
+                }
+
+                if (page.checkEmaildata() != 1) {
+                    alert("이메일 주소의 구성은 '아이디@호스트.도메인'입니다.\n수신가능한 e-mail 주소를 입력하세요.");
+                    page.iconImgChange(false,'mailId',1);
+                    return false;
+                }
+                if (user.email == '') {
+                    alert("이메일 중복 체크해 주세요.");
+                    $("#btnCheckEmail").focus();
+                    return false;
+                }
+
+                return true;
+            },
+            //가입가능한 상태 체크 함수
+            validateCheck: function() {
+                var user = page.getData();
+                var message = "";
+                var result = true;
+                if ($("#certType").val() == "ipin" && user.telNo == "") {
+                    message = message + "휴대폰 인증을 진행해 주세요.";
+                    result =  false;
+                }
+
+                if (!user.userId) {
+                    // 아이디를 입력해 주세요.
+
+                    message = message + "아이디를 입력해 주세요.";
+                    result = false;
+                }
+
+                if (!user.checkIdResult) {
+                    message = message + "아이디 중복 체크해 주세요.";
+                    result = false;
+                }
+
+                if ($("#certType").val() == "ipin" &&!user.phone01){
+                    message = message + "휴대전화번호를 입력해 주세요.";
+                    result = false;
+                }
+
+                if (!/^01([0|1|6|7|8|9])-?([0-9]{3,4})-?([0-9]{4})$/gi.test(user.telNo)) {
+                    message = message + "휴대전화번호를 올바르게 입력해 주세요.";
+                    result = false;
+                }
+
+                if (!user.pwd) {
+                    message = message + "비밀번호를 입력해 주세요.";
+                    result = false;
+                }
+
+                if (!user.confirmPwd) {
+                    message = message + "비밀번호 확인을 입력해 주세요.";
+                    result = false;
+                }
+
+                if (user.pwd !== user.confirmPwd) {
+                    message = message + "비밀번호와 비밀번호 확인이 일치하지 않습니다.";
+                    result = false;
+                }
+
+                if (!page.chkPwdCombination(user.pwd)) {
+                    message = message + "비밀번호는 영문, 숫자, 특수문자 중 2가지 이상의 조합으로 \n8~16자리 이내로 설정해주세요.";
+                    result = false;
+                }
+
+                if (checkPwRepeat(user.pwd, 3)) {
+                    message = message + "3개 이상 연속되거나 동일한 문자/숫자 제외.";
+                    result = false;
+                }
+
+                if (!page.idandpwCk(user.pwd)) {
+                    message = message + "비밀번호에 ID가 포함되었습니다.";
+                    result = false;
+                }
+
+                if (!user.postInput || !user.homeRoadNmAddr1) {
+                    //주소 정보를 입력해 주세요.
+                    message = message + "주소 정보를 입력해 주세요.";
+                    result = false;
+                }
+
+                if (user.juniorYn == 'Y' && user.P_authYn !== 'Y') {
+                    message = message + "보호자 동의를 해주세요.";
+                    result = false;
+                }
+
+                if (page.checkEmailText() != 1) {
+                    message = message + "이메일 주소의 구성은 '아이디@호스트.도메인'입니다.\n수신가능한 e-mail 주소를 입력하세요.";
+                    result = false;
+                }
+                if (user.email == '') {
+                    message = message + "이메일 중복 체크해 주세요.";
+                    result = false;
+                }
+                if (result) {
+                    page.btnActivation(true,'#joinBtn');
+                    $('.areaMarketing').addClass('on');
+                } else {
+                    page.btnActivation(false,'#joinBtn');
+                    $('.areaMarketing').removeClass('on');
+                }
+            },
+            /**
+             * 이메일 중복 검사
+             */
+            checkEmail: function (userId, email) {
+                if (email == null || email.split('@').length < 2) {
+                    return { code: '44' }
+                }
+                return $.ajax({
+                    type: 'get',
+                    url: '/api/join/check-email',
+                    contentType: 'application/json',
+                    async: false,
+                    data: {
+                        userId: userId,
+                        email1: email.split('@')[0],
+                        email2: email.split('@')[1]
+                    }
+                })
+            },
+            /**
+             * 아이디 중복 검사
+             */
+            checkIdDupl: function (userId) {
+                if (!userId.trim()) {
+                    alert('아이디를 입력하세요.');
+                    return;
+                }
+
+                // 버튼이 비활성화 되기 때문에 들어올 일이 없어야 함
+                if (!/^[a-z0-9]{6,12}$/.test(userId)) {
+                    page.inputDesc('descUserId', false,  "아이디는 6~12자로 영소문자, 숫자만 사용 가능합니다.");
+                    page.iconImgChange(false,'userId');
+                    return false;
+                }
+
+                $.ajax({
+                    method: "get",
+                    url: '/api/join/check-id',
+                    data: {userId: userId},
+                    success: function(res) {
+                        if(res.code !== '00') {
+                            $('#checkIdResult').val('').trigger('change');
+                            alert(res.message);
+                        } else {
+                            var data = res.result;
+                            var result = data.onlnIdUsePossYn == 'Y';
+                            $('#checkIdResult').val(result).trigger('change');
+                            // 결과에 따라 메시지 변경
+                            if (result) {
+                                // desc = '사용가능한 아이디 입니다.'
+                                // 성공 메시지 안보이게 처리
+                                result = null
+                                desc = '';
+                                // 성공 메시지 안보이게 처리
+                                $('.descUrl').hide();
+                                $('.find').hide();
+                                // 사용 가능한 아이디면 중복확인 버튼 비활성
+                                $('#btnCheckId').addClass('slightly');
+                                $('#btnCheckId').removeClass('normal');
+                                page.iconImgChange(1, 'userId');
+                                $(".areaPassword .insert").trigger('click');
+                                $('#label0102').focus();
+                            } else {
+                                desc = '이미 사용중인 아이디입니다.';
+                                $('.descUrl').show();
+                                $('.find').show();
+                                page.iconImgChange(0, 'userId');
+                            }
+                            // alert(desc);
+                            page.inputDesc('descUserId', result, desc);
+                        }
+                    },
+                    error: function (rq, status, err) {
+                        alert('오류가 발생했습니다.');
+                        console.error(err);
+                    }
+                });
+            },
+            checkPasswordConfirm: function (t) {
+                var pwd = $('input[name=pwd]').val();
+                var confirmPwd = $('input[name=confirmPwd]').val();
+
+                var result = null, desc = null;
+                if (pwd !== confirmPwd && confirmPwd != '') {
+                    result = false;
+                    desc = '비밀번호가 일치하지 않습니다.';
+                } else {
+                    result = 1;
+                    desc = null;
+                }
+                $('#descConfirmPwd').show();
+                page.inputDesc('descConfirmPwd', result, desc);
+
+                if (t == 'ignore' && confirmPwd == '') {
+                    page.iconImgChange(2, 'confirmPwd');
+                } else {
+                    page.iconImgChange(result, 'confirmPwd');
+                    // // 비밀번호 확인이 일치하면 바로 주소 창 띄움
+                    // if (confirmPwd != '' && result) {
+                    //     $('#inputAddr1').trigger('click');
+                    // }
+                }
+            },
+            /**
+             * 비밀번호 사용할 수 없는 특수문자 검사
+             */
+            chkPwdSpecialChars: function (pw) {
+                var test = /[^a-z0-9A-Z~!@#$%?={}[\],.`']/gi.test(pw);
+                return !test;
+            },
+            /**
+             * 비밀번호 길이와 조합 검사
+             */
+            chkPwdCombination: function (str){
+                if (!/^(?=.*[a-zA-Z0-9])(?=.*[a-zA-Z~!@#$%*={}[\],.`])(?=.*[0-9~!@#$%*={}[\],.`]).{8,16}$/.test(str)) {
+                    return false;
+                }
+                return true;
+            },
+            /*
+                id pw 일치 여부 체크
+            */
+            idandpwCk:function(value){
+                var id = $('#inputUserId').val();
+                if (value == null || value == '') {
+                    return false;
+                }
+                if(value && id){
+                    if(value.indexOf(id.trim()) != -1){
+                        return false;
+                    }else{
+                        return true;
+                    }
+                }
+                return true;
+            },
+            /*
+                비밀번호 유효성 검사
+            */
+            checkPassword:function(value){
+                var result = true;
+                if( !value ){
+                    $('#descPwd > p').removeClass('success').addClass('warning');
+                    result = false;
+                } else {
+                    if (page.chkPwdSpecialChars(value) === false) {
+                        result = false;
+                        $('.x1').removeClass('success').addClass('warning');
+                    } else{
+                        $('.x1').removeClass('warning').addClass('success');
+                    }
+
+                    if (page.chkPwdCombination(value) === false) {
+                        result = false;
+                        $('.x2').removeClass('success').addClass('warning');
+                    } else{
+                        $('.x2').removeClass('warning').addClass('success');
+                    }
+
+                    if (checkPwRepeat(value, 3)) {
+                        result = false;
+                        $('.x3').removeClass('success').addClass('warning');
+                    } else {
+                        $('.x3').removeClass('warning').addClass('success');
+                    }
+
+                    //Id 와 비번 동일 여부
+                    if (page.idandpwCk(value) === false) {
+                        result = false;
+                        $('.x4').removeClass('success').addClass('warning');
+                    } else {
+                        $('.x4').removeClass('warning').addClass('success');
+                    }
+                }
+                return result;
+            },
+            /**
+             * input 하단 설명
+             * @param wrapEleId
+             * @param value boolean
+             * @param text
+             */
+            inputDesc: function (wrapEleId, value, text) {
+                $('#' + wrapEleId).find('.warning,.success').remove();
+                // if (!text) {
+                //     return;
+                // }
+
+                var cls = value === true ? 'success' : 'warning';
+                var $ele = $('<p/>').addClass('em').addClass(cls).html(text);
+                $('#' + wrapEleId).html('').append($ele);
+            },
+            checkEmailText:function() {
+                var result = 1;
+                var email = $('#mailId').val().toLowerCase().replace(/ /g, '');
+                $('#emailId').val(email);
+
+                if (email == '') {
+                    return 0;
+                }
+                $('#descConfirmEmail').show();
+                if (!/^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-]?[0-9a-zA-Z])*\.(([a-zA-Z]{2,6})|(([a-zA-Z]{2,20})+\.([a-zA-Z]{2,20})))$/i.test(email)) {
+                    // desc = "이메일 주소가 올바르지 않습니다.";
+                    result = -1;
+                }
+                var $byte = getByteStr(email);
+                if ($byte < 10 || $byte > 150) {
+                    // page.inputDesc('descConfirmEmail', false, "이메일 주소는 10~150자 이내로 입력하세요.");
+                    result = -2;
+                }
+                return result;
+            },
+            checkEmaildata:function(){
+                var result = page.checkEmailText();
+                var desc = "이메일 주소가 올바르지 않습니다.";
+                if (result == 1) {
+                    desc = "";
+                    $('.insert.mailbox').addClass('line_btn');
+                    $('#btnCheckEmail').show();
+                }
+                page.btnActivation(result == 1, '#btnCheckEmail');
+                page.inputDesc('descConfirmEmail', result == 1, desc);
+                page.iconImgChange(result == 1, 'mailId');
+                return result;
+            },
+            formatPhoneNm:function(value){
+
+                var str = value.replace(/[^0-9]/g, '');
+                var tmp = '';
+                if( str.length < 4){
+                    return str;
+                }else if(str.length < 7){
+                    tmp += str.substr(0, 3);
+                    tmp += '-';
+                    tmp += str.substr(3);
+                    return tmp;
+                }else if(str.length < 11){
+                    tmp += str.substr(0, 3);
+                    tmp += '-';
+                    tmp += str.substr(3, 3);
+                    tmp += '-';
+                    tmp += str.substr(6);
+                    return tmp;
+                }else{
+                    tmp += str.substr(0, 3);
+                    tmp += '-';
+                    tmp += str.substr(3, 4);
+                    tmp += '-';
+                    tmp += str.substr(7);
+                    return tmp;
+                }
+                return str;
+            },
+            iconImgChange: function(value,target,isFocus) {
+                var inputSelf = $('input[name=' + target+']')
+                var parentField = $('input[name=' + target+']').closest('.field');
+
+                parentField.removeClass('on-error').removeClass('on-success');
+                if (value == 0) {
+                    parentField.addClass('on-error');
+                    if (isFocus) {
+                        inputSelf.focus();
+                    }
+                } else if(value == 1) {
+                    parentField.addClass('on-success');
+                    page.validateCheck();
+                }
+            },
+            btnActivation:function(flag,btnId){
+                if(flag){
+                    $(btnId).addClass('normal');
+                    $(btnId).removeClass('slightly');
+                }else{
+                    $(btnId).addClass('slightly');
+                    $(btnId).removeClass('normal');
+                }
+            },
+            tabIndex: function () {
+                $(".info-text>li, dt, dd, .label>label, #descUserId, #descPwd>p, #descConfirmPwd, #descConfirmEmail, .marketing-title, .label>label, .checker").attr("tabindex",0);
+                $('.checker').on('keydown', function(e){
+                    if(e.keyCode !== 32) return true;
+                    e.preventDefault();
+                    $(this).find('input').click();
+                    return false;
+                });
+            },
+            popAuthCell : function() {
+                // 보호자 본인인증 시작
+                var process = $("#btnParentCert").attr("data-process");
+                if (process == "1") {
+
+                } else if (process == "2") {
+                    if (!confirm("재인증하시겠습니까?")) {
+                        return false;
+                    }
+                }
+                unvus.util.callPhonePopup({ 'reqChnl':'pc', 'reqPage':'parent', 'reqPath':'' });
+            },
+            authCallback : function(result) {
+                // 보호자 본인인증 완료 콜백
+                if (result.pFlag == "Y") {
+                    $("#P_authYn").val("Y");
+                    $("#P_authInfo").val(result.authInfo);
+                    $("#P_userName").val(result.pInfo);
+                    $("#ptorFamyRelCd").val("90");
+                    $("#btnParentCert").attr("data-process", "2").css("opacity", "0.5");
+                } else {
+                    alert("보호자 인증 실패");
+                }
+            }
+        };
+    })();
+    //]]>
+
+    var $timeSec = 180;
+    var $sendLock = 0;
+    $(function() {
+        setInterval(function() {
+            if ($timeSec == -1)
+                return;
+            if ($timeSec == 0) {
+                page.btnActivation(false,'#btnMobileOwnerCheck');
+                $(".phoneAuthTimer").html("만료");
+                $timeSec = -1;
+                return;
+            }
+            var $tempSecVal = ($timeSec%60);
+            $(".phoneAuthTimer").html(parseInt($timeSec/60) + ":" + ($tempSecVal >= 10 ? $tempSecVal : "0" + $tempSecVal));
+            $timeSec--;
+            if ($sendLock > 0) {
+                $sendLock--;
+            }
+        }, 1000);
+    });
+
+    // 아이핀회원 점유인증
+    $("#btnMobileOwnerCheckSend").click(function(e) {
+        if ($(this).hasClass('slightly')){
+            return;
+        }
+        e.preventDefault();
+
+        if ($sendLock > 0) {
+            alert("30초 후 재전송할 수 있습니다.");
+            return false;
+        }
+
+        if (!$("#certType").val() == "ipin") {
+            return false;
+        }
+
+        if(!$("select[name=telComCd]").val()){
+            alert("통신사를 선택해주세요.");
+            return false;
+        }
+        var phone01 = $('#hp01').val();
+        if (phone01.length > 0) {
+            phone01 = phone01.replace(/[^0-9]/g, '');
+        }
+        if (!/^01([0|1|6|7|8|9])-?([0-9]{3,4})-?([0-9]{4})$/gi.test(phone01)) {
+            alert('휴대전화번호를 올바르게 입력해 주세요.');
+            return false;
+        }
+
+        $.ajax({
+            url: '/api/sms/send/mobileOwnerAuthNo',
+            type: 'POST',
+            data: JSON.stringify({
+                mobileNo : phone01
+            }),
+            dataType: 'json',
+            success: function (rslt) {
+                alert(rslt.message);
+                if (rslt != null && rslt.result != null && rslt.result.devAuthNo != null) {
+                    // 테스트소스, 필히 삭제 요망
+                    $("#mobileOwnerCheckValue").val(rslt.result.devAuthNo);
+                }
+                if (rslt.code == '00') {
+                    page.requsetPhoneNo = phone01;
+                    $("#btnMobileOwnerCheckSend").html("다시요청");
+                    $(".phoneAuthTimer").html("3:00");
+                    $timeSec = 180;
+                    $(".areaPhoneAuth").show();
+                    $(".areaPhoneAuth .insert").trigger('click');
+                    $("#authNoEncrypt").val(rslt.result.authNo);
+                    $sendLock = 30;
+                    $("#mobileOwnerCheckValue").focus();
+                }
+                $('#mobileOwnerCheckValue').trigger('keyup');
+            },
+            error: function (rq, status, err) {
+                alert('오류가 발생했습니다.');
+            }
+        });
+
+    });
+
+    $("#btnMobileOwnerCheck").click(function(e) {
+        if($(this).hasClass('slightly')){
+            return;
+        }
+        e.preventDefault();
+        if (!$("#certType").val() == "ipin") {
+            return false;
+        }
+        if ($('#mobileOwnerCheckValue').val().length < 1) {
+            alert("인증번호를 입력하세요.");
+            return false;
+        }
+        if (page.requsetPhoneNo == null || !/^01([0|1|6|7|8|9])-?([0-9]{3,4})-?([0-9]{4})$/gi.test(page.requsetPhoneNo)) {
+            alert('휴대전화번호를 올바르게 입력해 주세요.');
+            return false;
+        }
+        $.ajax({
+            url: '/api/sms/check/mobileOwnerAuthNo',
+            type: 'POST',
+            data: JSON.stringify({
+                mobileAuthNo : $('#mobileOwnerCheckValue').val(),
+                authNo : $("#authNoEncrypt").val(),
+                mobileNo : page.requsetPhoneNo,
+            }),
+            dataType: 'json',
+            success: function (rslt) {
+                alert(rslt.message);
+                if (rslt.code == '00') {
+                    page.iconImgChange(1,'phone01');
+                    $('#hp01').prop('readonly', 1);
+                    $('#mobileOwnerCheckValue').val('');
+                    $(".areaPhoneAuth").hide();
+                    // 전화번호 저장
+                    $('#verifyTelNo').val(page.requsetPhoneNo);
+
+                    page.btnActivation(false,'#btnMobileOwnerCheckSend');
+                    $("#btnMobileOwnerCheckSend").html("인증완료");
+                    $('.line_btn_phone.phone01').parent().removeClass('line_btn').removeClass('line_btn_phone');
+                    $('.line_btn_phone.phone01').removeClass('line_btn');
+
+                    $('#rowLabel0202').hide();
+                    $(".areaUserId .insert").trigger('click');
+                    $("#inputUserId").focus();
+
+                    // selectric disabled
+                    $('#rowLabel0202').data('selectric').state.enabled = false;
+
+                    page.validateCheck();
+                }
+            },
+            error: function (rq, status, err) {
+                alert('오류가 발생했습니다.');
+            }
+        });
+
+    });
+
+    function getByteStr(str) {
+        if (str == null || str == undefined || $.trim(str) == "") {
+            return 0;
+        }
+        var $byte = 0;
+        for (var i = 0; i < str.length; ++i) {
+            (str.charCodeAt(i) > 127) ? $byte += 3 : $byte++ ;
+        }
+        return $byte;
+    }
+
+
+    // 아이디 없는 회원 > [이메일 셋팅]
+    function isNoidEmail(type) {
+        page.checkEmaildata();
+        var userMailId = $.trim($('#mailId').val());
+        if ('null' == userMailId) {
+            // 중복확인 버튼 비활성화
+            page.btnActivation(false,'#btnCheckEmail');
+            // 중복확인 완료된 이메일만 데이터 입력
+            $('#verifyEmail').val(userMailId);
+            page.iconImgChange(true, 'mailId');
+            page.inputDesc('descConfirmEmail', null, null);
+
+            if (type == 'A') {
+                setTimeout(function(){$(".areaMarketing .insert").trigger('click');}, 100);
+            } else if (type == 'B') {
+                setTimeout(function(){$(".areaMarketing .insert").trigger('click');}, 100);
+                return true;
+            } else if (type == 'C') {
+
+            }
+        }
+    }
+    isNoidEmail('C');
+</script><script type="text/javascript">
+    //<![CDATA[
+    var headerPage = {};
+
+    (function () {
+        // init
+        $(function () {
+            // 나의 포인트 조회
+            headerPage.tabIndex();
+        });
+
+        // functions
+        headerPage = {
+            goLogin: function (url) {
+                if (confirm("로그인 후 이용 가능해요. 로그인 하시겠어요?")) {
+                    document.location.href = url;
+                } else {
+                    return false;
+                }
+            },
+            layer_popup_1: function (url, code, storeCd, agree_title, agree_item, pageCd) {
+                console.log("layerpopup1 함수");
+
+                $('#W_RURL').val(url);
+                $('#storeCd').val(storeCd);
+                $("#pageCd").val(pageCd);
+                $("#code").val(code);
+                $("#guide").css("display", "block");		// 제휴 쇼핑몰 안내 레이어 팝업
+
+                headerPage.layer_popup_2(url, code, storeCd, agree_title, agree_item);		//실질적인 레이어 팝업 실행
+                popupBase.layerPopup('#popupPartnerShopping');
+            },
+            layer_popup_2: function (url, code, storeCd, agree_title, agree_item) {
+                console.log("layerpopup2 함수");
+
+                $('#code').val(code);
+                $.ajax({
+                    type:"post",
+                    url:"/page/alliance/agree",
+                    data: JSON.stringify({"storeCd":storeCd, "code":code, "agree_item":agree_item, "url":url, "agree_title":agree_title}),
+                    dataType: 'html',
+                    success:function(data){
+                        if (data !== '' && data != null) {
+                            $('#popupPersnalInfo').remove();
+                            var $agreement = $('#agreement');
+                            $agreement.empty();
+                            $agreement.append(data);		// 정보 제공 동의 팝업에 띄울 값들 세팅하여 DOM 객체 가져옴
+                        }
+                    },
+                    error: function(trequest,status,error) {
+                        console.log("trequest:" + trequest);
+                        console.log("status:" + status);
+                        console.log("error:" + error);
+
+                    }
+                });
+            },
+            layer_popup_3: function () {
+                console.log("layerpopup3 함수");
+
+                popupBase.closePopup('#popupPartnerShopping');		//제휴 쇼핑묠 안내 레이어 팝업은 가려주고
+
+                if("Y" === $('#code').val()) {
+                    console.log('code==Y');
+                    // 일전에 동의 했다면
+                    headerPage.onSubmit();
+                }else{
+                    console.log('code==N || code==null');
+                    // 일전에 동의 하지않았다면 동의 팝업을 보여준다.
+                    popupBase.layerPopup('#popupPersnalInfo');
+                }
+
+            },
+            onSubmit: function (obj) {
+                if(obj !== undefined && obj.url !== undefined) {
+                    $('#W_RURL').val(obj.url);
+                }
+                if(obj !== undefined && obj.storeCd !== undefined) {
+                    $('#storeCd').val(obj.storeCd);
+                }
+                if ('OILBANK' == $('#storeCd').val()) {
+                    window.open($('#W_RURL').val());
+                } else {
+                    $('#headerForm').submit();	// 제출
+                }
+
+            },
+            agree: function () {
+                console.log('agree click');
+                $('#agreeForm').submit();
+            },
+            goVoc: function () {
+                if (false) {
+                    var popOption = 'width=920, height=700, resizable=no, scrollbars=no, status=no;';
+                    window.open('/page/customer/voc.spc', '', popOption);
+                } else {
+                    headerPage.goLogin('/sso/login.jsp');
+                }
+            },
+            goWithEncodeUrl: function(url){
+                location.href=encodeURI(url);
+            },
+            showSubGnb: function(e){
+                var $this = $(e);
+                $this.parent().find('.sub-gnb').show();
+            },
+            tabIndex: function (){
+                // PC 공통 tabindex
+                $("h1, h2, h3, h4, h5, img, th, td, radio").attr("tabindex",0);
+                $(".header-logo").attr("tabindex",-1);
+                $(".img, .title, .sub-text, .sub-info, .text, .article, .date, .subtitle1, .subtitle2, .info, .type, .thumbnail-area, .label, .d-day, .title-area.row, .info-text, .description, .question").attr("tabindex",0);
+            }
+        };
+    })();
+
+    // 로그인 화면에서 로그인 버튼 연타 방지
+    var flagMoveLoginPage = false;
+    function fn_moveLoginPage() {
+        if (flagMoveLoginPage) {
+            return;
+        }
+        flagMoveLoginPage = true;
+        var nowUri = window.location.pathname;
+        if (nowUri == '/sso/login.jsp') {
+            setTimeout(function() {
+                location.href = '/sso/login.jsp?returnUrl=/page/join/form.spc';
+            }, 1000);
+        } else {
+            location.href = '/sso/login.jsp?returnUrl=/page/join/form.spc';
+        }
+        setTimeout(function() {
+            flagMoveLoginPage = false;
+        }, 1000);
+    }
+    //]]>
+</script><script type="text/javascript" src="/assets/pc/hyundai-oil-bank/js/jquery.cookie.js"></script>
+<script type="text/javascript">
+    //<![CDATA[
+    var footerPage = {};
+
+    (function () {
+        // init
+        $(function () {
+            $('#family').on('change', footerPage.move);
+            $('.chatboot').on('click',footerPage.chatboot);
+            $('.close_btn').click(function () {
+                document.cookie = "chatboot_flag=b246a8484af085df06050d29da90c49aebcca983e6f8cf98a9b7b36239da1ac1261b6ee47c3b7659cac54ffda846a101;path=/page;secure";
+                $('.chatboot_ico').hide();
+            });
+            $('.chatboot_ico').show();
+
+            $('.chatboot_ico img').click(function () {
+                footerPage.chatboot();
+            });
+            footerPage.tabIndex();
+        });
+
+        // functions
+        footerPage = {
+            move: function () {
+                var url = $('#family option:selected').val()
+                window.open(url);
+            },
+            chatboot:function(){
+                window.location.href="https://answerny.ai/chatbot/projects/stn/chatbot_stn.html";
+            },
+            tabIndex: function (){
+                $(".number, .time>span, .company-info>span").attr("tabindex",0);
+            }
+
+        };
+    })();
+    //]]>
+</script><!-- 90일 비밀번호 변경 팝업 -->
+</body>
+</html>
