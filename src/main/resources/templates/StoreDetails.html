@@ -94,7 +94,7 @@
         <div th:each="food, iterStat : ${storeDetails.foods}"
              class="FoodMenuDiv HiddenContent"
              th:id="'FoodMenuDiv' + ${iterStat.index}"
-            onclick="ClickedFoodMenu(this.id)">
+             onclick="ClickedFoodMenu(this.id)">
             <div class="FoodContentDiv">
                 <span class="FoodNameFont" th:text="${food.food}">음식 이름</span><br/>
                 <span class="FoodDescFont" th:text="${food.description}">음식 설명</span><br/>
@@ -109,18 +109,30 @@
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="modalTitle">Modal title</h5>
-                        <button type="button" class="btn-close" id="closeModal" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <h5 class="modal-title" id="modalTitle"></h5>
+                        <button type="button" class="btn-close" id="closeModal" data-bs-dismiss="modal"
+                                aria-label="Close"></button>
                     </div>
-                    <div class="modal-body">
-                        <p>세부 옵션임메. 클릭한 내용과 연결필요</p>
+                    <div class="modal-body" id="modalBody">
                     </div>
-                    <div class="modal-footer" style="justify-content:center;">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">+</button>
-                        <span>1</span>
-                        <button type="button" class="btn btn-secondary">-</button><br/>
+                    <div class="modal-footer">
+                        <div>
+                            <span class="CountFont">수량</span>
+                        </div>
+                        <div class="CountDiv" style="">
+                            <button type="button" class="PlusMinusBtn" id="minusBtn" data-bs-dismiss="modal">-</button>
+                            <span id="OrderCount">1</span>&nbsp;개
+                            <button type="button" class="PlusMinusBtn" id="plusBtn">+</button>
+                            <br/>
+                        </div>
                     </div>
-                    <button>장바구니에 담귀</button>
+                    <div class="OrderDiv">
+                        <div class="MinOrderDiv">
+                            <span class="MinOrderFont">최소주문금액</span><br/>
+                            <span th:text="${storeDetails.minOrder}"></span>원
+                        </div>
+                        <button class="OrderBtn" id="OrderBtn"></button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -137,13 +149,13 @@
             <span class="StoreInfoCate">찜</span><br/>
             <hr>
             <h5>배달팁 안내</h5>
-                <li>거리,시간대,지역,배달방식,할인,클럽 혜택,사장님이 사용하는 요금제 등에 따라 배달팁이 달라져요.</li>
-                <li>알뜰배달은 근처 주문을 함께 배달해요.
-                    <hr>
-            <h5>사업자정보</h5><br/>
-            <span class="StoreInfoCate">대표자명</span> <span th:text="${storeDetails.ceo}"></span><br/>
-            <span class="StoreInfoCate">상호명</span> <span th:text="${storeDetails.store}"></span><br/>
-            <span class="StoreInfoCate">사업자주소</span> <span th:text="${storeDetails.addr}"></span><br/>
+            <li>거리,시간대,지역,배달방식,할인,클럽 혜택,사장님이 사용하는 요금제 등에 따라 배달팁이 달라져요.</li>
+            <li>알뜰배달은 근처 주문을 함께 배달해요.
+                <hr>
+                <h5>사업자정보</h5><br/>
+                <span class="StoreInfoCate">대표자명</span> <span th:text="${storeDetails.ceo}"></span><br/>
+                <span class="StoreInfoCate">상호명</span> <span th:text="${storeDetails.store}"></span><br/>
+                <span class="StoreInfoCate">사업자주소</span> <span th:text="${storeDetails.addr}"></span><br/>
         </div>
     </div>
 </div>

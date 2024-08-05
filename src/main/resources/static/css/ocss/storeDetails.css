@@ -150,3 +150,52 @@ margin-bottom:0px;
     width:150px;
     color:grey;
  }
+ .modal-title{
+    font-weight:600;
+ }
+ .modal-content{
+    min-width:500px;
+    min-height:300px;
+ }
+ .modal-footer{
+    justify-content:space-between;
+    padding-left:30px;
+    padding-right:30px;
+ }
+ .PlusMinusBtn{
+    margin:auto;
+    border:0px;
+    background-color:white;
+    font-size:20px;
+    font-weight:100;
+ }
+ .CountDiv{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    width:150px;
+    height:40px;
+    border:1px solid #dddddd;
+    border-radius: 5px;
+ }
+ .CountFont{
+    font-weight:600;
+ }
+ .OrderDiv{
+    display:flex;
+    justify-content:space-between;
+    padding-left: 15px;
+    padding-right: 10px;
+    padding-bottom: 10px
+ }
+ .MinOrderDiv{
+    width: 150px;
+    font-size: 14px
+ }
+.OrderBtn{
+    border: 0px;
+    background-color: #F986BD;
+    color: white;
+    border-radius: 5px;
+    width: 100%;
+}

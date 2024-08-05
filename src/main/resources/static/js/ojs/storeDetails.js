@@ -6,24 +6,22 @@
         const menus = document.querySelectorAll('.FoodMenuDiv');
         const info = document.getElementById("StoreInfoDiv");
         function handleClick(section) {
-            console.log(`Clicked on ${section}`);
-            document.querySelectorAll('.TopMenuStyle').forEach(btn => btn.classList.remove('SelectMenu'));
-            this.classList.add('SelectMenu');
-            hiddenContents.forEach(hiddenContent => hiddenContent.style.display = 'none');
-            switch (section) {
-                case "FoodMenu":
-                    menus.forEach(menu => menu.style.display = 'flex');
-                    break;
-                case "StoreInfo":
-                 info.style.display= 'block';
-                    break;
-                case "Review":
-                    // Add your logic for the "리뷰" button here
-                    break;
+        console.log(`Clicked on ${section}`);
+        document.querySelectorAll('.TopMenuStyle').forEach(btn => btn.classList.remove('SelectMenu'));
+        this.classList.add('SelectMenu');
+        hiddenContents.forEach(hiddenContent => hiddenContent.style.display = 'none');
+        switch (section) {
+            case "FoodMenu":
+             menus.forEach(menu => menu.style.display = 'flex');
+             break;
+            case "StoreInfo":
+             info.style.display= 'block';
+             break;
+            case "Review":
+             break;
             }
-        }
 
-        // Attach event listeners to each button
+        }
         foodMenuBtn.addEventListener("click", function() {
             handleClick.call(this, "FoodMenu");
         });
@@ -37,11 +35,46 @@
         });
     });
 
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function() {      //모달 내용표시 스크립트
     const modal = document.getElementById('clickedFoodModal');
     const closeModalBtn = document.getElementById('closeModal');
+    const modalTitle = document.getElementById("modalTitle");
+    const modalBody = document.getElementById("modalBody");
+    const orderCountElement = document.getElementById('OrderCount');
+    const minusBtn = document.getElementById('minusBtn');
+    const plusBtn = document.getElementById('plusBtn');
+    const orderBtn = document.getElementById("OrderBtn");
+    let count = parseInt(orderCountElement.textContent);
+
+    minusBtn.style.color="#dddddd";
+       minusBtn.addEventListener('click', () => {
+       if(count == 2){
+       minusBtn.style.color="#dddddd";
+       minusBtn.style.cursor="default";
+       }
+       if (count > 1) {
+       count--;
+       orderCountElement.textContent = count;
+       }});
+       plusBtn.addEventListener('click', () => {
+       minusBtn.style.color="black";
+       minusBtn.style.cursor="pointer";
+       count++;
+       orderCountElement.textContent = count;
+        });
 
     window.ClickedFoodMenu = function(id) {
+        const clickedFood = document.getElementById(id);
+        var foodNameSpan = clickedFood.querySelector('.FoodNameFont');
+        var foodDescSpan = clickedFood.querySelector('.FoodDescFont');
+        var foodPriceSpan = clickedFood.querySelector('.FoodPriceFont')
+
+        var foodName = foodNameSpan.textContent;
+        var foodDesc = foodDescSpan.textContent;
+        var foodPrice = foodPriceSpan.textContent;
+
+        modalTitle.textContent = foodName;
+        modalBody.textContent = foodDesc;
         modal.style.display = 'block';
     };
     closeModalBtn.addEventListener('click', function() {
@@ -53,3 +86,4 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 });
+
