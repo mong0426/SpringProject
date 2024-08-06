@@ -6,7 +6,6 @@
         const menus = document.querySelectorAll('.FoodMenuDiv');
         const info = document.getElementById("StoreInfoDiv");
         function handleClick(section) {
-        console.log(`Clicked on ${section}`);
         document.querySelectorAll('.TopMenuStyle').forEach(btn => btn.classList.remove('SelectMenu'));
         this.classList.add('SelectMenu');
         hiddenContents.forEach(hiddenContent => hiddenContent.style.display = 'none');
@@ -45,23 +44,25 @@ document.addEventListener('DOMContentLoaded', function() {      //모달 내용�
     const plusBtn = document.getElementById('plusBtn');
     const orderBtn = document.getElementById("OrderBtn");
     let count = parseInt(orderCountElement.textContent);
-
+    let price = parseInt(orderBtn.textContent.replace(/[^0-9]/g, ""), 10);
+    minusBtn.style.cursor="default";
     minusBtn.style.color="#dddddd";
-       minusBtn.addEventListener('click', () => {
-       if(count == 2){
-       minusBtn.style.color="#dddddd";
-       minusBtn.style.cursor="default";
-       }
-       if (count > 1) {
-       count--;
-       orderCountElement.textContent = count;
-       }});
-       plusBtn.addEventListener('click', () => {
-       minusBtn.style.color="black";
-       minusBtn.style.cursor="pointer";
-       count++;
-       orderCountElement.textContent = count;
-        });
+    minusBtn.addEventListener('click', () => {
+    console.log(orderBtn.textContent);
+    if(count == 2){
+    minusBtn.style.color="#dddddd";
+    minusBtn.style.cursor="default";
+    }
+    if (count > 1) {
+    count--;
+    orderCountElement.textContent = count;
+    }});
+    plusBtn.addEventListener('click', () => {
+    minusBtn.style.color="black";
+    minusBtn.style.cursor="pointer";
+    count++;
+    orderCountElement.textContent = count;
+    });
 
     window.ClickedFoodMenu = function(id) {
         const clickedFood = document.getElementById(id);
@@ -73,6 +74,7 @@ document.addEventListener('DOMContentLoaded', function() {      //모달 내용�
         var foodDesc = foodDescSpan.textContent;
         var foodPrice = foodPriceSpan.textContent;
 
+        OrderBtn.textContent = foodPrice+" 담기";
         modalTitle.textContent = foodName;
         modalBody.textContent = foodDesc;
         modal.style.display = 'block';
