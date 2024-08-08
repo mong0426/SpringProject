@@ -100,5 +100,9 @@ document.addEventListener('DOMContentLoaded', function() {      //모달 내용�
         totalPrice = price * count ;
         orderBtn.textContent = totalPrice +"원 담기";
         });
+
+        orderBtn.addEventListener('click', () =>{
+        console.log("담기기기");
+        })
 });
 

@@ -3,9 +3,13 @@ package com.example.project3.Service;
 import com.example.project3.DTO.StoreDetailsDTO;
 import com.example.project3.Entity.Stores;
 
+import java.util.List;
+
 public interface StoreDetailsService {
 
     StoreDetailsDTO showStore(Long sno);
+
+    List<StoreDetailsDTO> searchStore(String searchText);
 
     default Stores dtoToEntity(StoreDetailsDTO dto) {
         Stores entity = Stores.builder()

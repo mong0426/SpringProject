@@ -10,18 +10,3 @@
     });
  });
 
-  $(document).ready(function(){
-      const searchForm = document.getElementById("searchForm");
-      const searchBtn = document.getElementById("searchBtn");
-
-      searchBtn.addEventListener("click", function(event){
-      const searchText = document.getElementById("searchText").value.trim(); // .trim()을 사용하여 공백 제거
-      if (searchText !== "") {
-        searchForm.action = "/search?query=" + searchText;
-        searchForm.method = "get";
-        searchForm.submit();
-      }else {
-        event.preventDefault(); // 값이 비어 있을 경우 폼 제출 방지
-      }
-   });
-  });
