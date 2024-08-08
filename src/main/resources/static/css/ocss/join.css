@@ -146,6 +146,17 @@ h1, h2, h3, h4, h5, h6, strong, em {
     font-size: 18px;
     text-align: center;
 }
+.login__address {
+    display: block;
+    width: 100%;
+    height: 52px;
+    border: 1px solid #c6c1bf;
+    background: #f9f6f1;
+    color: #ac9181;
+    font-weight: var(--font-weight-sd-medium);
+    font-size: 18px;
+    text-align: center;
+}
 
 form {
     display: block;
