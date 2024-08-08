@@ -1,0 +1,32 @@
+.MyCartContainer{
+    min-width:1500px;
+}
+.CartTitle{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    height:300px;
+    font-size:25px;
+}
+.OrderTableRow{
+    height: 40px;
+    border-top: 1px solid #dee2e6;
+    border-bottom: 1px solid #dee2e6;
+}
+.TableContentRow{
+    height: 120px;
+    border-bottom: 1px solid #dee6e6;
+}
+.JustifyContentCenter{
+    display:flex;
+    justify-content:center;
+}
+.StoreNameDiv{
+    width:1000px;
+    height:40px;
+    display:flex;
+    justify-content:left;
+}
+.CartTable{
+    width:1000px;
+}

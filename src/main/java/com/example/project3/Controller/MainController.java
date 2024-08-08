@@ -35,4 +35,8 @@ public class MainController {
     public String StoreList() {
         return "StoreList";
     }
+
+    @GetMapping("/myCart")
+    public String myCart(){return "myCart";}
+
 }

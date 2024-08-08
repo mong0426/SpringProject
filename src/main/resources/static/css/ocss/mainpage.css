@@ -58,8 +58,8 @@
          padding:3rem;
         }
         .Category{
-         width:14rem;
-         height:9rem;
+         width:200px;
+         height:120px;
          margin:auto;
        }
        .CategoryImg{
@@ -96,15 +96,24 @@
        text-decoration:none;
        color:black;
        }
-
+       .card-img-top{
+       height: 150px;
+       object-fit: cover;
+       }
        .CardContainerDiv{
         display:flex;
         justify-content:space-between;
         overflow-x: hidden;
        }
+       .card-title {
+        font-weight:600;
+       }
+       .card-text{
+        font-size:14px;
+       }
        .BrandCard{
-        margin:3rem;
-        width:320px;
+        margin:15px;
+        width:310px;
        }
        .ScrollBtn{
        position: sticky;
