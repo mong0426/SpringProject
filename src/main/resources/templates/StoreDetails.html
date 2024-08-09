@@ -57,8 +57,9 @@
                 <span class="StarRating" th:text="${averageRating}"></span>
                 &nbsp;
                 <div id="reviewSpan">
-                <span class="StarRating">리뷰</span>
-                <span class="StarRating" th:text="${#lists.size(storeDetails.reviews)}"></span><span class="StarRating">개></span>
+                    <span class="StarRating">리뷰</span>
+                    <span class="StarRating" th:text="${#lists.size(storeDetails.reviews)}"></span><span
+                        class="StarRating">개></span>
                 </div>
             </div>
         </div>
@@ -109,7 +110,7 @@
 
         <div class="modal" id="clickedFoodModal" tabindex="-1">
             <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
+                <div class="modal-content" id="modalContent">
                     <div class="modal-header">
                         <h5 class="modal-title" id="modalTitle"></h5>
                         <button type="button" class="btn-close" id="closeModal" data-bs-dismiss="modal"
@@ -133,7 +134,7 @@
                             <span class="MinOrderFont">최소주문금액</span><br/>
                             <span th:text="${storeDetails.minOrder}"></span>원
                         </div>
-                        <button class="OrderBtn" id="OrderBtn"></button>
+                            <button class="OrderBtn" id="OrderBtn"></button>
                     </div>
                 </div>
             </div>

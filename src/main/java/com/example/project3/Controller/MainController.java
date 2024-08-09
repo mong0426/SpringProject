@@ -5,11 +5,10 @@ import com.example.project3.Service.StoreDetailsService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.apache.coyote.Request;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -52,4 +51,9 @@ public class MainController {
     @GetMapping("/myCart")
     public String myCart(){return "myCart";}
 
+    @PostMapping("/addToCart")
+    public void addToCart(Model model){
+        System.out.println("카트 담기 시도할거임");
+        System.out.println(model.getAttribute("foodPrice"));
+    }
 }

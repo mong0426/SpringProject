@@ -80,10 +80,10 @@ document.addEventListener('DOMContentLoaded', function() {      //모달 내용�
             modal.style.display = 'none';
         }
     });
+
         minusBtn.style.cursor="default";
         minusBtn.style.color="#dddddd";
         minusBtn.addEventListener('click', () => {
-        console.log(price);
         if(count == 2){
         minusBtn.style.color="#dddddd";
         minusBtn.style.cursor="default";
@@ -104,7 +104,28 @@ document.addEventListener('DOMContentLoaded', function() {      //모달 내용�
         });
 
         orderBtn.addEventListener('click', () =>{
-        console.log("담기기기");
-        })
+        let count = parseInt(orderCountElement.textContent);
+        const data = {
+             foodPrice: price,
+             quantity: count
+         };
+         fetch('/addToCart', {
+             method: 'POST',
+             headers: {
+                 'Content-Type': 'application/json'
+             },9
+             body: JSON.stringify(data)
+         })
+         .then(response => {
+             if (response.ok) {
+                 console.log('Data successfully sent to the server.');
+             } else {
+                 console.error('Failed to add to cart');
+             }
+         })
+         .catch(error => {
+             console.error('Error:', error);
+         });
+     });
 });
 
