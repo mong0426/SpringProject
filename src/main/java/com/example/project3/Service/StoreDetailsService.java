@@ -24,8 +24,10 @@ public interface StoreDetailsService {
                 .deliTime(dto.getDeliTime())
                 .deliTip(dto.getDeliTip())
                 .likes(dto.getLikes())
+                .orderCount(dto.getOrderCount())
                 .images(dto.getImages())
                 .foods(dto.getFoods())
+                .reviews(dto.getReviews())
                 .build();
         return entity;
     }
@@ -44,8 +46,10 @@ public interface StoreDetailsService {
                 .deliTime(entity.getDeliTime())
                 .deliTip(entity.getDeliTip())
                 .likes(entity.getLikes())
+                .orderCount(entity.getOrderCount())
                 .images(entity.getImages())
                 .foods(entity.getFoods())
+                .reviews(entity.getReviews())
                 .build();
         return dto;
     }

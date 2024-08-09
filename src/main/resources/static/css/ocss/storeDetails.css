@@ -141,6 +141,9 @@ margin-bottom:0px;
     padding:40px;
     display:none;
  }
+ .ReviewDiv{
+    display:none;
+ }
  .StoreInfoCate{
     display:inline-flex;
     width:150px;

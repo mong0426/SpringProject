@@ -30,7 +30,13 @@ public class MainController {
     @Transactional
     public String storeDetails(long sno, Model model) {
         StoreDetailsDTO dto = service.showStore(sno);
+        double totalRating = 0;
+        for(int i = 0 ;i < dto.getReviews().size(); i++){
+            totalRating+= dto.getReviews().get(i).getRating();
+        }
+        double averageRating = totalRating == 0 ? 0 : totalRating / dto.getReviews().size();
         model.addAttribute("storeDetails", dto);
+        model.addAttribute("averageRating", averageRating);
         return "StoreDetails";
     }
 

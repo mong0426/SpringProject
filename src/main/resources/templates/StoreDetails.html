@@ -54,9 +54,12 @@
         <div class="RatingAndInfoDiv">
             <div class="StoreRatingDiv">
                 <img class="StarIcon" th:src="@{/img/storedetailimg/StarIcon.png}">
-                <span class="StarRating">4.5</span>
-                &nbsp;&nbsp;
-                <span class="StarRating" id="reviewSpan">리뷰 243개 ></span>
+                <span class="StarRating" th:text="${averageRating}"></span>
+                &nbsp;
+                <div id="reviewSpan">
+                <span class="StarRating">리뷰</span>
+                <span class="StarRating" th:text="${#lists.size(storeDetails.reviews)}"></span><span class="StarRating">개></span>
+                </div>
             </div>
         </div>
         <hr>
@@ -143,9 +146,9 @@
             <span class="StoreInfoCate">매장전화</span> <span th:text="${storeDetails.tel}"></span>
             <hr>
             <h5>가게 통계</h5>
-            <span class="StoreInfoCate">주문수</span><br/>
-            <span class="StoreInfoCate">리뷰수</span><br/>
-            <span class="StoreInfoCate">찜</span> <span th:text="${storeDetails.likes}"></span><br/>
+            <span class="StoreInfoCate">주문수</span><span th:text="${storeDetails.orderCount}"></span><br/>
+            <span class="StoreInfoCate">리뷰수</span><span th:text="${#lists.size(storeDetails.reviews)}"></span><br/>
+            <span class="StoreInfoCate">찜</span><span th:text="${storeDetails.likes}"></span><br/>
             <hr>
             <h5>배달팁 안내</h5>
             <li>거리,시간대,지역,배달방식,할인,클럽 혜택,사장님이 사용하는 요금제 등에 따라 배달팁이 달라져요.</li>
@@ -155,6 +158,12 @@
                 <span class="StoreInfoCate">대표자명</span> <span th:text="${storeDetails.ceo}"></span><br/>
                 <span class="StoreInfoCate">상호명</span> <span th:text="${storeDetails.store}"></span><br/>
                 <span class="StoreInfoCate">사업자주소</span> <span th:text="${storeDetails.addr}"></span><br/>
+        </div>
+
+        <div class="ReviewDiv HiddenContent" id="ReviewDiv">
+            <div class="ReviewContentDiv">
+                머시랭 리뷰 슬거임.
+            </div>
         </div>
     </div>
 </div>

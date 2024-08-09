@@ -6,6 +6,7 @@
         const menus = document.querySelectorAll('.FoodMenuDiv');
         const info = document.getElementById("StoreInfoDiv");
         const reviewSpan = document.getElementById("reviewSpan");
+        const review = document.getElementById("ReviewDiv");
         function handleClick(section) {
         document.querySelectorAll('.TopMenuStyle').forEach(btn => btn.classList.remove('SelectMenu'));
         this.classList.add('SelectMenu');
@@ -18,6 +19,7 @@
              info.style.display= 'block';
              break;
             case "Review":
+            review.style.display= 'block';
              break;
             }
 
