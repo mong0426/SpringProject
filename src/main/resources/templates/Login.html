@@ -7,6 +7,8 @@
             integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
             crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500&display=swap" rel="stylesheet">
     <meta charset="UTF-8">
     <title>배달의 만족 - 로그인</title>
     <link th:href="@{/css/ocss/login.css}" rel="stylesheet"/>
@@ -29,7 +31,7 @@
     <div class="login__container">
         <div class="login__content">
             <div class="login__inner">
-                <form th:action="@{/login}" class="login__form" method="post">
+                <form action="/login" class="login__form" method="post">
                     <fieldset class="login__block">
                         <legend>계정 입력 폼</legend>
                         <input type="hidden" name="redirectUrl" value="/">

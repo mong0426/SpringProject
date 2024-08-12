@@ -21,63 +21,67 @@
     <div class="login__container">
         <div class="login__content">
             <div class="login__inner">
-                <form action="./login_proc.php" class="login__form" method="post">
+                <form th:action="@{/register}" method="post" class="login__form">
                     <fieldset class="login__block">
                         <legend>계정 입력 폼</legend>
-                        <input type="hidden" name="redirectUrl" value="/">
-                        <a>이름</a>
+
                         <label class="login__label">
-                            <input type="text" name="uname" placeholder="이름" class="login__input">
+                            <span>이름</span>
+                            <input type="text" name="name" placeholder="이름" class="login__input" required>
                         </label>
-                        <a>아이디</a>
+
                         <label class="login__label">
-                            <input type="text" name="uname" placeholder="아이디" class="login__input">
+                            <span>아이디</span>
+                            <input type="text" name="username" placeholder="아이디" class="login__input" required>
                         </label>
-                        <a>비밀번호</a>
+
                         <label class="login__label">
-                            <input type="password" name="pwd" placeholder="비밀번호" class="login__input">
+                            <span>비밀번호</span>
+                            <input type="password" name="password" placeholder="비밀번호" class="login__input" required>
                         </label>
+
                         <label class="login__label">
-                            <input type="password" name="pwd" placeholder="비밀번호확인" class="login__input">
+                            <span>비밀번호 확인</span>
+                            <input type="password" name="passwordConfirm" placeholder="비밀번호확인" class="login__input" required>
                         </label>
-                        <a>이메일</a>
+
                         <label class="login__label">
-                            <input type="text" name="email" placeholder="이메일" class="email">
+                            <span>이메일</span><br>
+                            <input type="text" name="email" placeholder="이메일" class="email" required>
                             @
-                            <select>
-                                <option>naver.com</option>
-                                <option>gmail.com</option>
-                                <option>daum.net</option>
-                                <option>nate.com</option>
+                            <select name="emailDomain" required>
+                                <option value="naver.com">naver.com</option>
+                                <option value="gmail.com">gmail.com</option>
+                                <option value="daum.net">daum.net</option>
+                                <option value="nate.com">nate.com</option>
                             </select>
                         </label>
 
-                        <a>주소</a>
                         <label class="login__label">
-
-                        <input type="text" id="sample3_postcode" class="login__address" placeholder="우편번호">
-                        <input type="button" class="" onclick="sample3_execDaumPostcode()" value="우편번호 찾기"><br>
-                        <input type="text" id="sample3_address" class="login__address" placeholder="주소"><br>
-                        <input type="text" id="sample3_detailAddress" class="login__input" placeholder="상세주소">
-                        <input type="text" id="sample3_extraAddress" class="login__input" placeholder="참고항목">
-
-                        <div id="wrap" style="display:none;border:1px solid;width:400px;height:300px;margin:5px 0;position:relative">
-                            <img src="//t1.daumcdn.net/postcode/resource/images/close.png" id="btnFoldWrap" style="cursor:pointer;position:absolute;right:0px;top:-1px;z-index:1" onclick="foldDaumPostcode()" alt="접기 버튼">
-                        </div>
+                            <span>주소</span>
+                            <div class="addressbtn">
+                                <input type="text" id="sample3_postcode" name="postcode" class="login__address" placeholder="우편번호" readonly>
+                                <button type="button" class="custom-btn btn-3" onclick="sample3_execDaumPostcode()">우편번호 찾기</button><br>
+                            </div>
+                            <div id="wrap" style="display:none;border:1px solid;width:500px;height:400px;margin:5px 0;position:relative">
+                                <img src="//t1.daumcdn.net/postcode/resource/images/close.png" id="btnFoldWrap" style="cursor:pointer;position:absolute;right:0px;top:-1px;z-index:1" onclick="foldDaumPostcode()" alt="접기 버튼">
+                            </div>
+                            <input type="text" id="sample3_address" name="address" class="login__address1" placeholder="주소" readonly><br>
+                            <input type="text" id="sample3_detailAddress" name="detailAddress" class="login__input" placeholder="상세주소" required>
+                            <input type="text" id="sample3_extraAddress" name="extraAddress" class="login__input" placeholder="참고항목">
                         </label>
-                        <a>생년월일</a>
+
                         <label class="login__label">
-                            <input type="date" name="pwd" placeholder="비밀번호" class="login__input">
+                            <span>생년월일</span>
+                            <input type="date" name="birthDate" class="login__input" required>
                         </label>
 
                         <button type="submit" class="login__button login__button--login">제출하기</button>
-
                     </fieldset>
                 </form>
             </div>
         </div>
     </div>
-
 </section>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script>
@@ -93,6 +97,7 @@
         // 현재 scroll 위치를 저장해놓는다.
         var currentScroll = Math.max(document.body.scrollTop, document.documentElement.scrollTop);
         new daum.Postcode({
+
             oncomplete: function(data) {
                 // 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
 
@@ -145,10 +150,10 @@
             },
             // 우편번호 찾기 화면 크기가 조정되었을때 실행할 코드를 작성하는 부분. iframe을 넣은 element의 높이값을 조정한다.
             onresize : function(size) {
-                element_wrap.style.height = size.height+'px';
+                element_wrap.style.width = size.width+'px' + size.height+"px";
             },
             width : '100%',
-            height : '100%'
+            height: '100%'
         }).embed(element_wrap);
 
         // iframe을 넣은 element를 보이게 한다.
