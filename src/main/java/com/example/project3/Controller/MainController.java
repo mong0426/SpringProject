@@ -1,16 +1,19 @@
 package com.example.project3.Controller;
 
+import com.example.project3.DTO.CartItemDTO;
 import com.example.project3.DTO.StoreDetailsDTO;
 import com.example.project3.Service.StoreDetailsService;
+import jakarta.servlet.http.HttpSession;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
-import org.apache.coyote.Request;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/")
@@ -30,13 +33,17 @@ public class MainController {
     public String storeDetails(long sno, Model model) {
         StoreDetailsDTO dto = service.showStore(sno);
         double totalRating = 0;
-        for(int i = 0 ;i < dto.getReviews().size(); i++){
-            totalRating+= dto.getReviews().get(i).getRating();
+        for (int i = 0; i < dto.getReviews().size(); i++) {
+            totalRating += dto.getReviews().get(i).getRating();
         }
         double averageRating = totalRating == 0 ? 0 : totalRating / dto.getReviews().size();
         model.addAttribute("storeDetails", dto);
         model.addAttribute("averageRating", averageRating);
         return "StoreDetails";
+    }
+    @GetMapping("myCart")
+    public String myCart(){
+        return "myCart";
     }
 
     @GetMapping("/StoreList")
@@ -48,12 +55,24 @@ public class MainController {
         return "StoreList";
     }
 
-    @GetMapping("/myCart")
-    public String myCart(){return "myCart";}
-
     @PostMapping("/addToCart")
-    public void addToCart(Model model){
-        System.out.println("카트 담기 시도할거임");
-        System.out.println(model.getAttribute("foodPrice"));
+    @ResponseBody
+    public Map<String, String> addToCart(@RequestBody CartItemDTO cartItem, HttpSession session) {
+        Map<String, String> response = new HashMap<>();
+        try {
+            @SuppressWarnings("unchecked")
+            List<CartItemDTO> cartItems = (List<CartItemDTO>) session.getAttribute("cartItems");
+            if (cartItems == null) {
+                cartItems = new ArrayList<>();
+            }
+            cartItems.add(cartItem);
+            session.setAttribute("cartItems", cartItems);
+            response.put("message", "장바구니에 추가되었습니다.");
+        } catch (Exception e) {
+            response.put("error", "장바구니에 아이템을 추가하는 중 오류가 발생했습니다.");
+        }
+        return response;
     }
+
+
 }

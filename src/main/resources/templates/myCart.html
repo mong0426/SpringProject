@@ -11,6 +11,7 @@
     <title>배달의 만족</title>
     <link th:href="@{/css/ocss/mainpage.css}" rel="stylesheet"/>
     <link th:href="@{/css/ocss/cartpage.css}" rel="stylesheet"/>
+    <script th:src="@{/js/ojs/myCart.js}"></script>
 </head>
 <body>
 <header th:replace="~{Header :: body}"></header>
@@ -20,13 +21,14 @@
     </div>
     <div class="JustifyContentCenter">
         <div class="StoreNameDiv">
-            가게이르으으므믐~
+             <span th:if="${session.cartItems != null and session.cartItems.size() > 0}"
+                   th:text="${session.cartItems[0].storeName}"></span>
+            <span th:unless="${session.cartItems != null and session.cartItems.size() > 0}"></span>
         </div>
     </div>
     <div class="JustifyContentCenter">
         <table class="CartTable">
-            <caption>
-                This is an example table, and this is its caption to describe the contents.
+            <caption class="AllTotalPrice" id="allTotalPrice">
             </caption>
             <thead>
             <tr class="OrderTableRow">
@@ -34,17 +36,45 @@
                 <th>담은 음식</th>
                 <th>수량</th>
                 <th>상품금액</th>
-                <th></th>
+                <th>합계</th>
             </tr>
             </thead>
             <tbody>
-            <tr class="TableContentRow">
-            <th scope="row">장바구니가 비었습니다.</th>
+            <!-- 장바구니가 비어 있을 때 메시지 표시 -->
+            <tr th:if="${session.cartItems == null or session.cartItems.size() == 0}" class="EmptyContentRow">
+                <td colspan="5" class="text-center">장바구니가 비었습니다.</td>
             </tr>
-            </th>
-            <tr class="TableContentRow">
-            </tr>
-            <tr class="TableContentRow">
+            <!-- 장바구니에 아이템이 있을 때 내용 표시 -->
+            <tr th:each="item, iterStat : ${session.cartItems}" class="TableContentRow">
+                <th scope="row" th:text="${iterStat.index + 1}">1</th>
+                <td class="FoodImgNInfo">
+                    <img th:src="${item.imgSrc}" alt="음식 이미지" class="food-img"/>
+                    <div class="NameNDescDiv">
+                        <span th:text="${item.foodName}" class="card-title">음식 이름</span>
+                        <span th:text="${item.foodDesc}" class="card-text">음식 설명</span>
+                    </div>
+                </td>
+                <td>
+                    <div class="QuantityDiv">
+                        <button class="QuantityControlBtn"
+                                th:attr="onclick='changeQuantity(' + ${iterStat.index} + ', 1)'">^
+                        </button>
+                        <span class="SubTd_quantity" th:attr="id='quantity-' + ${iterStat.index}"
+                              th:text="${item.quantity}">수량</span>
+                        <button class="QuantityControlBtn"
+                                th:attr="onclick='changeQuantity(' + ${iterStat.index} + ', -1)'">v
+                        </button>
+                    </div>
+                </td>
+                <td class="SubTd_price" th:text="${item.price}">가격</td>
+                <td class="FoodTotal"></td>
+                <td>
+                    <div class="DeleteImgDiv">
+                        <button class="DeleteBtn">
+                            <img class="TrashCanImg" th:src="@{/img/mycartimg/TrashCanIcon.png}">
+                        </button>
+                    </div>
+                </td>
             </tr>
             </tbody>
         </table>
