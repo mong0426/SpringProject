@@ -43,7 +43,7 @@ public class UserService {
                 .address(userDTO.getAddress())
                 .phone(userDTO.getPhone())
                 .birth(userDTO.getBirth())
-                .role(role) // Enum으로 설정
+                .role(User.Role.USER) // Enum으로 설정
                 .createDate(LocalDateTime.parse(userDTO.getCreateDate()))
                 .build();
 
