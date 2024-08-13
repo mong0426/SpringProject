@@ -28,7 +28,7 @@ public class User {
     @Column(nullable = false)
     private String password;
 
-    @Column(name = "email", nullable = false, unique = true)
+    @Column(nullable = false, unique = true)
     private String email;
 
     @Column(nullable = false)
@@ -38,13 +38,10 @@ public class User {
     private String phone;
 
     @Column(nullable = false)
-    private String gender;
-
-    @Column(nullable = false)
     private String birth;
 
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
+    @Column()
     private Role role;
 
     @Column(nullable = false)
@@ -59,7 +56,6 @@ public class User {
         this.email = email;
         this.address = address;
         this.phone = phone;
-        this.gender = gender;
         this.birth = birth;
         this.role = role;
         this.createDate = createDate;

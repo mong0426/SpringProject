@@ -7,8 +7,6 @@ import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
 
-import javax.management.relation.Role;
-
 @Data
 public class UserDTO {
 
@@ -18,7 +16,7 @@ public class UserDTO {
 
     @NotBlank(message = "비밀번호를 입력해주세요.")
     @Size(min = 8, max = 20, message = "비밀번호는 8자 이상 20자 이하로 입력해주세요.")
-    @Pattern(regexp = "(?=.*[0-9])(?=.*[a-zA-Z])(?=.*\\W)(?=\\S+$).{8,16}", message = "비밀번호는 8~16자 영문 대 소문자, 숫자, 특수문자를 사용하세요.")
+    @Pattern(regexp = "(?=.*[0-9])(?=.*[a-zA-Z])(?=.*\\W)(?=\\S+$).{8,20}", message = "비밀번호는 8~20자 영문 대 소문자, 숫자, 특수문자를 사용하세요.")
     private String password;
 
     @NotBlank(message = "이메일 주소를 입력해주세요.")
@@ -26,7 +24,7 @@ public class UserDTO {
     private String email;
 
     @NotNull(message = "역할을 입력해주세요.")
-    private Role role;
+    private String role; // Role은 간단히 String으로 처리
 
     @NotBlank(message = "이름을 입력해주세요.")
     private String name;
@@ -37,7 +35,6 @@ public class UserDTO {
     @Pattern(regexp = "(01[016789])(\\d{3,4})(\\d{4})", message = "올바른 휴대폰 번호를 입력해주세요.")
     private String phone;
 
-    private String gender;
     private String birth;
     private String createDate;
 }

@@ -121,7 +121,6 @@ fieldset {
 input {
     font-family: inherit;
     font-size: 100%;
-    line-height: 1.15;
     margin: 0;
     overflow: visible;
 }
@@ -189,7 +188,6 @@ button, input {
 button, input, optgroup, select, textarea {
     font-family: inherit;
     font-size: 100%;
-    line-height: 1.15;
     margin: 0;
 }
 

@@ -53,82 +53,32 @@ select {
     padding-left: 10px;
     background-color: rgb(61, 135, 255);
 }
-.custom-btn {
-    width: 97px;
-    height: 40px;
-    padding: 10px 25px;
-    border: 2px solid #000;
-    font-family: 'Lato', sans-serif;
-    font-weight: 500;
-    background: transparent;
-    cursor: pointer;
-    transition: all 0.3s ease;
+
+.btnBlueGreen {
+    display: flex;
     position: relative;
-    display: inline-block;
-    margin: auto;
-}
-/* 3 */
-.btn-3 {
-    line-height: 39px;
+    float: left;
+    width: 100px;
     padding: 0;
-}
-.btn-3:hover{
-    background: transparent;
-    color: #000;
-}
-.btn-3 span {
-    position: relative;
-    display: block;
-    width: 100%;
-    height: 100%;
-}
-.btn-3:before,
-.btn-3:after {
-    position: absolute;
-    content: "";
-    left: 0;
-    top: 0;
-    background: #000;
-    transition: all 0.3s ease;
-}
-.btn-3:before {
-    height: 0%;
-    width: 2px;
-}
-.btn-3:after {
-    width: 0%;
-    height: 2px;
-}
-.btn-3:hover:before {
-    height: 100%;
-}
-.btn-3:hover:after {
-    width: 100%;
-}
-.btn-3 span:before,
-.btn-3 span:after {
-    position: absolute;
-    content: "";
-    right: 0;
-    bottom: 0;
-    background: #000;
-    transition: all 0.3s ease;
-}
-.btn-3 span:before {
-    width: 2px;
-    height: 0%;
-}
-.btn-3 span:after {
-    width: 0%;
-    height: 2px;
-}
-.btn-3 span:hover:before {
-    height: 100%;
-}
-.btn-3 span:hover:after {
-    width: 100%;
+    margin: auto;
+    font-weight: 600;
+    text-align: center;
+    line-height: 50px;
+    color: #FFF;
+    border-radius: 5px;
+    height: 37px;
+    transition: all 0.2s;
+    align-items: center;
+    justify-content: center;
 }
 
+.btnBlueGreen {
+    background: #737272;
+}
+
+.btnFade.btnBlueGreen:hover {
+    background: #333333;
+}
 
 
 
@@ -226,13 +176,14 @@ h1, h2, h3, h4, h5, h6, strong, em {
 }
 .login__address {
     display: block;
-    width: 200px;
+    width: 250px;
     height: 52px;
     border: 1px solid #c6c1bf;
     background: #f9f6f1;
     color: #ac9181;
     font-weight: var(--font-weight-sd-medium);
     font-size: 18px;
+    margin: 15px 0 10px 0;
     text-align: center;
 
 }
@@ -351,7 +302,7 @@ label {
 button, input {
     overflow: visible;
 }
-input, optgroup, select, textarea {
+.login__input, .login__address1, optgroup, select, textarea {
     font-family: inherit;
     font-size: 100%;
     line-height: 1.15;

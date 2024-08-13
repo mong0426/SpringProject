@@ -42,7 +42,6 @@ public class UserService {
                 .name(userDTO.getName())
                 .address(userDTO.getAddress())
                 .phone(userDTO.getPhone())
-                .gender(userDTO.getGender())
                 .birth(userDTO.getBirth())
                 .role(role) // Enum으로 설정
                 .createDate(LocalDateTime.parse(userDTO.getCreateDate()))
