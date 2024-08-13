@@ -139,7 +139,7 @@ document.addEventListener('DOMContentLoaded', function() {      //모달 내용�
                         const Toast = Swal.mixin({
                             toast: true,
                             showConfirmButton: false,
-                            timer: 1000,
+                            timer: 500,
                             timerProgressBar: true,
                         })
                         Toast.fire({

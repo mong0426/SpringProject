@@ -7,6 +7,8 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
             crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <title>배달의 만족</title>
     <link th:href="@{/css/ocss/mainpage.css}" rel="stylesheet"/>
@@ -39,13 +41,13 @@
                 <th>합계</th>
             </tr>
             </thead>
-            <tbody>
+            <tbody id="cart-container">
             <!-- 장바구니가 비어 있을 때 메시지 표시 -->
             <tr th:if="${session.cartItems == null or session.cartItems.size() == 0}" class="EmptyContentRow">
                 <td colspan="5" class="text-center">장바구니가 비었습니다.</td>
             </tr>
             <!-- 장바구니에 아이템이 있을 때 내용 표시 -->
-            <tr th:each="item, iterStat : ${session.cartItems}" class="TableContentRow">
+            <tr th:each="item, iterStat : ${session.cartItems}" class="TableContentRow" th:attr="id='row-' + ${iterStat.index}">
                 <th scope="row" th:text="${iterStat.index + 1}">1</th>
                 <td class="FoodImgNInfo">
                     <img th:src="${item.imgSrc}" alt="음식 이미지" class="food-img"/>
@@ -56,13 +58,13 @@
                 </td>
                 <td>
                     <div class="QuantityDiv">
-                        <button class="QuantityControlBtn"
-                                th:attr="onclick='changeQuantity(' + ${iterStat.index} + ', 1)'">^
+                        <button class="QuantityControlBtn" th:attr="onclick='changeQuantity(' + ${iterStat.index} + ', 1)'">
+                            <img class="QuantityArrowIcon" th:src="@{/img/mycartimg/IncreaseQuantityArrowIcon.png}">
                         </button>
                         <span class="SubTd_quantity" th:attr="id='quantity-' + ${iterStat.index}"
                               th:text="${item.quantity}">수량</span>
-                        <button class="QuantityControlBtn"
-                                th:attr="onclick='changeQuantity(' + ${iterStat.index} + ', -1)'">v
+                        <button class="QuantityControlBtn" th:attr="onclick='changeQuantity(' + ${iterStat.index} + ', -1)'">
+                            <img class="QuantityArrowIcon" th:src="@{/img/mycartimg/DecreaseQuantityArrowIcon.png}">
                         </button>
                     </div>
                 </td>
@@ -70,7 +72,7 @@
                 <td class="FoodTotal"></td>
                 <td>
                     <div class="DeleteImgDiv">
-                        <button class="DeleteBtn">
+                        <button class="DeleteBtn" th:attr="onclick='deleteItem(' + ${iterStat.index} + ')'">
                             <img class="TrashCanImg" th:src="@{/img/mycartimg/TrashCanIcon.png}">
                         </button>
                     </div>
@@ -79,6 +81,9 @@
             </tbody>
         </table>
     </div>
+</div>
+<div class="BuyFoodDiv" id="buyFoodDiv" th:if="${session.cartItems != null and session.cartItems.size() > 0}">
+    <button class="BuyBtn">주문하기</button>
 </div>
 <div th:replace="~{Footer :: body}"></div>
 </body>

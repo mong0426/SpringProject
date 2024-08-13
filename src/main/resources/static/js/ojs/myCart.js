@@ -2,7 +2,6 @@ document.addEventListener('DOMContentLoaded', function() {
     updateTotalPrice();
 });
  function changeQuantity(index, change) {
-    console.log("index : "+index +", change : "+change);
     var quantityElement = document.getElementById('quantity-' + index);
     var currentQuantity = parseInt(quantityElement.textContent) || 0;
     var newQuantity = currentQuantity + change;
@@ -26,3 +25,62 @@ document.addEventListener('DOMContentLoaded', function() {
     TotalPriceElement.textContent = "총 상품 가격 = " + totalPrice;
    }
   }
+function deleteItem(index) {
+    fetch('/deleteCartItem', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(index)
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            // 프론트엔드에서 아이템 삭제
+            var row = document.getElementById("row-" + index);
+            if (row) {
+                row.remove();
+                // 아이템 삭제 후 인덱스 재계산
+                updateItemIndices();
+                updateTotalPrice();
+
+                // 장바구니가 비어 있는지 확인
+                if (data.empty) {
+                    var TotalPriceElement = document.getElementById("allTotalPrice");
+                    TotalPriceElement.textContent = "";
+                    document.getElementById("buyFoodDiv").style.display = "none";
+                    document.getElementById("cart-container").innerHTML = `
+                        <tr class="EmptyContentRow">
+                            <td colspan="5" class="text-center">장바구니가 비었습니다.</td>
+                        </tr>`;
+                }
+                const Toast = Swal.mixin({
+                    toast: true,
+                    showConfirmButton: false,
+                    timer: 700,
+                    timerProgressBar: true,
+                });
+                Toast.fire({
+                    icon: 'success',
+                    title: '삭제 되었습니다.'
+                });
+            }
+        } else {
+            alert("아이템 삭제에 실패했습니다.");
+        }
+    })
+    .catch(error => console.error('Error:', error));
+}
+
+function updateItemIndices() {
+    var rows = document.querySelectorAll('.TableContentRow');
+    rows.forEach((row, index) => {
+        row.id = "row-" + index;
+        var deleteButton = row.querySelector('.DeleteBtn');
+        if (deleteButton) {
+            deleteButton.setAttribute('onclick', 'deleteItem(' + index + ')');
+        }
+    });
+}
+
+
