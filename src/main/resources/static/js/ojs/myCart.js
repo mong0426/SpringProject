@@ -54,6 +54,12 @@ function deleteItem(index) {
                             <td colspan="5" class="text-center">장바구니가 비었습니다.</td>
                         </tr>`;
                 }
+                var container = document.getElementById("notification");
+                var notification = document.querySelector(".notification-bubble");
+                if(data.cartItemsSize == 0){
+                   notification.style.visibility = "hidden";
+                 }
+                notification.textContent = data.cartItemsSize;
                 const Toast = Swal.mixin({
                     toast: true,
                     showConfirmButton: false,

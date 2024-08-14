@@ -58,8 +58,8 @@ public class MainController {
 
     @PostMapping("/addToCart")
     @ResponseBody
-    public Map<String, String> addToCart(@RequestBody CartItemDTO cartItem, HttpSession session) {
-        Map<String, String> response = new HashMap<>();
+    public Map<String, Object> addToCart(@RequestBody CartItemDTO cartItem, HttpSession session) {
+        Map<String, Object> response = new HashMap<>();
         try {
             @SuppressWarnings("unchecked")
             List<CartItemDTO> cartItems = (List<CartItemDTO>) session.getAttribute("cartItems");
@@ -69,19 +69,21 @@ public class MainController {
             cartItems.add(cartItem);
             session.setAttribute("cartItems", cartItems);
             response.put("message", "장바구니에 추가되었습니다.");
+            response.put("cartItemsSize", cartItems.size());
         } catch (Exception e) {
             response.put("error", "장바구니에 아이템을 추가하는 중 오류가 발생했습니다.");
         }
         return response;
     }
 
-    @PostMapping("deleteCartItem")
+    @PostMapping("/deleteCartItem")
     @ResponseBody
     public Map<String, Object> deleteCartItem(@RequestBody String index, HttpSession session) {
         Map<String, Object> response = new HashMap<>();
         try {
             String numericValue = index.replaceAll("[^0-9]", "");
             int itemIndex = Integer.parseInt(numericValue);
+            @SuppressWarnings("unchecked")
             List<CartItemDTO> cartItems = (List<CartItemDTO>) session.getAttribute("cartItems");
 //            System.out.println("item index : "+itemIndex +" cartItems.size ====== "+cartItems.size());
             if (cartItems != null && itemIndex >= 0 && itemIndex <= cartItems.size()) {
@@ -89,7 +91,7 @@ public class MainController {
                 cartItems.remove(itemIndex);
                 // 세션에 업데이트된 장바구니 다시 저장
                 session.setAttribute("cartItems", cartItems);
-
+                response.put("cartItemsSize", cartItems.size());
                 response.put("success", true);
                 response.put("empty", cartItems.isEmpty());
                 response.put("message", "아이템이 성공적으로 삭제되었습니다.");

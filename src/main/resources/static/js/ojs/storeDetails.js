@@ -134,7 +134,14 @@ document.addEventListener('DOMContentLoaded', function() {      //모달 내용�
                     })
                     .then(response => response.json())
                     .then(data => {
-                        console.log('서버 응답:', data);
+                        var container = document.getElementById("notification");
+                        if(data.cartItemsSize == 1){
+                        var span = document.createElement('span');
+                        span.className = 'notification-bubble';
+                        container.appendChild(span);
+                        }
+                        var notification = document.querySelector(".notification-bubble");
+                        notification.textContent = data.cartItemsSize;
                         modal.style.display = 'none';
                         const Toast = Swal.mixin({
                             toast: true,

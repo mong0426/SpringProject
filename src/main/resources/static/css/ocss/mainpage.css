@@ -90,7 +90,22 @@
         z-index: 100;
        }
        .HeaderMenuImage{
-       width:1.5rem;
+       width:28px;
+       }
+       .notification-bubble {
+           position: absolute;
+           top: 15px;
+           right: 90px;
+           width: 18px;
+           height: 18px;
+           background-color: red;
+           color: white;
+           border-radius: 50%;
+           display: flex;
+           align-items: center;
+           justify-content: center;
+           font-size: 12px;
+           font-weight: bold;
        }
        .CardAtagStyle{
        text-decoration:none;
