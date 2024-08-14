@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="kr" xmlns:th="http://www.thymeleaf.org">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -14,15 +14,25 @@
             <h3>회원의 유형을 선택해주세요.</h3>
         </div>
         <div class="selector select-btn">
-            <a th:href="@{/Join}" class="UserSelect SMN_effect-5">
-                <span>일반 사용자</span>
-                <span>배달의 만족을 이용하시는 회원</span>
-            </a>
-            <a th:href="@{/SellerJoin}" class="SellerSelect SMN_effect-5">
-                <img th:src="@{/img/Joinimg/boss.png}" >
-                <span>배달의 만족 사장님</span>
-                <span>배달의 만족을 이용하시는 사장님</span>
-            </a>
+            <ul id="UserSelect" class="UserSelect SMN_effect-5">
+
+                    <a class="select-form" th:href="@{/Join}">
+                        <img class="select-img" th:src="@{/img/Joinimg/user.png}">
+                        <span class="img-text">일반 사용자</span>
+                        <span class="img-text">배달의 만족을 이용하시는 회원</span>
+                    </a>
+
+            </ul>
+            <ul  id="SellerSelect" class="SellerSelect SMN_effect-5">
+
+                    <a class="select-form" th:href="@{/SellerJoin}">
+                        <img class="select-img1" th:src="@{/img/Joinimg/seller.png}">
+                        <span class="img-text1">배달의 만족 사장님</span>
+                        <span class="img-text1">배달의 만족을 이용하시는 사장님</span>
+                    </a>
+
+            </ul>
+
         </div>
     </div>
 </div>

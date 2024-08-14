@@ -23,6 +23,34 @@
     justify-content: center;
     align-items: center;
     position: relative;
+
+}
+
+.img-text{
+    margin: 40px 0 -40px 0;
+}
+
+.img-text1{
+    margin: 20px 0 -20px 0;
+}
+
+.select-img{
+    width: 120px;
+    height: 120px;
+}
+
+.select-img1 {
+    width: 150px;
+    height: 150px;
+}
+
+.color-5 {
+    background: #353535;
+}
+
+.select-form{
+    text-decoration: none;
+    text-color: black;
 }
 
 .SMN_effect-5 {
@@ -31,6 +59,7 @@
     margin: 0 30px;
     padding: 18px 20px;
     text-align: center;
+
 }
 
 .SMN_effect-5:before, .SMN_effect-5:after {
@@ -39,7 +68,7 @@
     left: 0;
     width: 100%;
     height: 1px;
-    background: #000; /* Hover시 가시적인 효과를 위해 #000으로 변경 */
+    background: #000000; /* Hover시 가시적인 효과를 위해 #000으로 변경 */
     content: '';
     opacity: 0.2;
     transition: opacity 0.3s, height 0.3s;
@@ -58,17 +87,22 @@
     font-weight: 300;
 }
 
-.SMN_effect-5 span:last-child {
+.SMN_effect-5 a span:last-child {
     z-index: 1;
     display: block;
     padding: 8px 0 0 0;
-    color: rgba(255, 255, 255, 0.4);
+    color: rgba(0, 0, 0, 0.4);
     text-shadow: none;
     text-transform: none;
     font-style: italic;
-    font-size: 0.75em;
+    font-size: 14px;
+    font-family: Palatino, "Palatino Linotype", "Palatino LT STD", "Book Antiqua", Georgia, serif;
     opacity: 0;
+    -webkit-transition: -webkit-transform 0.3s, opacity 0.3s;
+    -moz-transition: -moz-transform 0.3s, opacity 0.3s;
     transition: transform 0.3s, opacity 0.3s;
+    -webkit-transform: translateY(-100%);
+    -moz-transform: translateY(-100%);
     transform: translateY(-100%);
 }
 
