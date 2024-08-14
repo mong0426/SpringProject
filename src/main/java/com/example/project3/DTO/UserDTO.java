@@ -23,7 +23,7 @@ public class UserDTO {
     @Email(message = "올바른 이메일 주소를 입력해주세요.")
     private String email;
 
-    @NotNull(message = "역할을 입력해주세요.")
+    @NotBlank(message = "역할을 입력해주세요.")
     private String role; // Role은 간단히 String으로 처리
 
     @NotBlank(message = "이름을 입력해주세요.")
@@ -35,6 +35,6 @@ public class UserDTO {
     @Pattern(regexp = "(01[016789])(\\d{3,4})(\\d{4})", message = "올바른 휴대폰 번호를 입력해주세요.")
     private String phone;
 
-    private String birth;
-    private String createDate;
+    private String birth; // 날짜 형식이 필요하다면 LocalDate로 변경
+    private String createDate; // 날짜 형식이 필요하다면 LocalDate로 변경
 }

@@ -1,10 +1,12 @@
 package com.example.project3.Controller;
 
 import com.example.project3.DTO.UserDTO;
+import com.example.project3.Entity.User;
 import com.example.project3.Service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
@@ -32,6 +34,12 @@ public class UserController {
         return "login";
     }
 
+    @GetMapping("Usertype")
+    public String Usertype() {
+        return "Usertype";
+    }
+
+
     @PostMapping("/loginUser")
     public String login(@RequestParam String username, @RequestParam String password) {
         // Spring Security에서 로그인은 보통 필터가 처리함
@@ -43,32 +51,37 @@ public class UserController {
         return "Join";
     }
 
-//    @PostMapping("/register")
-//    public ResponseEntity<String> registerUser(@Valid @RequestBody UserDTO userDTO, BindingResult bindingResult) {
-//        if (bindingResult.hasErrors()) {
-//            return ResponseEntity.badRequest().body("Invalid user data.");
-//        }
-//        try {
-//            User registeredUser = userService.registerUser(userDTO);
-//            return ResponseEntity.ok("User registered successfully: " + registeredUser.getUsername());
-//        } catch (IllegalArgumentException e) {
-//            return ResponseEntity.badRequest().body(e.getMessage());
-//        }
-//    }
     @PostMapping("/register")
-    public String registerUser(@Valid @ModelAttribute UserDTO userDTO, BindingResult bindingResult) {
+    public ResponseEntity<String> registerUser(@Valid @RequestBody UserDTO userDTO, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            // 유효성 검사에 실패한 경우 처리
-            return "registrationForm";
+            return ResponseEntity.badRequest().body("Invalid user data.");
         }
-        // 유효성 검사가 성공한 경우 사용자 등록 처리
-        return "redirect:/success";
+        try {
+            User registeredUser = userService.registerUser(userDTO);
+            return ResponseEntity.ok("User registered successfully: " + registeredUser.getUsername());
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
-
-    @GetMapping("/logout")
-    public String logout(HttpServletRequest request, HttpServletResponse response){
-        new SecurityContextLogoutHandler().logout(request, response,
-                SecurityContextHolder.getContext().getAuthentication());
-        return "redirect:/Login";
-    }
+//    @PostMapping("/register")
+//    public String registerUser(@Valid @ModelAttribute UserDTO userDTO, BindingResult bindingResult) {
+//        if (bindingResult.hasErrors()) {
+//            // 유효성 검사에 실패한 경우 처리
+//            return "registrationForm";
+//        }
+//        // 유효성 검사가 성공한 경우 사용자 등록 처리
+//        return "redirect:/success";
+//    }
+//@PostMapping("/register")
+//public ResponseEntity<String> registerUser(@Valid @RequestBody UserDTO userDTO) {
+//    userService.registerUser(userDTO);
+//    return ResponseEntity.ok("User registered successfully");
+//}
+//
+//    @GetMapping("/logout")
+//    public String logout(HttpServletRequest request, HttpServletResponse response){
+//        new SecurityContextLogoutHandler().logout(request, response,
+//                SecurityContextHolder.getContext().getAuthentication());
+//        return "redirect:/Login";
+//    }
 }

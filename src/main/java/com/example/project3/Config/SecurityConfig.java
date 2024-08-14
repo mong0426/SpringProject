@@ -24,28 +24,24 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .csrf(csrf -> csrf.disable())
-                .headers(headers -> headers
-                        .frameOptions(frameOptions -> frameOptions.disable())
+                .authorizeHttpRequests(authorizeRequests ->
+                        authorizeRequests
+                                .requestMatchers("/","/Usertype", "/index", "/Join", "/css/**", "/js/**", "/img/**").permitAll()  // 메인 페이지, 회원가입, 정적 리소스는 누구나 접근 가능
+                                .anyRequest().authenticated()  // 그 외의 요청은 인증된 사용자만 접근 가능
                 )
-                .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/admin").hasRole("ADMIN")
-                        .requestMatchers(("/login, /Join")).permitAll()
-                        // 추가적인 요청 경로 설정이 필요하다면 여기 추가
-                        .anyRequest().permitAll() // 모든 요청 허용
+                .formLogin(formLogin ->
+                        formLogin
+                                .loginPage("/login")  // 커스텀 로그인 페이지 설정
+                                .loginProcessingUrl("/loginTry")  // 로그인 처리 URL
+                                .defaultSuccessUrl("/", true)  // 로그인 성공 시 메인 페이지로 리다이렉트
+                                .permitAll()
                 )
-                .formLogin(form -> form
-                        .loginPage("/login")
-                        .loginProcessingUrl("/loginUser") // Spring Security 기본 로그인 처리 경로
-                        .permitAll()
-
-                )
-                .logout(logout -> logout // 로그아웃 설정
-                        .logoutUrl("/logout") // 로그아웃 처리 URL
-                        .logoutSuccessUrl("/login") // 로그아웃 성공 시 리다이렉트 URL
-                        .invalidateHttpSession(true) // 세션 무효화
+                .logout(logout ->
+                        logout
+                                .logoutUrl("/logout")
+                                .logoutSuccessUrl("/login?logout")  // 로그아웃 성공 시 로그인 페이지로 리다이렉트
+                                .permitAll()
                 );
-
 
         return http.build();
     }

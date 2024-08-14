@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="kr" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link th:href="@{/css/ocss/Usertype.css}" rel="stylesheet"/>
+    <link th:href="@{/css/ocss/mainpage.css}" rel="stylesheet"/>
+</head>
+<body>
+<header th:replace="~{Header :: body}"></header>
+<div class="wrap">
+    <div class="container">
+        <div class="sub-title">
+            <h3>회원의 유형을 선택해주세요.</h3>
+        </div>
+        <div class="selector select-btn">
+            <a th:href="@{/Join}" class="UserSelect SMN_effect-5">
+                <span>일반 사용자</span>
+                <span>배달의 만족을 이용하시는 회원</span>
+            </a>
+            <a th:href="@{/SellerJoin}" class="SellerSelect SMN_effect-5">
+                <span>배달의 만족 사장님</span>
+                <span>배달의 만족을 이용하시는 사장님</span>
+            </a>
+        </div>
+    </div>
+</div>
+</body>
+</html>
