@@ -26,7 +26,7 @@ public class SecurityConfig {
         http
                 .authorizeHttpRequests(authorizeRequests ->
                         authorizeRequests
-                                .requestMatchers("/","/Usertype", "/index", "/Join", "/css/**", "/js/**", "/img/**").permitAll()  // 메인 페이지, 회원가입, 정적 리소스는 누구나 접근 가능
+                                .requestMatchers("/","/Usertype", "/index", "/Join", "/css/**", "/js/**", "/img/**" ,"/myCart","/StoreDetails").permitAll()  // 메인 페이지, 회원가입, 정적 리소스는 누구나 접근 가능
                                 .anyRequest().authenticated()  // 그 외의 요청은 인증된 사용자만 접근 가능
                 )
                 .formLogin(formLogin ->

@@ -53,6 +53,7 @@ public class UserController {
 
     @PostMapping("/register")
     public ResponseEntity<String> registerUser(@Valid @RequestBody UserDTO userDTO, BindingResult bindingResult) {
+        System.out.println("여기임 ==================");
         if (bindingResult.hasErrors()) {
             return ResponseEntity.badRequest().body("Invalid user data.");
         }

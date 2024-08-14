@@ -18,20 +18,19 @@
         .InnerLine{
           display:flex;
           justify-content: space-between;
-          width:100%;
-          margin-left:4rem;
-          margin-right:4rem;
+          width:1700px;
           align-items: center;
         }
         .MenuStyle{
-          width:7rem;
+          width:110px;
+          height:28px;
           display:flex;
           justify-content: space-between;
           align-items: center;
         }
         .Logo {
          color: white;
-         font-size: 2rem;
+         font-size: 32px;
          font-weight: 600;
          text-decoration:none;
         }
@@ -82,12 +81,16 @@
         color:white;
         }
         .StickyHeader {
-        width: 100%;
-        height: 60px;
+        height: 65px;
         min-width:1500px;
         position: sticky;
         top: 0;
         z-index: 100;
+        background-color: #F986BD;
+        display: flex;
+        justify-content: center;
+        padding-left: 30px;
+        padding-right: 30px;
        }
        .HeaderMenuImage{
        width:28px;
@@ -184,13 +187,14 @@
        .SearchDiv{
        display:flex;
        margin-left:auto;
-       margin-right:2rem;
+       margin-right:20px;
+       width:240px;
        }
        .SearchText{
         background-color:#F986BD;
         border:none;
         border-bottom:3px solid white;
-        width:12rem;
+        width:200px;
        }
        .SearchText:focus{
        outline:none;
@@ -198,4 +202,13 @@
        .SearchBtn{
         background:transparent;
         border:none;
+        width:40px;
+        height:28px;
+        margin:0;
+       }
+       .SearchForm{
+        display:flex;
+        align-items: center;
+        width: 240px;
+        height: 30px;
        }
