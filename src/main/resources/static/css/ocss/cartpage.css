@@ -1,8 +1,7 @@
-body{
-    overflow-y:scroll;
-}
 .MyCartContainer{
     min-width:1500px;
+    min-height:750px;
+    flex:1;
 }
 .CartTitle{
     display:flex;

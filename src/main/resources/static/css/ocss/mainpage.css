@@ -1,7 +1,12 @@
-        body {
+          body {
+          display:flex;
+          flex-direction:column;
+          min-width:1500px;
+          height:100%;
           margin: 0;
           padding: 0;
           user-select:none;
+          overflow-y:scroll;
       }
         .MainPage{
           height:100%;
@@ -102,7 +107,7 @@
        .notification-bubble {
            position: absolute;
            top: 15px;
-           right: 90px;
+           right: 45px;
            width: 18px;
            height: 18px;
            background-color: red;
@@ -150,8 +155,11 @@
        width: 100%;
        min-width:1500px;
        max-height:450px;
-       position:relative;
-       padding:4rem;
+       box-sizing: border-box;
+       padding:60px;
+       border-top: 1px solid;
+       --tw-border-opacity: 1;
+       border-color: rgb(243 244 246 / var(--tw-border-opacity));
        }
        .FooterTopFont{
        text-decoration: underline;
@@ -163,14 +171,18 @@
        width:1200px;
        height:150px;
        display:flex;
-       justify-content: space-evenly;
-       margin-top:2rem;
+       justify-content: space-between;
+       margin-top:30px;
        }
        .FooterContents{
+        display:flex;
+        flex-direction: column;
+        margin-left:auto;
         font-size:12px;
         width:400px;
         height:150px;
         text-align:left;
+        line-height:35px; !important;
        }
        .FooterLine{
        display:flex;
@@ -179,8 +191,10 @@
        .BrandName{
         font-size: 14px;
         font-weight:600;
+        margin:0px;
        }
        .BlankSpace{
+       margin-left:auto;
        min-width:400px;
        }
        .SloganFont{

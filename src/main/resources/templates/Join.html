@@ -21,23 +21,22 @@
     <div class="login__container">
         <div class="login__content">
             <div class="login__inner">
-                <form th:action="@{/register}" method="post" class="login__form">
+                <form th:action="@{/register}" method="post" class="login__form" th:object="${userDTO}">
                     <fieldset class="login__block">
                         <legend>계정 입력 폼</legend>
 
                         <label class="login__label">
-                            <span>이름</span>
-                            <input type="text" name="name" placeholder="이름" class="login__input" required>
-                        </label>
-
-                        <label class="login__label">
                             <span>아이디</span>
-                            <input type="text" name="username" placeholder="아이디" class="login__input" required>
+                            <input type="text" name="userid" th:field="*{userid}" placeholder="아이디" class="login__input"
+                                   required>
+                            <span th:if="${#fields.hasErrors('userid')}" th:errors="*{userid}"></span>
                         </label>
 
                         <label class="login__label">
                             <span>비밀번호</span>
-                            <input type="password" name="password" placeholder="비밀번호" class="login__input" required>
+                            <input type="password" name="password" th:field="*{password}" placeholder="비밀번호"
+                                   class="login__input" required>
+                            <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span>
                         </label>
 
                         <label class="login__label">
@@ -45,41 +44,55 @@
                             <input type="password" name="passwordConfirm" placeholder="비밀번호확인" class="login__input" required>
                         </label>
 
+                        <label for="name">이름</label>
+                        <input type="text" id="name" name="name" th:field="*{name}" placeholder="이름" class="login__input" required>
+                        <span th:if=" ${#fields.hasErrors('name')}" th:errors="*{name}"></span>
+
                         <label class="login__label">
                             <span>이메일</span><br>
-                            <input type="text" name="email" placeholder="이메일" class="email" required>
+                            <input type="text" id="email" name="email" th:field="*{email}" placeholder="이메일" class="email" required>
                             @
-                            <select name="emailDomain" required>
+                            <select id="emailDomain" name="emailDomain" onchange="updateEmail()" required>
                                 <option value="naver.com">naver.com</option>
                                 <option value="gmail.com">gmail.com</option>
                                 <option value="daum.net">daum.net</option>
                                 <option value="nate.com">nate.com</option>
                             </select>
+                            <span th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
                         </label>
 
                         <label class="login__label">
                             <span>전화번호</span>
-                            <input type="tel" name="phone" class="login__input" placeholder="전화번호" required>
+                            <input type="tel" id="phone" name="phone" th:field="*{phone}" placeholder="010-1234-5678" class="login__input" required>
+                            <span th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}"></span>
                         </label>
 
                         <label class="login__label">
                             <span>주소</span>
                             <div class="addressbtn">
-                                <input type="text" id="sample3_postcode" name="postcode" class="login__address" placeholder="우편번호" readonly>
-                                <button type="button" class="button btnFade btnBlueGreen" onclick="sample3_execDaumPostcode()">우편번호 찾기</button><br>
+                                <input type="text" id="sample3_postcode" name="postcode" class="login__address"
+                                       placeholder="우편번호" readonly>
+                                <button type="button" class="button btnFade btnBlueGreen"
+                                        onclick="sample3_execDaumPostcode()">우편번호 찾기
+                                </button>
+                                <br>
                             </div>
-                            <div id="wrap" style="display:none;border:1px solid;width:500px;height:400px;margin:5px 0;position:relative">
-                                <img src="//t1.daumcdn.net/postcode/resource/images/close.png" id="btnFoldWrap" style="cursor:pointer;position:absolute;right:0px;top:-1px;z-index:1" onclick="foldDaumPostcode()" alt="접기 버튼">
+                            <div id="wrap"
+                                 style="display:none;border:1px solid;width:500px;height:400px;margin:5px 0;position:relative">
+                                <img src="//t1.daumcdn.net/postcode/resource/images/close.png" id="btnFoldWrap"
+                                     style="cursor:pointer;position:absolute;right:0px;top:-1px;z-index:1"
+                                     onclick="foldDaumPostcode()" alt="접기 버튼">
                             </div>
-                            <input type="text" id="sample3_address" name="address" class="login__address1" placeholder="주소" readonly>
-                            <input type="text" id="sample3_detailAddress" name="detailAddress" class="login__input" placeholder="상세주소(동,호수를 입력해주세요)" required>
+                            <input type="text" id="sample3_address" name="address" class="login__address1"
+                                   placeholder="주소" readonly>
+                            <input type="text" id="sample3_detailAddress" name="detailAddress" class="login__input"
+                                   placeholder="상세주소(동,호수를 입력해주세요)" required>
                         </label>
 
                         <label class="login__label">
                             <span>생년월일</span>
-                            <input type="date" name="birthDate" class="login__input" required>
+                            <input type="date" name="birthDate" class="login__input" th:field="*{birth}" required>
                         </label>
-
                         <button type="submit" class="login__button login__button--login">제출하기</button>
                     </fieldset>
                 </form>
@@ -89,6 +102,20 @@
 </section>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script>
+    function updateEmail() {
+        const emailField = document.getElementById("email");
+        const domainSelect = document.getElementById("emailDomain");
+        const domain = domainSelect.value;
+
+        if (emailField.value.indexOf('@') > -1) {
+            // 이미 @가 포함되어 있는 경우, @ 이하를 잘라내고 새로운 도메인 추가
+            emailField.value = emailField.value.split('@')[0] + "@" + domain;
+        } else {
+            // @가 포함되지 않은 경우, 도메인 추가
+            emailField.value += "@" + domain;
+        }
+    }
+
     // 우편번호 찾기 찾기 화면을 넣을 element
     var element_wrap = document.getElementById('wrap');
 
@@ -164,5 +191,6 @@
         element_wrap.style.display = 'block';
     }
 </script>
+<div th:replace="~{Footer :: body}"></div>
 </body>
 </html>

@@ -11,6 +11,8 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <title>배달의 만족</title>
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
     <link th:href="@{/css/ocss/mainpage.css}" rel="stylesheet"/>
     <link th:href="@{/css/ocss/storeDetails.css}" rel="stylesheet"/>
     <script th:src="@{/js/ojs/main.js}"></script>

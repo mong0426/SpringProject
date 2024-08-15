@@ -3,14 +3,11 @@ package com.example.project3.Controller;
 import com.example.project3.DTO.UserDTO;
 import com.example.project3.Entity.User;
 import com.example.project3.Service.UserService;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -47,21 +44,27 @@ public class UserController {
     }
 
     @GetMapping("/Join")
-    public String join() {
-        return "Join";
+    public String join(Model model) {
+        model.addAttribute("userDTO", new UserDTO());
+        return "join";
     }
 
     @PostMapping("/register")
-    public ResponseEntity<String> registerUser(@Valid @RequestBody UserDTO userDTO, BindingResult bindingResult) {
+    public String registerUser(@Valid @ModelAttribute UserDTO userDTO, BindingResult bindingResult) {
+        System.out.println("여기임 ==================");
+        System.out.println(userDTO);
         System.out.println("여기임 ==================");
         if (bindingResult.hasErrors()) {
-            return ResponseEntity.badRequest().body("Invalid user data.");
+            for (FieldError error : bindingResult.getFieldErrors()) {
+                System.out.println("필드: " + error.getField() + ", 에러 메시지: " + error.getDefaultMessage());
+            }
+            return "/join";
         }
         try {
             User registeredUser = userService.registerUser(userDTO);
-            return ResponseEntity.ok("User registered successfully: " + registeredUser.getUsername());
+            return "/MainPage";
         } catch (IllegalArgumentException e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
+            return "/Error404";
         }
     }
 //    @PostMapping("/register")

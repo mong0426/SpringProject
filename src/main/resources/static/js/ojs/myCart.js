@@ -26,10 +26,13 @@ document.addEventListener('DOMContentLoaded', function() {
    }
   }
 function deleteItem(index) {
+     const csrfToken = document.querySelector('meta[name="_csrf"]').getAttribute('content');
+     const csrfHeader = document.querySelector('meta[name="_csrf_header"]').getAttribute('content');
     fetch('/deleteCartItem', {
         method: 'POST',
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            [csrfHeader]: csrfToken
         },
         body: JSON.stringify(index)
     })

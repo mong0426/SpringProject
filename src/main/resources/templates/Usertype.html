@@ -16,25 +16,30 @@
         <div class="selector select-btn">
             <ul id="UserSelect" class="UserSelect SMN_effect-5">
 
-                    <a class="select-form" th:href="@{/Join}">
+                <a class="select-form" th:href="@{/Join}">
+                    <div>
                         <img class="select-img" th:src="@{/img/Joinimg/user.png}">
                         <span class="img-text">일반 사용자</span>
                         <span class="img-text">배달의 만족을 이용하시는 회원</span>
-                    </a>
+                    </div>
+                </a>
 
             </ul>
-            <ul  id="SellerSelect" class="SellerSelect SMN_effect-5">
+            <ul id="SellerSelect" class="SellerSelect SMN_effect-5">
 
-                    <a class="select-form" th:href="@{/SellerJoin}">
+                <a class="select-form" th:href="@{/SellerJoin}">
+                    <div>
                         <img class="select-img1" th:src="@{/img/Joinimg/seller.png}">
                         <span class="img-text1">배달의 만족 사장님</span>
                         <span class="img-text1">배달의 만족을 이용하시는 사장님</span>
-                    </a>
+                    </div>
+                </a>
 
             </ul>
 
         </div>
     </div>
 </div>
+<div th:replace="~{Footer :: body}"></div>
 </body>
 </html>

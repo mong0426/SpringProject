@@ -117,11 +117,13 @@ document.addEventListener('DOMContentLoaded', function() {      //모달 내용�
         console.log("내용 : "+foodDesc)
         console.log("메뉴가격 : "+price);
         console.log("메뉴 이미지 URL : "+imgSrc);
-
+        const csrfToken = document.querySelector('meta[name="_csrf"]').getAttribute('content');
+        const csrfHeader = document.querySelector('meta[name="_csrf_header"]').getAttribute('content');
         fetch('/addToCart', {
                         method: 'POST',
                         headers: {
-                            'Content-Type': 'application/json'
+                            'Content-Type': 'application/json',
+                            [csrfHeader]: csrfToken
                         },
                         body: JSON.stringify({
                             storeName: storeName,

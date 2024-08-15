@@ -18,7 +18,7 @@ public class UserService {
 
     public User registerUser(UserDTO userDTO) {
         // Username이나 Email이 이미 존재하는지 확인
-        if (userRepository.findByUsername(userDTO.getUsername()).isPresent()) {
+        if (userRepository.findByUsername(userDTO.getUserid()).isPresent()) {
             throw new IllegalArgumentException("Username already exists.");
         }
 
@@ -26,25 +26,24 @@ public class UserService {
             throw new IllegalArgumentException("Email already exists.");
         }
 
-        // UserDTO에서 Role을 Enum으로 변환
-        User.Role role;
-        try {
-            role = User.Role.valueOf(String.valueOf(userDTO.getRole())); // String을 Enum으로 변환
-        } catch (IllegalArgumentException e) {
-            throw new IllegalArgumentException("Invalid role.");
-        }
+//        // UserDTO에서 Role을 Enum으로 변환
+//        User.Role role;
+//        try {
+//            role = User.Role.valueOf(String.valueOf(userDTO.getRole())); // String을 Enum으로 변환
+//        } catch (IllegalArgumentException e) {
+//            throw new IllegalArgumentException("Invalid role.");
+//        }
 
         // User 엔티티 생성
         User user = User.builder()
-                .username(userDTO.getUsername())
+                .username(userDTO.getUserid())
                 .password(passwordEncoder.encode(userDTO.getPassword())) // 비밀번호 암호화
                 .email(userDTO.getEmail())
                 .name(userDTO.getName())
                 .address(userDTO.getAddress())
                 .phone(userDTO.getPhone())
                 .birth(userDTO.getBirth())
-                .role(User.Role.valueOf(userDTO.getRole())) // Enum으로 설정
-                .createDate(LocalDateTime.parse(userDTO.getCreateDate()))
+                .createDate(LocalDateTime.now())
                 .build();
 
         // 데이터베이스에 사용자 저장
