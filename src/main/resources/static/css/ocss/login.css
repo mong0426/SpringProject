@@ -6,6 +6,7 @@
 }
 body{
     word-break: keep-all;
+    overflow-y:scroll;
 }
 div {
     display: block;

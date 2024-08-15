@@ -18,7 +18,7 @@
         .InnerLine{
           display:flex;
           justify-content: space-between;
-          width:1700px;
+          width:100%;
           align-items: center;
         }
         .MenuStyle{
@@ -27,6 +27,10 @@
           display:flex;
           justify-content: space-between;
           align-items: center;
+        }
+        .MenuATag{
+          width:28px;
+          height:28px;
         }
         .Logo {
          color: white;
@@ -89,8 +93,8 @@
         background-color: #F986BD;
         display: flex;
         justify-content: center;
-        padding-left: 30px;
-        padding-right: 30px;
+        padding-left: 50px;
+        padding-right: 50px;
        }
        .HeaderMenuImage{
        width:28px;
@@ -194,21 +198,25 @@
         background-color:#F986BD;
         border:none;
         border-bottom:3px solid white;
-        width:200px;
+        width:200px; !important;
+        height:30px; !important;
+        padding:0; !important;
+        box-sizing: border-box; !important;
        }
        .SearchText:focus{
        outline:none;
        }
        .SearchBtn{
-        background:transparent;
-        border:none;
-        width:40px;
-        height:28px;
-        margin:0;
+        background:transparent; !important;
+        border:none; !important;
+        width:40px; !important;
+        height:28px; !important;
+        margin:0; !important;
+        padding:0; !important;
        }
        .SearchForm{
-        display:flex;
-        align-items: center;
-        width: 240px;
-        height: 30px;
+        display:flex; !important;
+        align-items: center; !important;
+        width: 240px; !important;
+        height: 30px; !important;
        }

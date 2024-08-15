@@ -18,13 +18,13 @@
             </form>
         </div>
     <div class="MenuStyle">
-        <a th:href="@{/login}">
+        <a class="MenuATag" th:href="@{/login}">
             <img class="HeaderMenuImage" th:src="@{/img/headerimg/LoginIcon.png}" alt=""/>
         </a>
-        <a th:href="@{/}">
+        <a class="MenuATag" th:href="@{/}">
             <img class="HeaderMenuImage" th:src="@{/img/headerimg/NoticeIcon.png}" alt=""/>
         </a>
-        <a th:href="@{/myCart}" id="notification">
+        <a class="MenuATag" th:href="@{/myCart}" id="notification">
             <img class="HeaderMenuImage" th:src="@{/img/headerimg/CartIcon.png}" alt="CartIcon"/>
             <span class="notification-bubble"
                   th:if="${session.cartItems != null and session.cartItems.size() > 0}"
