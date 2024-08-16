@@ -36,7 +36,6 @@ public class UserController {
         return "Usertype";
     }
 
-
     @PostMapping("/loginUser")
     public String login(@RequestParam String username, @RequestParam String password) {
         // Spring Security에서 로그인은 보통 필터가 처리함
@@ -62,25 +61,12 @@ public class UserController {
         }
         try {
             User registeredUser = userService.registerUser(userDTO);
-            return "/MainPage";
+            return "WelcomePage";
         } catch (IllegalArgumentException e) {
             return "/Error404";
         }
     }
-//    @PostMapping("/register")
-//    public String registerUser(@Valid @ModelAttribute UserDTO userDTO, BindingResult bindingResult) {
-//        if (bindingResult.hasErrors()) {
-//            // 유효성 검사에 실패한 경우 처리
-//            return "registrationForm";
-//        }
-//        // 유효성 검사가 성공한 경우 사용자 등록 처리
-//        return "redirect:/success";
-//    }
-//@PostMapping("/register")
-//public ResponseEntity<String> registerUser(@Valid @RequestBody UserDTO userDTO) {
-//    userService.registerUser(userDTO);
-//    return ResponseEntity.ok("User registered successfully");
-//}
+
 //
 //    @GetMapping("/logout")
 //    public String logout(HttpServletRequest request, HttpServletResponse response){

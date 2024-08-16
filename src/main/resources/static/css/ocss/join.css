@@ -306,7 +306,7 @@ button, input {
     font-family: inherit;
     font-size: 100%;
     line-height: 1.15;
-    margin: 10px 0 20px 0;
+    margin: 10px 0 10px 0;
 }
 
 legend {
@@ -348,3 +348,26 @@ body, dl, dt, dd, figure, h1, h2, h3, h4, h5, h6, ol, ul, li, p, table, td, th, 
     height: 55px;
     width: 55px;
 }
+.ValidWarningFont{
+    font-size:14px;
+    color:#979797;
+}
+ .icon {
+            font-size: 15px;
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            text-align: center;
+            border-radius: 5px;
+            margin: 5px;
+        }
+
+        .check::before {
+            content: '✔'; /* 체크 표시 */
+            color: green;
+        }
+
+        .cross::before {
+            content: '✘'; /* 엑스 표시 */
+            color: red;
+        }

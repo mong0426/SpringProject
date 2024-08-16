@@ -209,7 +209,7 @@
        width:240px;
        }
        .SearchText{
-        background-color:#F986BD;
+        background-color:#F986BD; !important;
         border:none;
         border-bottom:3px solid white;
         width:200px; !important;
@@ -218,8 +218,13 @@
         box-sizing: border-box; !important;
        }
        .SearchText:focus{
+       background-color:#F986BD; !important;
        outline:none;
        }
+      .SearchText:-webkit-autofill {
+          background-color: #F986BD !important; /* 자동 완성된 필드의 배경 색상 설정 */
+          transition: background-color 5000s ease-in-out 0s;
+      }
        .SearchBtn{
         background:transparent; !important;
         border:none; !important;
@@ -234,3 +239,44 @@
         width: 240px; !important;
         height: 30px; !important;
        }
+       .text-green-500 {
+        --tw-text-opacity: 1;
+        color: rgb(34 197 94 / var(--tw-text-opacity));
+        }
+        .Welcome{
+        display:flex;
+        flex-direction: column;
+        justify-content:center;
+        align-items:center;
+        height:800px;
+        }
+        .WelcomeContent{
+        display:flex;
+        flex-direction:column;
+        align-items:center;
+        padding:40px;
+        box-shadow:1px 7px 10px 1px rgb(0 0 0 / 12%)
+        }
+        .WelcomeFont{
+        font-size: 14px;
+        color: darkgray;
+        }
+        .WelcomeBtnDiv{
+        display:flex;
+        justify-content:center;
+        width: 100%;
+        margin-top: 20px;
+        }
+        .Welcome-select-btn{
+        display:flex;
+        width: 150px;
+        height: 40px;
+        border: none;
+        background-color: black;
+        color: white;
+        border-radius: 6%;
+        cursor:pointer;
+        text-decoration: none;
+        justify-content: center;
+        align-items: center;
+        }
