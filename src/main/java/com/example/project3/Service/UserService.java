@@ -17,26 +17,17 @@ public class UserService {
     private final PasswordEncoder passwordEncoder;
 
     public User registerUser(UserDTO userDTO) {
-        // Username이나 Email이 이미 존재하는지 확인
-        if (userRepository.findByUsername(userDTO.getUserid()).isPresent()) {
-            throw new IllegalArgumentException("Username already exists.");
-        }
-
-        if (userRepository.findByEmail(userDTO.getEmail()).isPresent()) {
-            throw new IllegalArgumentException("Email already exists.");
-        }
-
-//        // UserDTO에서 Role을 Enum으로 변환
-//        User.Role role;
-//        try {
-//            role = User.Role.valueOf(String.valueOf(userDTO.getRole())); // String을 Enum으로 변환
-//        } catch (IllegalArgumentException e) {
-//            throw new IllegalArgumentException("Invalid role.");
+//        // Username이나 Email이 이미 존재하는지 확인
+//        if (userRepository.findByUserid(userDTO.getUserid()).isPresent()) {
+//            throw new IllegalArgumentException("Username already exists.");
 //        }
-        System.out.println("User Service ====================");
+//        if (userRepository.findByEmail(userDTO.getEmail()).isPresent()) {
+//            throw new IllegalArgumentException("Email already exists.");
+//        }
+
         // User 엔티티 생성
-        User user = User.builder()
-                .username(userDTO.getUserid())
+                User user = User.builder()
+                .userid(userDTO.getUserid())
                 .password(passwordEncoder.encode(userDTO.getPassword())) // 비밀번호 암호화
                 .email(userDTO.getEmail())
                 .name(userDTO.getName())

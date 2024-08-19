@@ -67,12 +67,4 @@ public class UserController {
             return "/Error404";
         }
     }
-
-//
-//    @GetMapping("/logout")
-//    public String logout(HttpServletRequest request, HttpServletResponse response){
-//        new SecurityContextLogoutHandler().logout(request, response,
-//                SecurityContextHolder.getContext().getAuthentication());
-//        return "redirect:/Login";
-//    }
 }

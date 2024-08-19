@@ -9,39 +9,29 @@
     }
   }
   function checkPassInput(id){
-        const input = document.getElementById(id).value;
-        const status = document.getElementById("passLengthStatus");
-        const status1 = document.getElementById("passFormStatus");
-        const regex = /(?=.*[0-9])(?=.*[a-zA-Z])(?=.*\W)(?=\S+$)./;
-         if(input.length < 8 || input.length > 20){
-          toggleStatusIconCross(status);
-        }else{
-            toggleStatusIconCheck(status);
-        }
-        if(regex.test(input)){
-            toggleStatusIconCheck(status1);
-        }else{
+          const inputPass = document.getElementById("password").value;
+          const inputPassCheck = document.getElementById("passCheck").value;
+          const status1 = document.getElementById("passLengthStatus");
+          const status2 = document.getElementById("passFormStatus");
+          const statusPassCheck = document.getElementById("passCheckStatus");
+          const regex = /(?=.*[0-9])(?=.*[a-zA-Z])(?=.*\W)(?=\S+$)./;
+           if(inputPass.length < 8 || inputPass.length > 20){
             toggleStatusIconCross(status1);
+          }else{
+              toggleStatusIconCheck(status1);
+          }
+          if(regex.test(inputPass)){
+              toggleStatusIconCheck(status2);
+          }else{
+              toggleStatusIconCross(status2);
+          }
+          if(inputPass === inputPassCheck){
+              toggleStatusIconCheck(statusPassCheck);
+           }else{
+              toggleStatusIconCross(statusPassCheck);
+           }
         }
-      }
 
-   function passDoubleCheck(id){
-     const input = document.getElementById(id).value;
-     const pass = document.getElementById("password").value;
-     const status = document.getElementById("passCheckStatus");
-     if(pass === input){
-        toggleStatusIconCheck(status);
-     }else{
-        toggleStatusIconCross(status);
-     }
-   }
-    function nameCheck(id){
-    const input = document.getElementById(id).value;
-    const regex = /^(?![ㄱ-ㅎ]+$)(?![ㅏ-ㅣ]+$)[가-힣]{2,6}$/;
-    if(regex.test(input)){
-    console.log("올바른 형식임");
-    }
-    }
     function toggleStatusIconCheck(element){
                element.classList.remove('cross');
                element.classList.add('check');
@@ -180,3 +170,19 @@
 
                // 페이지 로드 시 날짜 제한 설정
                document.addEventListener('DOMContentLoaded', setDateLimits);
+
+              document.addEventListener("DOMContentLoaded", function() {
+               document.getElementById("createForm").addEventListener("submit", function(event) {
+               const inputPass = document.getElementById("password");
+               const inputPassCheck = document.getElementById("passCheck");
+               const addressCheck = document.getElementById("sample3_address");
+                if(inputPass.value != inputPassCheck.value){
+               event.preventDefault();
+               inputPassCheck.focus();
+               }
+               if(addressCheck.value == ""){
+               event.preventDefault();
+               addressCheck.focus();
+               }
+           });
+           });

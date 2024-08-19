@@ -30,6 +30,8 @@ public class SellerServiceImpl implements SellerService {
         store.setCeo(sellerDTO.getCeo());
         store.setTel(sellerDTO.getTel());
         store.setAddr(sellerDTO.getAddress());
+        store.setOrderCount(0);
+        store.setLikes(0);
         storesRepository.save(store);
 
         Seller seller = new Seller();

@@ -29,8 +29,7 @@ public class Reviews {
     @Column
     private String content;
 
-//    @ManyToOne(fetch = FetchType.EAGER)
-//    @JoinColumn(name = "id")
-//    private users user;
+    @Column
+    private String writer;
 
 }
