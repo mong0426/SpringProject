@@ -155,12 +155,12 @@ h1, h2, h3, h4, h5, h6, strong, em {
 .login__content {
     width: 600px;
     margin: 0 auto;
-    padding-top: 65px;
+    padding-top: 50px;
     border-top: 1px solid #d4d4d4;
 }
 .login__container {
     width: var(--size-pc);
-    margin: 70px auto 0;
+    margin: 10px auto 0;
 }
 
 .login__input {
@@ -371,3 +371,18 @@ body, dl, dt, dd, figure, h1, h2, h3, h4, h5, h6, ol, ul, li, p, table, td, th, 
             content: '✘'; /* 엑스 표시 */
             color: red;
         }
+.SubHeaderContent{
+     display: flex;
+     justify-content: center;
+}
+.SubHeaderDiv{
+    display: flex;
+    justify-content: right;
+    width: 600px;
+    margin-top: 60px;
+    font-size: 14px;
+    color: #8b8b8b;
+}
+.RedColor{
+    color:red;
+}

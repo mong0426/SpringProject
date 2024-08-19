@@ -1,5 +1,6 @@
 package com.example.project3.Controller;
 
+import com.example.project3.DTO.SellerDTO;
 import com.example.project3.DTO.UserDTO;
 import com.example.project3.Entity.User;
 import com.example.project3.Service.UserService;
@@ -31,9 +32,9 @@ public class UserController {
         return "login";
     }
 
-    @GetMapping("Usertype")
-    public String Usertype() {
-        return "Usertype";
+    @GetMapping("CreateAccount")
+    public String CreateAccount() {
+        return "CreateAccount";
     }
 
     @PostMapping("/loginUser")
@@ -42,10 +43,16 @@ public class UserController {
         return "redirect:/"; // 성공 시 리디렉션 페이지
     }
 
-    @GetMapping("/Join")
-    public String join(Model model) {
+    @GetMapping("/CreateAccount/User")
+    public String CreateAccountUser(Model model) {
         model.addAttribute("userDTO", new UserDTO());
-        return "join";
+        return "User";
+    }
+
+    @GetMapping("CreateAccount/Seller")
+    public String CreateAccountSeller(Model model) {
+        model.addAttribute("sellerDTO", new SellerDTO());
+        return "Seller";
     }
 
     @PostMapping("/register")
@@ -57,7 +64,7 @@ public class UserController {
             for (FieldError error : bindingResult.getFieldErrors()) {
                 System.out.println("필드: " + error.getField() + ", 에러 메시지: " + error.getDefaultMessage());
             }
-            return "/join";
+            return "/CreateAccount/User";
         }
         try {
             User registeredUser = userService.registerUser(userDTO);

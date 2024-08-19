@@ -2,7 +2,7 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>배달의 만족</title>
     <link th:href="@{/css/ocss/Usertype.css}" rel="stylesheet"/>
     <link th:href="@{/css/ocss/mainpage.css}" rel="stylesheet"/>
 </head>
@@ -16,7 +16,7 @@
         <div class="selector select-btn">
             <ul id="UserSelect" class="UserSelect SMN_effect-5">
 
-                <a class="select-form" th:href="@{/Join}">
+                <a class="select-form" th:href="@{/CreateAccount/User}">
                     <div>
                         <img class="select-img" th:src="@{/img/Joinimg/user.png}">
                         <span class="img-text">일반 사용자</span>
@@ -27,7 +27,7 @@
             </ul>
             <ul id="SellerSelect" class="SellerSelect SMN_effect-5">
 
-                <a class="select-form" th:href="@{/SellerJoin}">
+                <a class="select-form" th:href="@{/CreateAccount/Seller}">
                     <div>
                         <img class="select-img1" th:src="@{/img/Joinimg/seller.png}">
                         <span class="img-text1">배달의 만족 사장님</span>
