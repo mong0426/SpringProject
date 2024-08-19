@@ -2,7 +2,6 @@ package com.example.project3.Service;
 
 import com.example.project3.DTO.StoreDetailsDTO;
 import com.example.project3.Entity.Stores;
-
 import java.util.List;
 
 public interface StoreDetailsService {

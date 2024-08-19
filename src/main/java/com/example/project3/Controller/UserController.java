@@ -49,12 +49,6 @@ public class UserController {
         return "User";
     }
 
-    @GetMapping("CreateAccount/Seller")
-    public String CreateAccountSeller(Model model) {
-        model.addAttribute("sellerDTO", new SellerDTO());
-        return "Seller";
-    }
-
     @PostMapping("/register")
     public String registerUser(@Valid @ModelAttribute UserDTO userDTO, BindingResult bindingResult) {
         System.out.println("여기임 ==================");
@@ -64,7 +58,7 @@ public class UserController {
             for (FieldError error : bindingResult.getFieldErrors()) {
                 System.out.println("필드: " + error.getField() + ", 에러 메시지: " + error.getDefaultMessage());
             }
-            return "/CreateAccount/User";
+            return "User";
         }
         try {
             User registeredUser = userService.registerUser(userDTO);

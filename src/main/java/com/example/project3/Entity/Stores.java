@@ -14,7 +14,7 @@ import java.util.List;
 public class Stores {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long sno;
 
     @Column(nullable = false)

@@ -33,7 +33,7 @@ public class UserService {
 //        } catch (IllegalArgumentException e) {
 //            throw new IllegalArgumentException("Invalid role.");
 //        }
-
+        System.out.println("User Service ====================");
         // User 엔티티 생성
         User user = User.builder()
                 .username(userDTO.getUserid())

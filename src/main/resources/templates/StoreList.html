@@ -70,7 +70,7 @@
         <div th:each="store : ${stores}" class="StoreListDiv">
             <a class="StoreATag" th:href="@{/StoreDetails(sno = ${store.sno})}">
             <div class="StoreThumbnail">
-                <img class="Thumbnail" th:src="${store.images.size() > 0 ? store.images[0].imageUrl : '/img/default.png'}" alt="Store Thumbnail"/>
+                <img class="Thumbnail" th:src="${store.images.size() > 0 ? store.images[0].imageUrl : '/img/default.jpg'}" alt="Store Thumbnail"/>
             </div>
             <div class="StoreInfo">
                 <h2 th:text="${store.store}">가게 이름</h2><br/>

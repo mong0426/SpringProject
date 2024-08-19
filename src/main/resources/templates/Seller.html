@@ -7,7 +7,7 @@
     <link th:href="@{/css/ocss/mainpage.css}" rel="stylesheet"/>
     <link th:href="@{/css/ocss/join.css}" rel="stylesheet"/>
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-    <script th:src="@{/js/ojs/join.js}"></script>
+    <script th:src="@{/js/ojs/seller.js}"></script>
 </head>
 <body class="">
 <header th:replace="~{Header :: body}"></header>
@@ -27,20 +27,20 @@
     <div class="login__container">
         <div class="login__content">
             <div class="login__inner">
-                <form th:action="@{/register}" method="post" class="login__form" th:object="${sellerDTO}">
+                <form th:action="@{/register/Seller}" method="post" class="login__form" th:object="${sellerDTO}">
                     <fieldset class="login__block">
                         <legend>계정 입력 폼</legend>
 
                         <label class="login__label">
                             <span>아이디</span>
-                            <input type="text" name="userid" id="userid" th:field="*{userid}" placeholder="아이디"
+                            <input type="text" name="id" id="id" th:field="*{id}" placeholder="아이디"
                                    autocomplete="off" maxlength="12"
                                    oninput="checkIdInput(this.id)" class="login__input"
                                    pattern=".{6,12}" title="아이디는 6자 이상 12자 이하로 입력해주세요."
                                    required>
                             <span id="idStatus" class="icon cross"></span>
                             <span class="ValidWarningFont">6자 이상 12자 이하로 입력해주세요.</span>
-                            <span th:if="${#fields.hasErrors('userid')}" th:errors="*{userid}"></span>
+                            <span th:if="${#fields.hasErrors('id')}" th:errors="*{id}"></span>
                         </label>
 
                         <label class="login__label">
@@ -66,19 +66,18 @@
                         </label>
 
                         <label class="login__label">매장 이름
-                            <input type="text" id="storeName" name="storeName" placeholder="매장 이름"
+                            <input type="text" id="store" name="store" th:field="*{store}" placeholder="매장 이름"
                                    autocomplete="off"
-                                   maxlength="8"
+                                   maxlength="30"
                                    class="login__input" required>
-
                         </label>
 
                         <label class="login__label">대표자
-                            <input type="text" id="name" name="name" th:field="*{name}" placeholder="대표자 이름"
+                            <input type="text" id="ceo" name="ceo" th:field="*{ceo}" placeholder="대표자 이름"
                                    autocomplete="off" oninput="nameCheck(this.id)"
                                    maxlength="8"
                                    class="login__input" required>
-                            <span th:if=" ${#fields.hasErrors('name')}" th:errors="*{name}"></span>
+                            <span th:if=" ${#fields.hasErrors('ceo')}" th:errors="*{ceo}"></span>
                         </label>
 
                         <label class="login__label">
@@ -99,11 +98,11 @@
 
                         <label class="login__label">
                             <span>매장 전화번호</span>
-                            <input type="tel" id="phone" name="phone" th:field="*{phone}" placeholder="031-234-5678"
+                            <input type="tel" id="tel" name="tel" th:field="*{tel}" placeholder="031-234-5678"
                                    oninput="updatePhoneNumber()"
                                    maxlength="13" autocomplete="off"
                                    class="login__input" required>
-                            <span th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}"></span>
+                            <span th:if="${#fields.hasErrors('tel')}" th:errors="*{tel}"></span>
                         </label>
 
                         <label class="login__label">
