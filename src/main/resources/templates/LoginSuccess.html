@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>배달의 만족</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link th:href="@{/css/ocss/mainpage.css}" rel="stylesheet"/>
+</head>
+<body>
+<header th:replace="~{Header :: body}"></header>
+<div class="container">
+    <div class="Welcome">
+        <div class="WelcomeContent">
+            <svg data-id="4" xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 24 24" fill="none"
+                 stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                 class="text-green-500 h-12 w-12 mx-auto">
+                <circle cx="12" cy="12" r="10"></circle>
+                <path d="m9 12 2 2 4-4"></path>
+            </svg>
+            <h1>로그인에 성공했습니다.</h1>
+            <p class="WelcomeFont">서비스를 이용하실 수 있습니다.</p>
+            <div class="WelcomeBtnDiv">
+                <a th:href="@{/}" class="Welcome-select-btn">메인 페이지로 이동</a>
+            </div>
+        </div>
+    </div>
+</div>
+<div th:replace="~{Footer :: body}"></div>
+</body>
+</html>

@@ -61,6 +61,7 @@ select {
     width: 100px;
     padding: 0;
     margin: auto;
+    font-size:14px;
     font-weight: 600;
     text-align: center;
     line-height: 50px;
@@ -153,7 +154,7 @@ h1, h2, h3, h4, h5, h6, strong, em {
     margin: 0 auto;
 }
 .login__content {
-    width: 600px;
+    width: 800px;
     margin: 0 auto;
     padding-top: 50px;
     border-top: 1px solid #d4d4d4;
@@ -243,7 +244,7 @@ input {
 }
 
 .login__button--login {
-    margin-top: 10px;
+    margin-top: 30px;
     background: #000;
     color: #fff;
     font-weight: var(--font-weight-sd-bold);
@@ -378,7 +379,7 @@ body, dl, dt, dd, figure, h1, h2, h3, h4, h5, h6, ol, ul, li, p, table, td, th, 
 .SubHeaderDiv{
     display: flex;
     justify-content: right;
-    width: 600px;
+    width: 800px;
     margin-top: 60px;
     font-size: 14px;
     color: #8b8b8b;
@@ -392,4 +393,18 @@ body, dl, dt, dd, figure, h1, h2, h3, h4, h5, h6, ol, ul, li, p, table, td, th, 
 }
 .telHyphen{
      font-size:30px;
+ }
+ .inputDiv{
+    display:flex;
+    align-items:center;
+    width:630px;
+ }
+ .isExistCheckBtn{
+    min-width:100px;
+    height:40px;
+    margin-left:30px;
+    border: none;
+    border-radius:5px;
+    background-color:black;
+    color:white;
  }

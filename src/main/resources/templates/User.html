@@ -4,9 +4,13 @@
     <meta charset="UTF-8">
     <title>배달의 만족 - 회원가입</title>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
     <link th:href="@{/css/ocss/mainpage.css}" rel="stylesheet"/>
     <link th:href="@{/css/ocss/join.css}" rel="stylesheet"/>
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.js"></script>
     <script th:src="@{/js/ojs/join.js}"></script>
 </head>
 <body class="">
@@ -32,19 +36,25 @@
                         <legend>계정 입력 폼</legend>
                         <label class="login__label">
                             <span>아이디</span>
-                            <input type="text" name="userid" id="userid" th:field="*{userid}" placeholder="아이디"
-                                   autocomplete="off" maxlength="12"
-                                   oninput="checkIdInput(this.id)" class="login__input"
-                                   pattern="[a-zA-Z0-9]{6,12}" title="아이디는 영문 혹은 숫자를 사용해 6자 이상 12자 이하로 입력해주세요."
-                                   required>
+                            <div class="inputDiv">
+                                <input type="text" id="userid" th:field="*{userid}" placeholder="아이디"
+                                       autocomplete="off" maxlength="12"
+                                       oninput="checkIdInput(this.id)" class="login__input"
+                                       pattern="[a-zA-Z0-9]{6,12}" title="아이디는 영문 혹은 숫자를 사용해 6자 이상 12자 이하로 입력해주세요."
+                                       required>
+                                <div>
+                                    <button type="button" class="isExistCheckBtn" id="isIdExistBtn">중복 확인</button>
+                                    <input type="hidden" id="isExistCheck">
+                                </div>
+                            </div>
                             <span id="idStatus" class="icon cross"></span>
-                            <span class="ValidWarningFont">아이디는 영문 혹은 숫자를 사용해 6자 이상 12자 이하로 입력해주세요.</span>
+                            <span class="ValidWarningFont">아이디는 영문 혹은 숫자를 사용해 6자 이상 12자 이하로 입력해주세요.</span><br/>
                             <span th:if="${#fields.hasErrors('userid')}" th:errors="*{userid}"></span>
                         </label>
 
                         <label class="login__label">
                             <span>비밀번호</span>
-                            <input type="password" name="password" id="password" th:field="*{password}"
+                            <input type="password" id="password" th:field="*{password}"
                                    autocomplete="off" maxlength="20"
                                    oninput="checkPassInput()" placeholder="비밀번호 "
                                    pattern="^(?=.*[a-zA-Z])(?=.*\d)(?=.*[\W_]).{8,20}$"
@@ -59,7 +69,7 @@
 
                         <label class="login__label">
                             <span>비밀번호 확인</span>
-                            <input type="password" name="passwordConfirm" id="passCheck" placeholder="비밀번호확인"
+                            <input type="password" id="passCheck" placeholder="비밀번호확인"
                                    autocomplete="off" maxlength="20"
                                    class="login__input" oninput="checkPassInput()" required>
                             <span class="icon cross" id="passCheckStatus"></span>
@@ -67,7 +77,7 @@
                         </label>
 
                         <label class="login__label">이름
-                            <input type="text" id="name" name="name" th:field="*{name}" placeholder="이름"
+                            <input type="text" id="name" th:field="*{name}" placeholder="이름"
                                    autocomplete="off"
                                    pattern="^(?![ㄱ-ㅎ]+$)(?![ㅏ-ㅣ]+$)[가-힣]{2,6}$"
                                    title="올바른 이름을 입력해주세요."
@@ -82,9 +92,9 @@
                                    maxlength="20" oninput="checkEmail()"
                                    pattern="[a-zA-Z0-9]{4,15}" title="올바른 이메일을 입력해주세요."
                                    class="email" required>
-                            <input type="hidden" id="email" name="email" th:field="*{email}">
+                            <input type="hidden" id="email" th:field="*{email}">
                             @
-                            <select id="emailDomain" name="emailDomain" onchange="checkEmail()" required>
+                            <select id="emailDomain" onchange="checkEmail()" required>
                                 <option value="naver.com" selected>naver.com</option>
                                 <option value="gmail.com">gmail.com</option>
                                 <option value="daum.net">daum.net</option>
@@ -95,7 +105,7 @@
 
                         <label class="login__label">
                             <span>휴대폰번호</span>
-                            <input type="tel" id="phone" name="phone" th:field="*{phone}" placeholder="010-1234-5678"
+                            <input type="tel" id="phone" th:field="*{phone}" placeholder="010-1234-5678"
                                    oninput="updatePhoneNumber()"
                                    maxlength="13" autocomplete="off"
                                    class="login__input" required>
@@ -128,7 +138,7 @@
 
                         <label class="login__label">
                             <span>생년월일</span>
-                            <input type="date" id="birthDate" name="birthDate" class="login__input" th:field="*{birth}"
+                            <input type="date" id="birthDate" class="login__input" th:field="*{birth}"
                                    required>
                         </label>
                         <button id="submitBtn" class="login__button login__button--login">제출하기</button>

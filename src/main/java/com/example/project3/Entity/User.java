@@ -22,19 +22,19 @@ public class User {
     private String userid;
 
     @Column(nullable = false)
-    private String name;
+    private String password;
 
     @Column(nullable = false)
-    private String password;
+    private String name;
 
     @Column(nullable = false, unique = true)
     private String email;
 
     @Column(nullable = false)
-    private String address;
+    private String phone;
 
     @Column(nullable = false)
-    private String phone;
+    private String address;
 
     @Column(nullable = false)
     private String birth;

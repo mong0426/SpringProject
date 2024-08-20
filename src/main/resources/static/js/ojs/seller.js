@@ -2,36 +2,36 @@
     const input = document.getElementById(id).value;
     const status = document.getElementById("idStatus");
     const waring = document.getElementById("useridWarning");
-        if(input.length < 6 || input.length > 12){
+    document.getElementById("isExistCheck").value = "false";
+    if(input.length < 6 || input.length > 12){
         toggleStatusIconCross(status);
     }else{
         toggleStatusIconCheck(status);
     }
   }
-
   function checkPassInput(id){
-        const inputPass = document.getElementById("password").value;
-        const inputPassCheck = document.getElementById("passCheck").value;
-        const status1 = document.getElementById("passLengthStatus");
-        const status2 = document.getElementById("passFormStatus");
-        const statusPassCheck = document.getElementById("passCheckStatus");
-        const regex = /(?=.*[0-9])(?=.*[a-zA-Z])(?=.*\W)(?=\S+$)./;
-         if(inputPass.length < 8 || inputPass.length > 20){
-          toggleStatusIconCross(status1);
-        }else{
-            toggleStatusIconCheck(status1);
+          const inputPass = document.getElementById("password").value;
+          const inputPassCheck = document.getElementById("passCheck").value;
+          const status1 = document.getElementById("passLengthStatus");
+          const status2 = document.getElementById("passFormStatus");
+          const statusPassCheck = document.getElementById("passCheckStatus");
+          const regex = /(?=.*[0-9])(?=.*[a-zA-Z])(?=.*\W)(?=\S+$)./;
+           if(inputPass.length < 8 || inputPass.length > 20){
+            toggleStatusIconCross(status1);
+          }else{
+              toggleStatusIconCheck(status1);
+          }
+          if(regex.test(inputPass)){
+              toggleStatusIconCheck(status2);
+          }else{
+              toggleStatusIconCross(status2);
+          }
+          if((inputPass != "" || inputPassCheck != "") && inputPass === inputPassCheck){
+              toggleStatusIconCheck(statusPassCheck);
+           }else{
+              toggleStatusIconCross(statusPassCheck);
+           }
         }
-        if(regex.test(inputPass)){
-            toggleStatusIconCheck(status2);
-        }else{
-            toggleStatusIconCross(status2);
-        }
-        if(inputPass === inputPassCheck){
-            toggleStatusIconCheck(statusPassCheck);
-         }else{
-            toggleStatusIconCross(statusPassCheck);
-         }
-      }
 
     function toggleStatusIconCheck(element){
                element.classList.remove('cross');
@@ -146,13 +146,75 @@
                const inputPass = document.getElementById("password");
                const inputPassCheck = document.getElementById("passCheck");
                const addressCheck = document.getElementById("sample3_address");
+               const Toast = Swal.mixin({
+                     toast: true,
+                     showConfirmButton: false,
+                     timer: 800,
+                     timerProgressBar: true
+               });
+                if(document.getElementById("isExistCheck").value != "true"){
+                    event.preventDefault();
+                    Toast.fire({
+                         icon: 'warning',
+                        title: '아이디 중복체크 오류입니다.'
+                    });
+                }
                 if(inputPass.value != inputPassCheck.value){
                event.preventDefault();
                inputPassCheck.focus();
+               Toast.fire({
+                        icon: 'warning',
+                        title: '비밀번호를 다시 한 번 정확히 입력해주세요.'
+                  });
                }
                if(addressCheck.value == ""){
                event.preventDefault();
                addressCheck.focus();
+                Toast.fire({
+                        icon: 'warning',
+                        title: '주소 검색을 해주세요.'
+                });
                }
            });
            });
+          $(document).ready(function() {
+             $('#isIdExistBtn').click(function() {
+              const inputId = document.getElementById("id").value;
+              const isIdExistBtn = document.getElementById("isIdExistBtn");
+              const csrfToken = document.querySelector('meta[name="_csrf"]').getAttribute('content');
+              const csrfHeader = document.querySelector('meta[name="_csrf_header"]').getAttribute('content');
+              const Toast = Swal.mixin({
+              toast: true,
+              showConfirmButton: false,
+              timer: 800,
+              timerProgressBar: true
+          });
+          fetch('/isExist/id', {
+              method: 'POST',
+              headers: {
+                  'Content-Type': 'application/json',
+                  [csrfHeader]: csrfToken
+              },
+              body: JSON.stringify({ userid: inputId })
+          }) .then(response => response.json())
+             .then(data => {
+              console.log('Response data:', data);
+             if(inputId != ""){
+              if (data === false) {
+              document.getElementById("isExistCheck").value = "true";
+                  Toast.fire({
+                      icon: 'success',
+                      title: '사용 가능한 아이디입니다.'
+                  });
+              } else {
+                  Toast.fire({
+                      icon: 'error',
+                      title: '이미 사용 중인 아이디입니다.'
+                  });
+              }}
+          })
+          .catch(error => {
+              console.error('Error:', error);
+          });
+      });
+  });

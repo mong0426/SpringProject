@@ -1,5 +1,9 @@
 package com.example.project3.DTO;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
@@ -8,6 +12,8 @@ import lombok.Data;
 
 @Data
 public class UserDTO {
+
+    private Long id;
 
     @NotBlank(message = "아이디를 입력해주세요.")
     @Size(min = 6, max = 12, message = "아이디는 영문 혹은 숫자를 사용해 6자 이상 12자 이하로 입력해주세요.")

@@ -4,9 +4,13 @@
     <meta charset="UTF-8">
     <title>배달의 만족 - 회원가입</title>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
     <link th:href="@{/css/ocss/mainpage.css}" rel="stylesheet"/>
     <link th:href="@{/css/ocss/join.css}" rel="stylesheet"/>
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.js"></script>
     <script th:src="@{/js/ojs/seller.js}"></script>
 </head>
 <body class="">
@@ -27,25 +31,31 @@
     <div class="login__container">
         <div class="login__content">
             <div class="login__inner">
-                <form th:action="@{/register/Seller}" id="createForm" method="post" class="login__form" th:object="${sellerDTO}">
+                <form th:action="@{/register/Seller}" id="createForm" method="post" class="login__form"
+                      th:object="${sellerDTO}">
                     <fieldset class="login__block">
                         <legend>계정 입력 폼</legend>
-
                         <label class="login__label">
                             <span>아이디</span>
-                            <input type="text" name="id" id="id" th:field="*{id}" placeholder="아이디"
-                                   autocomplete="off" maxlength="12"
-                                   oninput="checkIdInput(this.id)" class="login__input"
-                                   pattern="[a-zA-Z0-9]{6,12}" title="아이디는 영문 혹은 숫자를 사용해 6자 이상 12자 이하로 입력해주세요."
-                                   required>
+                            <div class="inputDiv">
+                                <input type="text" th:field="*{id}" placeholder="아이디"
+                                       autocomplete="off" maxlength="12"
+                                       oninput="checkIdInput(this.id)" class="login__input"
+                                       pattern="[a-zA-Z0-9]{6,12}" title="아이디는 영문 혹은 숫자를 사용해 6자 이상 12자 이하로 입력해주세요."
+                                       required>
+                                <div>
+                                    <button type="button" class="isExistCheckBtn" id="isIdExistBtn">중복 확인</button>
+                                    <input type="hidden" id="isExistCheck">
+                                </div>
+                            </div>
                             <span id="idStatus" class="icon cross"></span>
-                            <span class="ValidWarningFont">아이디는 영문 혹은 숫자를 사용해 6자 이상 12자 이하로 입력해주세요.</span>
+                            <span class="ValidWarningFont">아이디는 영문 혹은 숫자를 사용해 6자 이상 12자 이하로 입력해주세요.</span><br/>
                             <span th:if="${#fields.hasErrors('id')}" th:errors="*{id}"></span>
                         </label>
 
                         <label class="login__label">
                             <span>비밀번호</span>
-                            <input type="password" name="password" id="password" th:field="*{password}"
+                            <input type="password" id="password" th:field="*{password}"
                                    autocomplete="off" maxlength="20"
                                    oninput="checkPassInput()" placeholder="비밀번호 "
                                    pattern="^(?=.*[a-zA-Z])(?=.*\d)(?=.*[\W_]).{8,20}$"
@@ -60,7 +70,7 @@
 
                         <label class="login__label">
                             <span>비밀번호 확인</span>
-                            <input type="password" name="passwordConfirm" id="passCheck" placeholder="비밀번호확인"
+                            <input type="password" id="passCheck" placeholder="비밀번호확인"
                                    autocomplete="off" maxlength="20"
                                    class="login__input" oninput="checkPassInput()" required>
                             <span class="icon cross" id="passCheckStatus"></span>
@@ -91,10 +101,9 @@
                                    maxlength="20" oninput="checkEmail()"
                                    pattern="[a-zA-Z0-9]{4,15}" title="올바른 이메일을 입력해주세요."
                                    class="email" required>
-                            <input type="hidden" id="email" name="email" th:field="*{email}"
-                            >
+                            <input type="hidden" id="email" th:field="*{email}">
                             @
-                            <select id="emailDomain" name="emailDomain" onchange="checkEmail()" required>
+                            <select id="emailDomain" onchange="checkEmail()" required>
                                 <option value="naver.com" selected>naver.com</option>
                                 <option value="gmail.com">gmail.com</option>
                                 <option value="daum.net">daum.net</option>
@@ -144,7 +153,7 @@
                                      style="cursor:pointer;position:absolute;right:0px;top:-1px;z-index:1"
                                      onclick="foldDaumPostcode()" alt="접기 버튼">
                             </div>
-                            <input type="text" id="sample3_address" class="login__address1" title="주소 검색을 해주세요."
+                            <input type="text" id="sample3_address" class="login__address1"
                                    placeholder="주소" readonly>
                             <input type="text" id="sample3_detailAddress" name="detailAddress" class="login__input"
                                    placeholder="상세주소(동,호수를 입력해주세요)" autocomplete="off" oninput="addDetailAddress()"
