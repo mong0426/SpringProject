@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -34,10 +35,14 @@ public class MainController {
     public String storeDetails(@RequestParam("sno") long sno, Model model) {
         StoreDetailsDTO dto = service.showStore(sno);
         double totalRating = 0;
-        for (int i = 0; i < dto.getReviews().size(); i++) {
-            totalRating += dto.getReviews().get(i).getRating();
+        if (dto.getReviews() != null) {
+            for (int i = 0; i < dto.getReviews().size(); i++) {
+                totalRating += dto.getReviews().get(i).getRating();
+            }
         }
+        DecimalFormat df = new DecimalFormat("#.0");
         double averageRating = totalRating == 0 ? 0 : totalRating / dto.getReviews().size();
+        averageRating = Double.parseDouble(df.format(averageRating));
         model.addAttribute("storeDetails", dto);
         model.addAttribute("averageRating", averageRating);
         return "StoreDetails";

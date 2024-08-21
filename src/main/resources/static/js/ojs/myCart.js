@@ -50,6 +50,8 @@ function deleteItem(index) {
                 // 장바구니가 비어 있는지 확인
                 if (data.empty) {
                     var TotalPriceElement = document.getElementById("allTotalPrice");
+                    var storeNameDiv = document.getElementById("StoreNameDiv");
+                    storeNameDiv.style.display = "none";
                     TotalPriceElement.textContent = "";
                     document.getElementById("buyFoodDiv").style.display = "none";
                     document.getElementById("cart-container").innerHTML = `

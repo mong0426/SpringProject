@@ -101,13 +101,17 @@
 
     <div>
         <div class="SubContentsDiv">
-            <a class="SubContents" th:href="@{/userinfo}" th:text="${username}" methods="get">a</a>
+            <a class="SubContents" th:href="@{/userinfo}" th:text="${username}" methods="get"></a>
+            <p>사용자 이름: <span th:text="${#authentication.name}"></span></p>
             <button class="SubContents">b</button>
             <button class="SubContents">c</button>
             <button class="SubContents">d</button>
         </div>
     </div>
 </div>
+<script th:if="${#authentication.principal != 'anonymousUser'}">
+    console.log("사용자 이름은:","/*[[${#authentication.name}]]*/");
+</script>
 <div th:replace="~{Footer :: body}"></div>
 </body>
 </html>

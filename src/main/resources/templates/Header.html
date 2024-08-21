@@ -8,29 +8,29 @@
 <body>
 <div class="StickyHeader">
     <div class="InnerLine">
-    <a th:href="@{/}" class="Logo">배달의 만족</a>
+        <a th:href="@{/}" class="Logo">배달의 만족</a>
         <div class="SearchDiv">
-            <form class="SearchForm" id="searchForm" th:action="@{/StoreList}" method="get">
-            <input class="SearchText" type="text" id="searchText" name="searchText">
-            <button class="SearchBtn" id="searchBtn">
-                <img class="HeaderMenuImage" th:src="@{/img/headerimg/SearchIcon.png}" alt=""/>
-            </button>
+            <form class="SearchForm" id="searchForm" name="searchForm" th:action="@{/StoreList}" method="get">
+                <input class="SearchText" type="text" id="searchText" name="searchText">
+                <button type="button" class="SearchBtn" id="searchBtn" name="searchBtn">
+                    <img class="HeaderMenuImage" th:src="@{/img/headerimg/SearchIcon.png}" alt="searchIcon"/>
+                </button>
             </form>
         </div>
-    <div class="MenuStyle">
-        <a class="MenuATag" th:href="@{/login}">
-            <img class="HeaderMenuImage" th:src="@{/img/headerimg/LoginIcon.png}" alt=""/>
-        </a>
-        <a class="MenuATag" th:href="@{/}">
-            <img class="HeaderMenuImage" th:src="@{/img/headerimg/NoticeIcon.png}" alt=""/>
-        </a>
-        <a class="MenuATag" th:href="@{/myCart}" id="notification">
-            <img class="HeaderMenuImage" th:src="@{/img/headerimg/CartIcon.png}" alt="CartIcon"/>
-            <span class="notification-bubble"
-                  th:if="${session.cartItems != null and session.cartItems.size() > 0}"
-                  th:text="${session.cartItems.size()}"></span>
-        </a>
-    </div>
+        <div class="MenuStyle">
+            <a class="MenuATag" th:href="@{/login}">
+                <img class="HeaderMenuImage" th:src="@{/img/headerimg/LoginIcon.png}" alt=""/>
+            </a>
+            <a class="MenuATag" th:href="@{/}">
+                <img class="HeaderMenuImage" th:src="@{/img/headerimg/NoticeIcon.png}" alt=""/>
+            </a>
+            <a class="MenuATag" th:href="@{/myCart}" id="notification">
+                <img class="HeaderMenuImage" th:src="@{/img/headerimg/CartIcon.png}" alt="CartIcon"/>
+                <span class="notification-bubble"
+                      th:if="${session.cartItems != null and session.cartItems.size() > 0}"
+                      th:text="${session.cartItems.size()}"></span>
+            </a>
+        </div>
     </div>
 </div>
 <script>

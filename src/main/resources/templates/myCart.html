@@ -7,8 +7,8 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
             crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert2/11.12.4/sweetalert2.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert2/11.12.4/sweetalert2.all.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <title>배달의 만족</title>
     <meta name="_csrf" th:content="${_csrf.token}"/>
@@ -24,7 +24,7 @@
         <span>장바구니</span>
     </div>
     <div class="JustifyContentCenter">
-        <div class="StoreNameDiv">
+        <div class="StoreNameDiv" id="StoreNameDiv">
              <span th:if="${session.cartItems != null and session.cartItems.size() > 0}"
                    th:text="${session.cartItems[0].storeName}"></span>
             <span th:unless="${session.cartItems != null and session.cartItems.size() > 0}"></span>

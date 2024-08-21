@@ -79,23 +79,25 @@ public class UserController {
         System.out.println("id =========== " + id);
         return userService.isExistId(id);
     }
-    @GetMapping("/userinfo")
-    public String userInfo(Model model) {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        Object principal = auth.getPrincipal();
 
-        if (principal instanceof UserDetails) {
-            UserDetails userDetails = (UserDetails) principal;
-            System.out.println("Username ================= userDetails.getUsername " + userDetails.getUsername());
-            model.addAttribute("username", userDetails.getUsername());
-        } else if (principal instanceof String) {
-            // principal이 String 타입인 경우
-            System.out.println("Username ================= String" + principal);
-            model.addAttribute("username", principal);
-        } else {
-            // 인증되지 않은 사용자 처리
-            System.out.println("인증되지 않은 사용자입니다.");
-        }
-        return "MainPage";
-    }
+//    @GetMapping("/userinfo")
+//    public String userInfo(Model model) {
+//        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+//        System.out.println(SecurityContextHolder.getContext().getAuthentication().getName());
+//        Object principal = auth.getPrincipal();
+//
+//        if (principal instanceof UserDetails) {
+//            UserDetails userDetails = (UserDetails) principal;
+//            System.out.println("Username ================= userDetails.getUsername " + userDetails.getUsername());
+//            model.addAttribute("username", userDetails.getUsername());
+//        } else if (principal instanceof String) {
+//            // principal이 String 타입인 경우
+//            System.out.println("Username ================= String" + principal);
+//            model.addAttribute("username", principal);
+//        } else {
+//            // 인증되지 않은 사용자 처리
+//            System.out.println("인증되지 않은 사용자입니다.");
+//        }
+//        return "MainPage";
+//    }
 }
