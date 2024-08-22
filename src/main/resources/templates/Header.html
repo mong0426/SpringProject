@@ -18,11 +18,14 @@
             </form>
         </div>
         <div class="MenuStyle">
-            <a class="MenuATag" th:href="@{/login}">
+            <a th:if="${#authentication.name} == 'anonymousUser'" class="MenuATag" th:href="@{/login}">
                 <img class="HeaderMenuImage" th:src="@{/img/headerimg/LoginIcon.png}" alt=""/>
             </a>
-            <a class="MenuATag" th:href="@{/}">
-                <img class="HeaderMenuImage" th:src="@{/img/headerimg/NoticeIcon.png}" alt=""/>
+            <a th:if="${#authentication.name} != 'anonymousUser'" class="MenuATag" th:href="@{/myPage}">
+                <img class="HeaderMenuImage" th:src="@{/img/headerimg/SettingIcon.png}" alt=""/>
+            </a>
+            <a class="MenuATag" th:href="@{/saved-stores}">
+                <img class="HeaderMenuImage" th:src="@{/img/headerimg/LikesIconWhite.png}" alt=""/>
             </a>
             <a class="MenuATag" th:href="@{/myCart}" id="notification">
                 <img class="HeaderMenuImage" th:src="@{/img/headerimg/CartIcon.png}" alt="CartIcon"/>

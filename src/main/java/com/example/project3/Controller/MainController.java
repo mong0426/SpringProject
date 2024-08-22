@@ -48,7 +48,7 @@ public class MainController {
         return "StoreDetails";
     }
 
-    @GetMapping("myCart")
+    @GetMapping("/myCart")
     public String myCart() {
         return "myCart";
     }

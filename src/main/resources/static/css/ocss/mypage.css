@@ -1,0 +1,58 @@
+.container{
+    min-width:1500px;
+    min-height:750px;
+    flex:1;
+}
+.my-page-title{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 200px;
+    margin-top:50px;
+}
+.profile-icon{
+    width:100px;
+    height:100px;
+}
+.before-id-span{
+    font-size:25px;
+}
+.userid-span{
+    font-size: 25px;
+    font-weight: 600;
+}
+.id-right-arrow{
+    font-size: 25px;
+    color: #cbcbcb;
+}
+.flex-justify-center{
+    display: flex;
+    justify-content: center;
+}
+.sub-menu-body{
+    display: flex;
+    width: 400px;
+    border-top: 1px solid gainsboro;
+    padding: 20px;
+    justify-content: space-between;
+}
+.sub-menu-div{
+    width: fit-content;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 80px;
+    justify-content: space-between;
+}
+.order-list-icon{
+    width:40px;
+    height:50px;
+}
+.sub-menu-icon{
+    width:50px;
+    height:50px;
+}
+.hidden-content{
+    display:none;
+}
