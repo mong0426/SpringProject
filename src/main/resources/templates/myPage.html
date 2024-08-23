@@ -7,6 +7,9 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
             crossorigin="anonymous"></script>
+    <script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=f7e0248a0ea796980fa0dbd15bc25170&libraries=services"></script>
+    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=APIKEY&libraries=LIBRARY"></script>
+    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert2/11.12.4/sweetalert2.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert2/11.12.4/sweetalert2.all.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -15,16 +18,27 @@
     <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
     <link th:href="@{/css/ocss/mainpage.css}" rel="stylesheet"/>
     <link th:href="@{/css/ocss/mypage.css}" rel="stylesheet"/>
+    <script th:src="@{/js/ojs/mypage.js}"></script>
 </head>
 <body>
 <header th:replace="~{Header :: body}"></header>
 <div class="container">
     <div class="my-page-title">
-        <div>
+        <div class="title-top-div">
             <img class="profile-icon" th:src="@{/img/mypageimg/default-profile-icon.png}" alt="profileIcon"/>
-            <span class="before-id-span">고마운분,</span>
-            <span class="userid-span" th:text="${#authentication.name}"></span>
-            <span class="id-right-arrow"> > </span>
+            <div style="display:flex; height:70px; flex-direction: column; justify-content: space-around">
+                <div style="display:flex;">
+                    <span class="before-id-span">고마운 분,</span>
+                    <div>
+                        <span class="userid-span" th:text="${#authentication.name}"></span>
+                        <span class="id-right-arrow"> > </span>
+                    </div>
+                </div>
+                <div class="create-date-div">
+                    <span>가입하신 날짜 : </span>
+                    <span th:text="${session.userCreateDate}" id="create-date"></span>
+                </div>
+            </div>
         </div>
     </div>
     <div class="flex-justify-center">
@@ -44,11 +58,17 @@
         </div>
     </div>
     <div class="flex-justify-center">
-        <div class="sub-menu-body">
-            현재 주소
-        </div>
-        <div class="sub-menu-body hidden-content">
-            현재 주소
+        <div class="user-address-div sub-menu-body">
+            <div class="hidden-content" id="user-address-div">
+                <label for="user-address">현재 주소
+                    <input type="text" class="user-address-input" id="user-address" th:value="${session.userAddress}"
+                           disabled>
+                    <input type="text" class="user-address-input" id="user-detail-address" placeholder="상세주소" required>
+                    <div class="map-div" id="map"></div>
+                    <input type="button" class="search-address-btn" id="search-address-btn" value="주소검색"><br>
+                    <input type="button" id="change-address-btn" class="search-address-btn" value="저장"><br>
+                </label>
+            </div>
         </div>
     </div>
 </div>

@@ -38,6 +38,11 @@ public class UserService {
         return userRepository.save(user);
     }
 
+    public User getUserInfo(String id) {
+        User user = userRepository.findByUserid(id);
+        return user;
+    }
+
     public boolean isExistId(String id) {
         System.out.println("Service id ========== " + id);
         boolean result = userRepository.findByUserid(id) != null;
@@ -47,4 +52,14 @@ public class UserService {
         return result;
     }
 
+    public boolean isCoustomerUser(String id) {
+        boolean result = userRepository.findByUserid(id) != null;
+        return result;
+    }
+
+    public void updateAddress(String id, String address) {
+        User user = userRepository.findByUserid(id);
+        user.setAddress(address);
+        userRepository.save(user);
+    }
 }

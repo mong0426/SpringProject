@@ -18,12 +18,27 @@
             </form>
         </div>
         <div class="MenuStyle">
-            <a th:if="${#authentication.name} == 'anonymousUser'" class="MenuATag" th:href="@{/login}">
-                <img class="HeaderMenuImage" th:src="@{/img/headerimg/LoginIcon.png}" alt=""/>
-            </a>
-            <a th:if="${#authentication.name} != 'anonymousUser'" class="MenuATag" th:href="@{/myPage}">
-                <img class="HeaderMenuImage" th:src="@{/img/headerimg/SettingIcon.png}" alt=""/>
-            </a>
+            <div class="dropdown" th:if="${#authentication.name} == 'anonymousUser'">
+                <a class="MenuATag" th:href="@{/login}">
+                    <img class="HeaderMenuImage" th:src="@{/img/headerimg/LoginIcon.png}" alt=""/>
+                </a>
+                <div class="dropdown-content">
+                    <a th:href="@{/login}">Login</a>
+                    <a th:href="@{/CreateAccount}">Join</a>
+                </div>
+            </div>
+            <div class="dropdown" th:if="${#authentication.name} != 'anonymousUser'">
+                <a class="MenuATag" th:href="@{/myPage}">
+                    <img class="HeaderMenuImage" th:src="@{/img/headerimg/SettingIcon.png}" alt=""/>
+                </a>
+                <div class="dropdown-content">
+                    <a th:href="@{/myPage}">MyPage</a>
+                    <form th:action="@{/logout}" method="post">
+                        <button type="submit" class="logout-btn">Logout
+                        </button>
+                    </form>
+                </div>
+            </div>
             <a class="MenuATag" th:href="@{/saved-stores}">
                 <img class="HeaderMenuImage" th:src="@{/img/headerimg/LikesIconWhite.png}" alt=""/>
             </a>

@@ -22,7 +22,6 @@
             review.style.display= 'block';
              break;
             }
-
         }
         foodMenuBtn.addEventListener("click", function() {
             handleClick.call(this, "FoodMenu");

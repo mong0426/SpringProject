@@ -1,31 +1,30 @@
 package com.example.project3.Controller;
 
 import com.example.project3.DTO.UserDTO;
-import com.example.project3.Entity.CustomUserDetails;
 import com.example.project3.Entity.User;
+import com.example.project3.Service.SellerService;
 import com.example.project3.Service.UserService;
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.beans.factory.annotation.Autowired;
 
-import java.security.Principal;
+import java.util.HashMap;
+import java.util.Map;
 
 @Controller
+@RequiredArgsConstructor
 public class UserController {
 
     private final UserService userService;
-
-    @Autowired
-    public UserController(UserService userService) {
-        this.userService = userService;
-    }
+    private final SellerService sellerService;
 
     @GetMapping("/myPage")
     public String myPage() {
@@ -38,7 +37,20 @@ public class UserController {
     }
 
     @GetMapping("/LoginSuccess")
-    public String loginSuccess() {
+    public String loginSuccess(HttpSession session, Model model) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String userid = authentication.getName();
+        if (userService.isCoustomerUser(userid)) {
+            User user = userService.getUserInfo(userid);
+            session.setAttribute("userId", user.getName());
+            session.setAttribute("userEmail", user.getEmail());
+            session.setAttribute("userPhone", user.getPhone());
+            session.setAttribute("userAddress", user.getAddress());
+            session.setAttribute("userBirth", user.getBirth());
+            session.setAttribute("userCreateDate", user.getCreateDate());
+        } else {
+            System.out.println("판매자인거심");
+        }
         return "LoginSuccess";
     }
 
@@ -80,24 +92,20 @@ public class UserController {
         return userService.isExistId(id);
     }
 
-//    @GetMapping("/userinfo")
-//    public String userInfo(Model model) {
-//        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-//        System.out.println(SecurityContextHolder.getContext().getAuthentication().getName());
-//        Object principal = auth.getPrincipal();
-//
-//        if (principal instanceof UserDetails) {
-//            UserDetails userDetails = (UserDetails) principal;
-//            System.out.println("Username ================= userDetails.getUsername " + userDetails.getUsername());
-//            model.addAttribute("username", userDetails.getUsername());
-//        } else if (principal instanceof String) {
-//            // principal이 String 타입인 경우
-//            System.out.println("Username ================= String" + principal);
-//            model.addAttribute("username", principal);
-//        } else {
-//            // 인증되지 않은 사용자 처리
-//            System.out.println("인증되지 않은 사용자입니다.");
-//        }
-//        return "MainPage";
-//    }
+    @PostMapping("/changeAddress")
+    @ResponseBody
+    public Map<String, Object> changeAddress(@RequestBody User userDTO,HttpSession session) {
+        Map<String, Object> response = new HashMap<>();
+        String id = SecurityContextHolder.getContext().getAuthentication().getName();
+        String address = userDTO.getAddress();
+        try {
+            userService.updateAddress(id, address);
+            session.setAttribute("userAddress", address);
+            response.put("success", "주소 수정 성공");
+        } catch (Exception e) {
+            e.printStackTrace();
+            response.put("error", "주소 수정 실패");
+        }
+        return response;
+    }
 }
