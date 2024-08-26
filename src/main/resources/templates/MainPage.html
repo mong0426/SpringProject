@@ -15,97 +15,100 @@
 <body>
 <header th:replace="~{Header :: body}"></header>
 <div class="MainPage">
-    <div id="carouselMain" class="carousel slide" data-bs-ride="carousel">
-        <div class="carousel-indicators">
-            <button type="button" data-bs-target="#carouselMain" data-bs-slide-to="0" class="active" aria-current="true"
-                    aria-label="Slide 1"></button>
-            <button type="button" data-bs-target="#carouselMain" data-bs-slide-to="1" aria-label="Slide 2"></button>
-            <button type="button" data-bs-target="#carouselMain" data-bs-slide-to="2" aria-label="Slide 3"></button>
-        </div>
-        <div class="carousel-inner">
-            <div class="carousel-item active">
-                <img th:src="@{/img/mainpageimg/BannerImage1.png}" class="BannerStyle" alt="...">
+    <div class="carousel-div">
+        <div id="carouselMain" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-indicators">
+                <button type="button" data-bs-target="#carouselMain" data-bs-slide-to="0" class="active"
+                        aria-current="true"
+                        aria-label="Slide 1"></button>
+                <button type="button" data-bs-target="#carouselMain" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                <button type="button" data-bs-target="#carouselMain" data-bs-slide-to="2" aria-label="Slide 3"></button>
             </div>
-            <div class="carousel-item">
-                <img th:src="@{/img/mainpageimg/BannerImage2.jpg}" class="BannerStyle" alt="...">
-            </div>
-            <div class="carousel-item">
-                <img th:src="@{/img/mainpageimg/BannerImage3.jpg}" class="BannerStyle" alt="...">
-            </div>
-        </div>
-        <button class="carousel-control-prev" type="button" data-bs-target="#carouselMain" data-bs-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Previous</span>
-        </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#carouselMain" data-bs-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Next</span>
-        </button>
-    </div>
-
-    <div class="CategoryDiv">
-        <a class="Category" th:href="@{/StoreList}">
-            <img class="CategoryImg" th:src="@{/img/mainpageimg/SubMenuIcon1.png}" alt="배달팁무료"/>
-        </a>
-        <a class="Category" th:href="@{/StoreList?searchText=삼계탕}">
-            <img class="CategoryImg" th:src="@{/img/mainpageimg/SubMenuIcon2.png}" alt="삼계탕"/>
-        </a>
-        <a class="Category" th:href="@{/StoreList}">
-            <img class="CategoryImg" th:src="@{/img/mainpageimg/SubMenuIcon3.png}" alt="재주문순"/>
-        </a>
-        <a class="Category" th:href="@{/StoreList}">
-            <img class="CategoryImg" th:src="@{/img/mainpageimg/SubMenuIcon4.png}" alt="여름면요리"/>
-        </a>
-    </div>
-
-    <div class="MainLine">
-        <div class="InnerLine">
-            <span class="MiniTitle">지금 할인하는 브랜드</span>
-            <a class="MiniTitle">전체보기></a>
-        </div>
-    </div>
-
-    <div class="CardContainerDiv" id="cardContainer">
-        <button class="ScrollBtn" id="btnLeft">
-            <img class="ScrollBtnImage" th:src="@{/img/mainpageimg/LeftArrowIcon.png}" alt="..."/>
-        </button>
-
-        <div class="card BrandCard">
-            <a th:href="@{/StoreDetails(sno = 1)}" class="CardAtagStyle">
-                <img th:src="@{/img/mainpageimg/CardItem1.png}" class="card-img-top" alt="...">
-                <div class="card-body">
-                    <h5 class="card-title">육연식당 의정부점</h5>
-                    <p class="card-text">39 ~ 54분 배달팁 무료 <br> 최소주문 13,000원</p>
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <img th:src="@{/img/mainpageimg/BannerImage1.png}" class="BannerStyle" alt="...">
                 </div>
+                <div class="carousel-item">
+                    <img th:src="@{/img/mainpageimg/BannerImage2.jpg}" class="BannerStyle" alt="...">
+                </div>
+                <div class="carousel-item">
+                    <img th:src="@{/img/mainpageimg/BannerImage3.jpg}" class="BannerStyle" alt="...">
+                </div>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselMain" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselMain" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+        <div class="carousel-line"></div>
+        <div class="CategoryDiv">
+            <a class="Category" th:href="@{/StoreList}">
+                <img class="CategoryImg" th:src="@{/img/mainpageimg/SubMenuIcon1.png}" alt="배달팁무료"/>
+            </a>
+            <a class="Category" th:href="@{/StoreList?searchText=삼계탕}">
+                <img class="CategoryImg" th:src="@{/img/mainpageimg/SubMenuIcon2.png}" alt="삼계탕"/>
+            </a>
+            <a class="Category" th:href="@{/StoreList}">
+                <img class="CategoryImg" th:src="@{/img/mainpageimg/SubMenuIcon3.png}" alt="재주문순"/>
+            </a>
+            <a class="Category" th:href="@{/StoreList}">
+                <img class="CategoryImg" th:src="@{/img/mainpageimg/SubMenuIcon4.png}" alt="여름면요리"/>
             </a>
         </div>
-        <div class="card BrandCard">
-            <a th:href="@{/StoreDetails(sno = 2)}" class="CardAtagStyle">
-                <img th:src="@{/img/mainpageimg/CardItem2.png}" class="card-img-top" alt="...">
-                <div class="card-body">
-                    <h5 class="card-title">피자마루 장암신곡점</h5>
-                    <p class="card-text">29 ~ 44분 배달팁 무료 <br> 최소주문 15,000원</p>
-                </div>
-            </a>
-        </div>
-        <button class="ScrollBtn" id="btnRight">
-            <img class="ScrollBtnImage" th:src="@{/img/mainpageimg/RightArrowIcon.png}" alt="..."/>
-        </button>
-    </div>
 
-    <div class="MainLine">
-        <div class="InnerLine">
-            <span class="MiniTitle">주변 지역 가게</span>
-            <a class="MiniTitle">전체보기></a>
+        <div class="MainLine">
+            <div class="InnerLine">
+                <span class="MiniTitle">지금 할인하는 브랜드</span>
+                <a class="MiniTitle">전체보기></a>
+            </div>
         </div>
-    </div>
 
-    <div>
-        <div class="SubContentsDiv">
-            <button class="SubContents">a</button>
-            <button class="SubContents">b</button>
-            <button class="SubContents">c</button>
-            <button class="SubContents">d</button>
+        <div class="CardContainerDiv" id="cardContainer">
+            <button class="ScrollBtn" id="btnLeft">
+                <img class="ScrollBtnImage" th:src="@{/img/mainpageimg/LeftArrowIcon.png}" alt="..."/>
+            </button>
+
+            <div class="card BrandCard">
+                <a th:href="@{/StoreDetails(sno = 1)}" class="CardAtagStyle">
+                    <img th:src="@{/img/mainpageimg/CardItem1.png}" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">육연식당 의정부점</h5>
+                        <p class="card-text">39 ~ 54분 배달팁 무료 <br> 최소주문 13,000원</p>
+                    </div>
+                </a>
+            </div>
+            <div class="card BrandCard">
+                <a th:href="@{/StoreDetails(sno = 2)}" class="CardAtagStyle">
+                    <img th:src="@{/img/mainpageimg/CardItem2.png}" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">피자마루 장암신곡점</h5>
+                        <p class="card-text">29 ~ 44분 배달팁 무료 <br> 최소주문 15,000원</p>
+                    </div>
+                </a>
+            </div>
+            <button class="ScrollBtn" id="btnRight">
+                <img class="ScrollBtnImage" th:src="@{/img/mainpageimg/RightArrowIcon.png}" alt="..."/>
+            </button>
+        </div>
+
+        <div class="MainLine">
+            <div class="InnerLine">
+                <span class="MiniTitle">주변 지역 가게</span>
+                <a class="MiniTitle">전체보기></a>
+            </div>
+        </div>
+
+        <div>
+            <div class="SubContentsDiv">
+                <button class="SubContents">a</button>
+                <button class="SubContents">b</button>
+                <button class="SubContents">c</button>
+                <button class="SubContents">d</button>
+            </div>
         </div>
     </div>
 </div>

@@ -10,6 +10,9 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert2/11.12.4/sweetalert2.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert2/11.12.4/sweetalert2.all.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.iamport.kr/v1/iamport.js"></script>
+    <!-- iamport.payment.js -->
+    <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js"></script>
     <title>배달의 만족</title>
     <meta name="_csrf" th:content="${_csrf.token}"/>
     <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
@@ -88,7 +91,12 @@
     </div>
 </div>
 <div class="BuyFoodDiv" id="buyFoodDiv" th:if="${session.cartItems != null and session.cartItems.size() > 0}">
-    <button class="BuyBtn">주문하기</button>
+    <button class="BuyBtn" id="buyBtnNotLoggedIn" th:if="${#authentication.principal == 'anonymousUser'}" onclick="IsNotLogin()">
+        주문하기
+    </button>
+    <button class="BuyBtn" id="buyBtnLoggedIn" th:if="${#authentication.principal != 'anonymousUser'}" onclick="OnOrderClick()">
+        주문하기
+    </button>
 </div>
 <div th:replace="~{Footer :: body}"></div>
 </body>

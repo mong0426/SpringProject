@@ -41,9 +41,10 @@
 .sub-menu-body{
     display: flex;
     width: 400px;
-    border-top: 1px solid gainsboro;
     padding: 20px;
     justify-content: space-between;
+    border-top:1px solid gainsboro;
+    border-bottom:1px solid gainsboro;
 }
 .sub-menu-div{
     width: fit-content;
@@ -52,6 +53,7 @@
     align-items: center;
     height: 80px;
     justify-content: space-between;
+    cursor:pointer;
 }
 .order-list-icon{
     width:40px;
@@ -68,6 +70,8 @@
     display: flex;
     flex-direction: column;
     margin-bottom:40px;
+    width: 400px;
+    padding: 20px;
 }
 .map-div{
     width:100%;

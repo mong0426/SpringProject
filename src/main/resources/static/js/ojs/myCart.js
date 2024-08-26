@@ -1,4 +1,5 @@
 document.addEventListener('DOMContentLoaded', function() {
+    ;
     updateTotalPrice();
 });
  function changeQuantity(index, change) {
@@ -94,4 +95,28 @@ function updateItemIndices() {
     });
 }
 
-
+function IsNotLogin() {
+            Swal.fire({
+                icon: 'info',
+                title: '로그인 필요',
+                text: '로그인 페이지로 이동합니다.',
+                toast: true,
+                position: 'center',
+                timer: 1000,
+                timerProgressBar: true,
+                showConfirmButton: false,
+                background: '#f8f9fa',
+                iconColor: '#007bff',
+                customClass: {
+                    title: 'swal2-title',
+                    container: 'swal2-container'
+                },
+                willClose: () => {
+                    window.location.href = '/Login.html';
+                }
+            });
+        }
+async function OnOrderClick() {
+            // 사용자에게 알림을 표시
+            alert('주문을 진행합니다.');
+        }

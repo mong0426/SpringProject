@@ -3,7 +3,10 @@ document.addEventListener('DOMContentLoaded', function() {
     const addressBtn = document.getElementById("address-btn");
     const addressDiv = document.getElementById("user-address-div");
     const hiddenContents = document.querySelectorAll('.hidden-content');
-
+    const orderListBtn = document.getElementById("order-list-btn");
+    const userOrderDiv = document.getElementById("user-order-div");
+    const userLikesBtn = document.getElementById("likes-btn");
+    const userLikesDiv = document.getElementById("user-likes-div");
     // 지도 관련 변수 선언
     let map, geocoder, marker;
 
@@ -85,6 +88,18 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
+    orderListBtn.addEventListener("click", function(){
+        document.querySelectorAll('.sub-menu-div').forEach(btn => btn.classList.remove('SelectMenu'));
+        this.classList.add('SelectMenu');
+        hiddenContents.forEach(hiddenContent => hiddenContent.style.display = 'none');
+        userOrderDiv.style.display = 'block';
+    });
+    userLikesBtn.addEventListener("click", function(){
+            document.querySelectorAll('.sub-menu-div').forEach(btn => btn.classList.remove('SelectMenu'));
+            this.classList.add('SelectMenu');
+            hiddenContents.forEach(hiddenContent => hiddenContent.style.display = 'none');
+            userLikesDiv.style.display = 'block';
+        });
     // 이벤트 리스너 등록
     addressBtn.addEventListener("click", function() {
         const inputAddress = document.getElementById("user-address").value;

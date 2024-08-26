@@ -95,6 +95,7 @@ th{
     bottom:50px;
     display:flex;
     justify-content:center;
+    margin-bottom:50px;
 }
 .BuyBtn{
     width: 200px;

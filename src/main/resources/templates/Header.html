@@ -8,7 +8,9 @@
 <body>
 <div class="StickyHeader">
     <div class="InnerLine">
-        <a th:href="@{/}" class="Logo">배달의 만족</a>
+        <div class="logo-div">
+            <a th:href="@{/}" class="Logo">배달의 만족</a>
+        </div>
         <div class="SearchDiv">
             <form class="SearchForm" id="searchForm" name="searchForm" th:action="@{/StoreList}" method="get">
                 <input class="SearchText" type="text" id="searchText" name="searchText">
@@ -17,37 +19,39 @@
                 </button>
             </form>
         </div>
-        <div class="MenuStyle">
-            <div class="dropdown" th:if="${#authentication.name} == 'anonymousUser'">
-                <a class="MenuATag" th:href="@{/login}">
-                    <img class="HeaderMenuImage" th:src="@{/img/headerimg/LoginIcon.png}" alt=""/>
-                </a>
-                <div class="dropdown-content">
-                    <a th:href="@{/login}">Login</a>
-                    <a th:href="@{/CreateAccount}">Join</a>
+        <div class="header-menu-div">
+            <div class="MenuStyle">
+                <div class="dropdown" th:if="${#authentication.name} == 'anonymousUser'">
+                    <a class="MenuATag" th:href="@{/login}">
+                        <img class="HeaderMenuImage" th:src="@{/img/headerimg/LoginIcon.png}" alt=""/>
+                    </a>
+                    <div class="dropdown-content">
+                        <a th:href="@{/login}">Login</a>
+                        <a th:href="@{/CreateAccount}">Join</a>
+                    </div>
                 </div>
-            </div>
-            <div class="dropdown" th:if="${#authentication.name} != 'anonymousUser'">
-                <a class="MenuATag" th:href="@{/myPage}">
-                    <img class="HeaderMenuImage" th:src="@{/img/headerimg/SettingIcon.png}" alt=""/>
-                </a>
-                <div class="dropdown-content">
-                    <a th:href="@{/myPage}">MyPage</a>
-                    <form th:action="@{/logout}" method="post">
-                        <button type="submit" class="logout-btn">Logout
-                        </button>
-                    </form>
+                <div class="dropdown" th:if="${#authentication.name} != 'anonymousUser'">
+                    <a class="MenuATag" th:href="@{/myPage}">
+                        <img class="HeaderMenuImage" th:src="@{/img/headerimg/SettingIcon.png}" alt=""/>
+                    </a>
+                    <div class="dropdown-content">
+                        <a th:href="@{/myPage}">MyPage</a>
+                        <form th:action="@{/logout}" method="post">
+                            <button type="submit" class="logout-btn">Logout
+                            </button>
+                        </form>
+                    </div>
                 </div>
+                <a class="MenuATag" th:href="@{/saved-stores}">
+                    <img class="HeaderMenuImage" th:src="@{/img/headerimg/LikesIconBefore.png}" alt=""/>
+                </a>
+                <a class="MenuATag" th:href="@{/myCart}" id="notification">
+                    <img class="HeaderMenuImage" th:src="@{/img/headerimg/CartIcon.png}" alt="CartIcon"/>
+                    <span class="notification-bubble"
+                          th:if="${session.cartItems != null and session.cartItems.size() > 0}"
+                          th:text="${session.cartItems.size()}"></span>
+                </a>
             </div>
-            <a class="MenuATag" th:href="@{/saved-stores}">
-                <img class="HeaderMenuImage" th:src="@{/img/headerimg/LikesIconWhite.png}" alt=""/>
-            </a>
-            <a class="MenuATag" th:href="@{/myCart}" id="notification">
-                <img class="HeaderMenuImage" th:src="@{/img/headerimg/CartIcon.png}" alt="CartIcon"/>
-                <span class="notification-bubble"
-                      th:if="${session.cartItems != null and session.cartItems.size() > 0}"
-                      th:text="${session.cartItems.size()}"></span>
-            </a>
         </div>
     </div>
 </div>
