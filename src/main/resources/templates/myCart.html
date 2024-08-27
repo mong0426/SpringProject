@@ -27,10 +27,19 @@
         <span>장바구니</span>
     </div>
     <div class="JustifyContentCenter">
-        <div class="StoreNameDiv" id="StoreNameDiv">
+        <div class="table-top-div">
+            <div class="StoreNameDiv" id="StoreNameDiv">
+                <div>
              <span th:if="${session.cartItems != null and session.cartItems.size() > 0}"
                    th:text="${session.cartItems[0].storeName}"></span>
-            <span th:unless="${session.cartItems != null and session.cartItems.size() > 0}"></span>
+                    <span th:unless="${session.cartItems != null and session.cartItems.size() > 0}"></span>
+                </div>
+            </div>
+            <div class="user-address-div" th:if="${session.userAddress != null}">
+                <img class="location-icon" th:src="@{/img/mycartimg/locationIcon.png}">
+                <input class="user-address-input" type="text" id="user-address-input" th:value="${session.userAddress}"
+                       disabled>
+            </div>
         </div>
     </div>
     <div class="JustifyContentCenter">
@@ -93,6 +102,19 @@
             </tr>
             </tbody>
         </table>
+    </div>
+    <div class="JustifyContentCenter">
+        <div class="user-info-div" th:if="${session.userName != null}">
+            <div>
+                <span class="user-info-span">주문자 </span>: <span th:text="${session.userName}" id="user-name"></span>
+            </div>
+            <div>
+                <span class="user-info-span">이메일 </span>: <span th:text="${session.userEmail}" id="user-email"></span>
+            </div>
+            <div>
+                <span class="user-info-span">연락처 </span>: <span th:text="${session.userPhone}" id="user-phone"></span>
+            </div>
+        </div>
     </div>
 </div>
 <div class="BuyFoodDiv" id="buyFoodDiv" th:if="${session.cartItems != null and session.cartItems.size() > 0}">

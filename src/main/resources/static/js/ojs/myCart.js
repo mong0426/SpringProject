@@ -121,29 +121,41 @@ function IsNotLogin() {
 function OnOrderClick() {
             IMP.init("imp71404515");
             const merchantUid = `payment-${crypto.randomUUID()}`;
+            var totalPriceText = document.getElementById("allTotalPrice").textContent;
+            let numbersArray = totalPriceText.match(/\d+/g);
+            let totalPrice = numbersArray.join('');
+            totalPrice = parseInt(totalPrice);
+            var cartItems = document.querySelectorAll('tr.TableContentRow');
+            var row = document.getElementById('row-0');
+            var foodNameSpan = row.querySelector('td.FoodImgNInfo .NameNDescDiv .card-title');
+            var foodName = foodNameSpan.textContent.trim();
+            const address = document.getElementById("user-address-input").value;
+            const Name = document.getElementById("user-name").textContent;
+            const Email = document.getElementById("user-email").textContent;
+            const Phone = document.getElementById("user-phone").textContent;
+            if(cartItems.length>1){
+                foodName+= " 외 "+(cartItems.length-1)+"개"
+            }
              IMP.request_pay(
                {
                  pg: "kicc",
                  pay_method: "card",
                  merchant_uid: merchantUid, // 상점에서 생성한 고유 주문번호
-                 name: "주문명:결제테스트",
-                 amount: 1004,
-                 buyer_email: "test@portone.io",
-                 buyer_name: "구매자이름",
-                 buyer_tel: "010-1234-5678", // 필수
-                 buyer_addr: "서울특별시 강남구 삼성동",
-                 m_redirect_url: "{모바일에서 결제 완료 후 리디렉션 될 URL}",
+                 name: foodName,
+                 amount: totalPrice,
+                 buyer_email: Email,
+                 buyer_name: Name,
+                 buyer_tel: Phone, // 필수
+                 buyer_addr: address,
                },
             function (rsp) {
             if (rsp.success) {
                 // 결제 성공
                 alert('결제가 완료되었습니다.');
-                console.log('결제 정보:', rsp);
-                // 결제 완료 후 추가 처리
+
             } else {
                 // 결제 실패
-                alert(`결제에 실패하였습니다. 에러 코드: ${rsp.error_code}, 에러 메시지: ${rsp.error_msg}`);
-                console.log('결제 실패 정보:', rsp);
+                console.log(`결제에 실패하였습니다. 에러 코드: ${rsp.error_code}, 에러 메시지: ${rsp.error_msg}`);
                 // 결제 실패 후 추가 처리
             }
         }

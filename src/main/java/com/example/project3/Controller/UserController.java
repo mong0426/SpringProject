@@ -41,7 +41,7 @@ public class UserController {
         String userid = authentication.getName();
         if (userService.isCoustomerUser(userid)) {
             User user = userService.getUserInfo(userid);
-            session.setAttribute("userId", user.getName());
+            session.setAttribute("userName", user.getName());
             session.setAttribute("userEmail", user.getEmail());
             session.setAttribute("userPhone", user.getPhone());
             session.setAttribute("userAddress", user.getAddress());
