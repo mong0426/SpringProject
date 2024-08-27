@@ -1,17 +1,21 @@
 package com.example.project3.Controller;
 
 import com.example.project3.DTO.CartItemDTO;
+import com.example.project3.DTO.OrderHistoryDTO;
 import com.example.project3.DTO.StoreDetailsDTO;
+import com.example.project3.Service.OrderHistoryService;
 import com.example.project3.Service.StoreDetailsService;
 import jakarta.servlet.http.HttpSession;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.text.DecimalFormat;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -24,6 +28,7 @@ import java.util.Map;
 public class MainController {
 
     private final StoreDetailsService service;
+    private final OrderHistoryService orderHistoryService;
 
     @GetMapping
     public String mainPage() {
@@ -107,6 +112,25 @@ public class MainController {
         } catch (NumberFormatException e) {
             response.put("success", "false");
             response.put("message", "잘못된 인덱스 값입니다.");
+        }
+        return response;
+    }
+
+    @PostMapping("/add-to-order-history")
+    @ResponseBody
+    public Map<String, Object> addToOrderHistory(@RequestBody OrderHistoryDTO orderHistoryDTO, HttpSession httpSession) {
+        Map<String, Object> response = new HashMap<>();
+        String id = SecurityContextHolder.getContext().getAuthentication().getName();
+        orderHistoryDTO.setId(id);
+        orderHistoryDTO.setOrderDate(LocalDateTime.now());
+        service.IncreaseOrderCount(orderHistoryDTO.getStore());
+        try {
+            orderHistoryService.saveOrderHistory(orderHistoryDTO);
+            response.put("message", "주문 목록 저장 성공");
+            httpSession.removeAttribute("cartItems");
+        } catch (Exception e) {
+            response.put("message", "주문 목록 저장 실패");
+            response.put("error", e.getMessage());
         }
         return response;
     }

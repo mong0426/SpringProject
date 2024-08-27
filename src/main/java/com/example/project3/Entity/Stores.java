@@ -17,7 +17,7 @@ public class Stores {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long sno;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String store;
 
     @Column

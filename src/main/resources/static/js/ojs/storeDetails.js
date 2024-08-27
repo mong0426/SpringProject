@@ -110,12 +110,12 @@ document.addEventListener('DOMContentLoaded', function() {      //모달 내용�
         orderBtn.addEventListener('click', () =>{
         const storeName = document.getElementById("storeName").textContent;
 
-        console.log("가게 이름 : "+storeName);
-        console.log("메뉴 이름 : "+foodName);
-        console.log("수량 : "+quantity);
-        console.log("내용 : "+foodDesc)
-        console.log("메뉴가격 : "+price);
-        console.log("메뉴 이미지 URL : "+imgSrc);
+//        console.log("가게 이름 : "+storeName);
+//        console.log("메뉴 이름 : "+foodName);
+//        console.log("수량 : "+quantity);
+//        console.log("내용 : "+foodDesc)
+//        console.log("메뉴가격 : "+price);
+//        console.log("메뉴 이미지 URL : "+imgSrc);
         const csrfToken = document.querySelector('meta[name="_csrf"]').getAttribute('content');
         const csrfHeader = document.querySelector('meta[name="_csrf_header"]').getAttribute('content');
         fetch('/addToCart', {

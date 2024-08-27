@@ -27,14 +27,12 @@ public class OrderHistory {
     private String food;
 
     @Column(nullable = false)
-    private String quantity;
-
-    @Column(nullable = false)
     private Integer totalPrice;
 
     @Column(nullable = false)
     private LocalDateTime orderDate;
 
     @Column
-    private String reviewed;
+    @Builder.Default
+    private String reviewed = "N";
 }

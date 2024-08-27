@@ -29,14 +29,14 @@
     align-items:center;
 }
 .StoreName{
-    font-size:46px;
+    font-size:36px;
     font-weight:700;
 }
 .StarIcon{
     width:25px;
 }
 .StarRating{
-    font-size:18px;
+    font-size:16px;
     font-weight:700;
 }
 .LikesBtn{
@@ -100,7 +100,7 @@ margin-bottom:0px;
     padding:10px;
 }
 .FoodNameFont{
-    font-size: 26px;
+    font-size: 24px;
     font-weight: 600;
 }
 .FoodDescFont{
@@ -108,7 +108,7 @@ margin-bottom:0px;
     color: darkgrey;
 }
 .FoodPriceFont{
-    font-size: 20px;
+    font-size: 18px;
     font-weight: 600;
 }
 .FoodImage{
@@ -129,7 +129,7 @@ margin-bottom:0px;
     box-shadow: 0px 5px 8px 0px rgba(0, 0, 0, 0.1);
 }
 .TopMenuFont{
-    font-size:18px;
+    font-size:16px;
 }
 .SelectMenu {
     box-shadow: 0px -5px 8px 0px rgba(0, 0, 0, 0.1)

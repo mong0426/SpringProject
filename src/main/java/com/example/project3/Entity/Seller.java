@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
+
 @Getter
 @Setter
 @Entity
@@ -24,4 +26,7 @@ public class Seller {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "sno")
     private Stores stores;
+
+    @Column(nullable = false)
+    private LocalDateTime createDate;
 }

@@ -204,7 +204,7 @@
               document.getElementById("isExistCheck").value = "true";
                   Toast.fire({
                       icon: 'success',
-                      title: '사용 가능한 아이디입니다.'
+                      title: '사용중인 아이디가 없습니다.'
                   });
               } else {
                   Toast.fire({

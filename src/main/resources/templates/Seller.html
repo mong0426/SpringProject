@@ -79,7 +79,7 @@
 
                         <label class="login__label">매장명
                             <input type="text" id="store" name="store" th:field="*{store}" placeholder="매장 이름"
-                                   pattern="^[가-힣a-zA-Z0-9]{4,20}$" title="매장명을 올바르게 적어주세요."
+                                   pattern="^[가-힣a-zA-Z0-9\s]{4,20}$" title="매장명을 올바르게 적어주세요."
                                    autocomplete="off"
                                    maxlength="20"
                                    class="login__input" required>

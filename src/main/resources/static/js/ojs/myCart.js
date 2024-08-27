@@ -133,6 +133,7 @@ function OnOrderClick() {
             const Name = document.getElementById("user-name").textContent;
             const Email = document.getElementById("user-email").textContent;
             const Phone = document.getElementById("user-phone").textContent;
+            const store = document.getElementById("store-name").textContent;
             if(cartItems.length>1){
                 foodName+= " 외 "+(cartItems.length-1)+"개"
             }
@@ -151,8 +152,46 @@ function OnOrderClick() {
             function (rsp) {
             if (rsp.success) {
                 // 결제 성공
-                alert('결제가 완료되었습니다.');
-
+                const csrfToken = document.querySelector('meta[name="_csrf"]').getAttribute('content');
+                const csrfHeader = document.querySelector('meta[name="_csrf_header"]').getAttribute('content');
+                fetch('/add-to-order-history', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        [csrfHeader]: csrfToken
+                    },
+                    body: JSON.stringify({
+                        food: foodName,
+                        store: store,
+                        totalPrice:totalPrice,
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    console.log('Response data:', data);
+                    Swal.fire({
+                                    icon: 'success',
+                                    title: '결제 성공',
+                                    text: '주문 목록으로 이동합니다.',
+                                    toast: true,
+                                    position: 'center',
+                                    timer: 1000,
+                                    timerProgressBar: true,
+                                    showConfirmButton: false,
+                                    background: '#f8f9fa',
+                                    iconColor: '#007bff',
+                                    customClass: {
+                                        title: 'swal2-title',
+                                        container: 'swal2-container'
+                                    },
+                                    willClose: () => {
+                                        window.location.href = '/myPage';
+                                    }
+                                });
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
             } else {
                 // 결제 실패
                 console.log(`결제에 실패하였습니다. 에러 코드: ${rsp.error_code}, 에러 메시지: ${rsp.error_msg}`);

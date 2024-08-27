@@ -1,7 +1,10 @@
 package com.example.project3.Controller;
 
+import com.example.project3.DTO.OrderHistoryDTO;
 import com.example.project3.DTO.UserDTO;
+import com.example.project3.Entity.Seller;
 import com.example.project3.Entity.User;
+import com.example.project3.Service.OrderHistoryService;
 import com.example.project3.Service.SellerService;
 import com.example.project3.Service.UserService;
 import jakarta.servlet.http.HttpSession;
@@ -15,7 +18,9 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -24,9 +29,16 @@ public class UserController {
 
     private final UserService userService;
     private final SellerService sellerService;
+    private final OrderHistoryService orderHistoryService;
 
     @GetMapping("/myPage")
-    public String myPage() {
+    public String myPage(Model model) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String userid = authentication.getName();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        List<OrderHistoryDTO> orderHistories = orderHistoryService.showOrderList(userid);
+        orderHistories.forEach(dto -> dto.setFormattedOrderDate(dto.getOrderDate().format(formatter)));
+        model.addAttribute("orderHistories", orderHistories);
         return "myPage";
     }
 
@@ -48,7 +60,12 @@ public class UserController {
             session.setAttribute("userBirth", user.getBirth());
             session.setAttribute("userCreateDate", user.getCreateDate());
         } else {
-            System.out.println("판매자인거심");
+            Seller seller = sellerService.getSellerInfo(userid);
+            session.setAttribute("userName", seller.getStores().getCeo());
+            session.setAttribute("userEmail", seller.getEmail());
+            session.setAttribute("userPhone", seller.getStores().getTel());
+            session.setAttribute("userAddress", seller.getStores().getAddr());
+            session.setAttribute("userCreateDate", seller.getCreateDate());
         }
         return "LoginSuccess";
     }
@@ -93,7 +110,7 @@ public class UserController {
 
     @PostMapping("/changeAddress")
     @ResponseBody
-    public Map<String, Object> changeAddress(@RequestBody User userDTO,HttpSession session) {
+    public Map<String, Object> changeAddress(@RequestBody User userDTO, HttpSession session) {
         Map<String, Object> response = new HashMap<>();
         String id = SecurityContextHolder.getContext().getAuthentication().getName();
         String address = userDTO.getAddress();

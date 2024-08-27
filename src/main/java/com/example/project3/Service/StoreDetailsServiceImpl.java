@@ -27,10 +27,16 @@ public class StoreDetailsServiceImpl implements StoreDetailsService {
     }
 
     @Override
-    public List<StoreDetailsDTO> searchStore(String searchText){
+    public List<StoreDetailsDTO> searchStore(String searchText) {
         List<Stores> stores = repository.searchStores(searchText);
         return stores.stream()
                 .map(this::entityToDto)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    @Transactional
+    public void IncreaseOrderCount(String store) {
+        repository.incrementCounterByStore(store);
     }
 }
