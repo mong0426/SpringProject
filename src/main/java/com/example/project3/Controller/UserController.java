@@ -59,6 +59,7 @@ public class UserController {
             session.setAttribute("userAddress", user.getAddress());
             session.setAttribute("userBirth", user.getBirth());
             session.setAttribute("userCreateDate", user.getCreateDate());
+            session.setAttribute("authentication", "user");
         } else {
             Seller seller = sellerService.getSellerInfo(userid);
             session.setAttribute("userName", seller.getStores().getCeo());
@@ -66,6 +67,7 @@ public class UserController {
             session.setAttribute("userPhone", seller.getStores().getTel());
             session.setAttribute("userAddress", seller.getStores().getAddr());
             session.setAttribute("userCreateDate", seller.getCreateDate());
+            session.setAttribute("authentication", seller.getStores().getSno());
         }
         return "LoginSuccess";
     }

@@ -52,10 +52,15 @@
                 <img class="sub-menu-icon" th:src="@{/img/mypageimg/likeicon.png}" alt="profileIcon"/>
                 <span>나의 찜</span>
             </div>
-            <div class="sub-menu-div" id="address-btn">
+            <div class="sub-menu-div" id="address-btn" th:if="${session.authentication == 'user'}">
                 <img class="sub-menu-icon" th:src="@{/img/mypageimg/address-icon.png}" alt="profileIcon"/>
                 <span>주소관리</span>
             </div>
+            <a th:href="@{/StoreDetails(sno=${session.authentication})}" class="sub-menu-div" id="store-setting-btn"
+               th:if="${session.authentication != 'user'}">
+                <img class="sub-menu-icon" th:src="@{/img/mypageimg/store-setting-icon.png}" alt="settingIcon"/>
+                <span>매장관리</span>
+            </a>
         </div>
     </div>
     <div class="flex-justify-center">

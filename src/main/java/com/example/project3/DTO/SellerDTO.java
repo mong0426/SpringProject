@@ -35,4 +35,6 @@ public class SellerDTO {
 
     private String address;
 
+    private String createDate;
+
 }

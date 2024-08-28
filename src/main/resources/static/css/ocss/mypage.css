@@ -54,6 +54,8 @@
     height: 80px;
     justify-content: space-between;
     cursor:pointer;
+    text-decoration:none;
+    color:black;
 }
 .order-list-icon{
     width:40px;

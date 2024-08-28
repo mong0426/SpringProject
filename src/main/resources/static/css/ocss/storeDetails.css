@@ -198,3 +198,77 @@ margin-bottom:0px;
     border-radius: 5px;
     width: 100%;
 }
+.BuyFoodDiv{
+      position: sticky;
+      z-index: 95;
+      bottom:50px;
+      display:flex;
+      justify-content:center;
+      margin-top:50px;
+      margin-bottom:50px;
+  }
+  .move-to-cart{
+      width: 200px;
+      height: 50px;
+      background-color: #F986BD;
+      border: none;
+      border-radius: 4%;
+      color: white;
+      text-align: center;
+      align-content: center;
+      text-decoration: none;
+  }
+  .seller-menu-div{
+      margin-left:auto;
+  }
+  .seller-menu-btn{
+      display: inline-block;
+      padding: .5em 1em;
+      margin: .4em .15em;
+      border: 1px solid #ccc;
+      border-color: #dbdbdb #d2d2d2 #b2b2b2 #d2d2d3;
+      cursor: pointer;
+      color: #464646;
+      border-radius: .2em;
+      vertical-align: middle;
+      font-size: 1em;
+      line-height: 1.25em;
+      background-image: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#f2f2f2));
+  }
+  .store-info-div{
+     display:flex;
+     justify-content: space-around;
+     margin:20px;
+     align-items: center;
+  }
+  .store-info{
+    width:40%;
+    height:40px;
+    align-content: center;
+  }
+  .store-info-input{
+    width:100%;
+    border-radius: 5px;
+    border: 1px solid #c9c9c9;
+    height: 40px;
+    font-size:14px;
+    padding:10px;
+  }
+   .food-img-div{
+    display: flex;
+    justify-content: flex-end;
+    padding-right: 10px;
+   }
+   .food-img-btn{
+    display: inline-block;
+    padding: 8px 16px;
+    border: 1px solid #ccc;
+    border-color: #dbdbdb #d2d2d2 #b2b2b2 #d2d2d3;
+    cursor: pointer;
+    color: #464646;
+    border-radius: .2em;
+    vertical-align: middle;
+    font-size: 1em;
+    line-height: 1.25em;
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#f2f2f2));
+   }

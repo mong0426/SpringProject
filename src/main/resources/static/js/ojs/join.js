@@ -3,10 +3,11 @@
     const status = document.getElementById("idStatus");
     const waring = document.getElementById("useridWarning");
     document.getElementById("isExistCheck").value = "false";
-    if(input.length < 6 || input.length > 12){
-        toggleStatusIconCross(status);
-    }else{
+    const regex = /^[a-zA-Z0-9]{6,12}$/;
+    if(regex.test(input)){
         toggleStatusIconCheck(status);
+    }else{
+        toggleStatusIconCross(status);
     }
   }
   function checkPassInput(id){
@@ -214,12 +215,14 @@
               const isIdExistBtn = document.getElementById("isIdExistBtn");
               const csrfToken = document.querySelector('meta[name="_csrf"]').getAttribute('content');
               const csrfHeader = document.querySelector('meta[name="_csrf_header"]').getAttribute('content');
+              const regex = /^[a-zA-Z0-9]{6,12}$/;
               const Toast = Swal.mixin({
               toast: true,
               showConfirmButton: false,
               timer: 800,
               timerProgressBar: true
           });
+          if(regex.test(inputId)){
           fetch('/isExist/id', {
               method: 'POST',
               headers: {
@@ -247,5 +250,11 @@
           .catch(error => {
               console.error('Error:', error);
           });
+          }else{
+              Toast.fire({
+              icon: 'error',
+              title: '올바른 아이디를 입력해주세요.'
+            });
+          }
       });
   });

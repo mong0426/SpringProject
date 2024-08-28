@@ -144,6 +144,7 @@ document.addEventListener('DOMContentLoaded', function() {      //모달 내용�
                         var notification = document.querySelector(".notification-bubble");
                         notification.textContent = data.cartItemsSize;
                         modal.style.display = 'none';
+
                         const Toast = Swal.mixin({
                             toast: true,
                             showConfirmButton: false,
@@ -161,3 +162,17 @@ document.addEventListener('DOMContentLoaded', function() {      //모달 내용�
     });
 });
 
+document.addEventListener("DOMContentLoaded", function() {
+         document.getElementById('imageUrl').addEventListener('change', function(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const image = document.getElementById('imagePreview');
+                    image.src = e.target.result;
+                    image.style.display = 'block';
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+    });

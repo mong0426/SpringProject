@@ -20,4 +20,6 @@ public interface StoresRepository extends JpaRepository<Stores, Long> {
     @Modifying
     @Query("UPDATE Stores s SET s.orderCount = s.orderCount + 1 WHERE s.store = :store")
     void incrementCounterByStore(@Param("store") String store);
+
+    Stores findByStore(String store);
 }

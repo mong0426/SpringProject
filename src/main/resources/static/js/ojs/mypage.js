@@ -10,6 +10,13 @@ document.addEventListener('DOMContentLoaded', function() {
     // 지도 관련 변수 선언
     let map, geocoder, marker;
 
+    // 날짜 포맷팅
+    const dateTimeStr = document.getElementById("create-date").textContent;
+    if (dateTimeStr) {
+        const formattedDate = dateTimeStr.split('T')[0];
+        document.getElementById("create-date").textContent = formattedDate + " 일";
+    }
+
     // 지도 및 주소 검색 초기화
     function initializeMap() {
         map = new daum.maps.Map(document.getElementById('map'), {
@@ -117,11 +124,4 @@ document.addEventListener('DOMContentLoaded', function() {
 
     document.getElementById("search-address-btn").addEventListener("click", openPostcodeSearch);
     document.getElementById("change-address-btn").addEventListener("click", changeAddress);
-
-    // 날짜 포맷팅
-    const dateTimeStr = document.getElementById("create-date").textContent;
-    if (dateTimeStr) {
-        const formattedDate = dateTimeStr.split('T')[0];
-        document.getElementById("create-date").textContent = formattedDate;
-    }
 });

@@ -3,6 +3,7 @@ package com.example.project3.Service;
 import com.example.project3.DTO.StoreDetailsDTO;
 import com.example.project3.Entity.Stores;
 import com.example.project3.Repository.StoresRepository;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -36,7 +37,39 @@ public class StoreDetailsServiceImpl implements StoreDetailsService {
 
     @Override
     @Transactional
-    public void IncreaseOrderCount(String store) {
+    public void increaseOrderCount(String store) {
         repository.incrementCounterByStore(store);
+    }
+
+    @Override
+    public boolean isExistStore(String store) {
+        boolean result = repository.findByStore(store) != null;
+        return result;
+    }
+
+    @Override
+    public void changeStoreInfo(StoreDetailsDTO storeDetailsDTO) {
+        Long sno = storeDetailsDTO.getSno();
+        Optional<Stores> existingStoreOptional = repository.findById(sno);
+
+        if (existingStoreOptional.isPresent()) {
+            Stores existingStore = existingStoreOptional.get();
+
+            // 기존 엔티티의 필드를 DTO에서 제공한 값으로 업데이트합니다.
+            existingStore.setSno(storeDetailsDTO.getSno());
+            existingStore.setStore(storeDetailsDTO.getStore());
+            existingStore.setCeo(storeDetailsDTO.getCeo());
+            existingStore.setOpeningHours(storeDetailsDTO.getOpeningHours());
+            existingStore.setClosedDays(storeDetailsDTO.getClosedDays());
+            existingStore.setDeliTime(storeDetailsDTO.getDeliTime());
+            existingStore.setDeliTip(storeDetailsDTO.getDeliTip());
+            existingStore.setMinOrder(storeDetailsDTO.getMinOrder());
+            existingStore.setTel(storeDetailsDTO.getTel());
+            existingStore.setAddr(storeDetailsDTO.getAddr());
+            // 업데이트된 엔티티를 저장합니다.
+            repository.save(existingStore);
+        } else {
+            throw new EntityNotFoundException("Store not found with ID: " + sno);
+        }
     }
 }

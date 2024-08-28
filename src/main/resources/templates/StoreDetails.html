@@ -84,6 +84,127 @@
                 <span th:text="${storeDetails.deliTime}"></span><br/>
                 <span class="DeliTipTitle">배달팁 </span><span th:text="${storeDetails.deliTip}"></span>
             </div>
+            <!-- <div th:if="${session.authentication == storeDetails.sno}" class="seller-menu-div"> -->
+            <button type="button" class="seller-menu-btn" data-bs-toggle="modal" data-bs-target="#edit-store-modal">
+                가게정보 수정
+            </button>
+            <button type="button" class="seller-menu-btn" data-bs-toggle="modal" data-bs-target="#add-food-modal">메뉴 추가
+            </button>
+            <button type="button" class="seller-menu-btn">메뉴 삭제</button>
+            <!-- </div> -->
+        </div>
+    </div>
+    <div class="modal" id="edit-store-modal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">가게정보 수정</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form th:action="@{/edit/store}" method="post">
+                    <div class="modal-body">
+                        <input type="hidden" name="sno" th:value="${storeDetails.sno}">
+                        <div class="store-info-div">
+                            <label class="store-info" for="store">매장명</label>
+                            <input type="text" id="store" name="store" class="store-info-input"
+                                   th:value="${storeDetails.store}"
+                                   required>
+                        </div>
+
+                        <div class="store-info-div">
+                            <label class="store-info" for="ceo">대표자</label>
+                            <input type="text" id="ceo" name="ceo" class="store-info-input"
+                                   th:value="${storeDetails.ceo}"
+                                   required>
+                        </div>
+
+                        <div class="store-info-div">
+                            <label class="store-info" for="openingHours">운영시간</label>
+                            <input type="text" id="openingHours" name="openingHours" class="store-info-input"
+                                   th:value="${storeDetails.openingHours}" required>
+                        </div>
+
+                        <div class="store-info-div">
+                            <label class="store-info" for="closedDays">휴무일</label>
+                            <input type="text" id="closedDays" name="closedDays" class="store-info-input"
+                                   th:value="${storeDetails.closedDays}" required>
+                        </div>
+
+                        <div class="store-info-div">
+                            <label class="store-info" for="deliTime">배달시간</label>
+                            <input type="text" id="deliTime" name="deliTime" class="store-info-input"
+                                   th:value="${storeDetails.deliTime}" required>
+                        </div>
+
+                        <div class="store-info-div">
+                            <label class="store-info" for="deliTip">배달팁</label>
+                            <input type="text" id="deliTip" name="deliTip" class="store-info-input"
+                                   th:value="${storeDetails.deliTip}"
+                                   required>
+                        </div>
+
+                        <div class="store-info-div">
+                            <label class="store-info" for="minOrder">최소주문금액</label>
+                            <input type="text" id="minOrder" name="minOrder" class="store-info-input"
+                                   th:value="${storeDetails.minOrder}" required>
+                        </div>
+                        <div class="store-info-div">
+                            <label class="store-info" for="tel">매장전화번호</label>
+                            <input type="text" id="tel" name="tel" class="store-info-input"
+                                   th:value="${storeDetails.tel}"
+                                   required>
+                        </div>
+                        <div class="store-info-div">
+                            <label class="store-info" for="addr">매장주소</label>
+                            <input type="text" id="addr" name="addr" class="store-info-input"
+                                   th:value="${storeDetails.addr}"
+                                   required>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+                        <button type="submit" class="btn btn-primary" id="save-change-btn">저장</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="modal" id="add-food-modal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">메뉴추가</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form th:action="@{/edit/foods}" method="post">
+                    <input type="hidden" name="sno" th:value="${storeDetails.sno}">
+                    <div class="modal-body">
+                        <div class="store-info-div">
+                            <label class="store-info" for="food">메뉴이름</label>
+                            <input type="text" id="food" name="food" class="store-info-input" required>
+                        </div>
+                        <div class="store-info-div">
+                            <label class="store-info" for="description">상세설명</label>
+                            <input type="text" id="description" name="description" class="store-info-input" required>
+                        </div>
+                        <div class="store-info-div">
+                            <label class="store-info" for="price">가격</label>
+                            <input type="text" id="price" name="price" class="store-info-input" required>
+                        </div>
+                        <div class="store-info-div">
+                            <label class="store-info" for="imageUrl">메뉴사진</label>
+                            <input type="file" id="imageUrl" name="imageUrl" class="form-control store-info-input" accept="image/*" required>
+                        </div>
+                        <div class="store-info-div">
+                            <img id="imagePreview" class="preview" th:src="@{/img/default.jpg}" alt="Image Preview" style="width:300px;">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+                        <button type="submit" class="btn btn-primary" id="add-food-btn">메뉴추가</button>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
     <div class="TopMenuDiv">
@@ -170,6 +291,11 @@
             </div>
         </div>
     </div>
+</div>
+<div class="BuyFoodDiv" id="buyFoodDiv">
+    <a class="move-to-cart" th:href="@{/myCart}" id="move-to-cart">
+        장바구니로 이동
+    </a>
 </div>
 <div th:replace="~{Footer :: body}"></div>
 </body>

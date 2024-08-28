@@ -22,7 +22,7 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests(authorizeRequests ->
                         authorizeRequests
-                                .requestMatchers("/", "/userinfo", "/index", "/CreateAccount/**", "/register/**", "/StoreList/**", "/css/**", "/js/**", "/img/**", "/myCart", "/StoreDetails", "/addToCart", "/deleteCartItem", "/isExist/**").permitAll()  // 메인 페이지, 회원가입, 정적 리소스는 누구나 접근 가능
+                                .requestMatchers("/", "/userinfo", "/index", "/CreateAccount/**", "/register/**", "/StoreList/**", "/css/**", "/js/**", "/img/**", "/myCart", "/StoreDetails", "/addToCart", "/deleteCartItem", "/isExist/**","/edit/**").permitAll()  // 메인 페이지, 회원가입, 정적 리소스는 누구나 접근 가능
                                 .anyRequest().authenticated()  // 그 외의 요청은 인증된 사용자만 접근 가능
                 )
                 .formLogin(formLogin ->

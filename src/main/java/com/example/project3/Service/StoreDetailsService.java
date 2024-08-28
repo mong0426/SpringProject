@@ -11,7 +11,11 @@ public interface StoreDetailsService {
 
     List<StoreDetailsDTO> searchStore(String searchText);
 
-    void IncreaseOrderCount(String store);
+    void increaseOrderCount(String store);
+
+    boolean isExistStore(String store);
+
+    void changeStoreInfo(StoreDetailsDTO storeDetailsDTO);
 
     default Stores dtoToEntity(StoreDetailsDTO dto) {
         Stores entity = Stores.builder()

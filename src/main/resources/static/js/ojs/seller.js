@@ -1,12 +1,12 @@
  function checkIdInput(id){
     const input = document.getElementById(id).value;
     const status = document.getElementById("idStatus");
-    const waring = document.getElementById("useridWarning");
     document.getElementById("isExistCheck").value = "false";
-    if(input.length < 6 || input.length > 12){
-        toggleStatusIconCross(status);
-    }else{
+    const regex = /^[a-zA-Z0-9]{6,12}$/;
+    if(regex.test(input)){
         toggleStatusIconCheck(status);
+    }else{
+        toggleStatusIconCross(status);
     }
   }
   function checkPassInput(id){
@@ -32,6 +32,12 @@
               toggleStatusIconCross(statusPassCheck);
            }
         }
+   document.addEventListener("DOMContentLoaded", function() {
+       function storeNameCheck() {
+           document.getElementById("storeNameCheck").value = "false";
+       }
+       document.getElementById("store").addEventListener("input", storeNameCheck);
+   });
 
     function toggleStatusIconCheck(element){
                element.classList.remove('cross');
@@ -159,6 +165,13 @@
                         title: '아이디 중복체크 오류입니다.'
                     });
                 }
+               if(document.getElementById("storeNameCheck").value != "true"){
+                     event.preventDefault();
+                     Toast.fire({
+                     icon: 'warning',
+                     title: '매장명 중복체크 오류입니다.'
+                   });
+                }
                 if(inputPass.value != inputPassCheck.value){
                event.preventDefault();
                inputPassCheck.focus();
@@ -178,17 +191,61 @@
            });
            });
           $(document).ready(function() {
+           const csrfToken = document.querySelector('meta[name="_csrf"]').getAttribute('content');
+           const csrfHeader = document.querySelector('meta[name="_csrf_header"]').getAttribute('content');
+           const Toast = Swal.mixin({
+                         toast: true,
+                         showConfirmButton: false,
+                         timer: 800,
+                         timerProgressBar: true
+            });
+            $('#storeNameCheckBtn').click(function(){
+                const store = document.getElementById("store").value;
+                const regex = /^[가-힣a-zA-Z0-9\s]{4,20}$/;
+                if(regex.test(store)){
+                fetch('/isExist/store',{
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        [csrfHeader]: csrfToken
+                    },
+                    body: JSON.stringify({ store : store })
+                }).then(response => response.json())
+                      .then(data => {
+                          console.log('Response data: ', data);
+                          if(store != ""){
+                          if (data === false) { // 서버 응답 데이터 형태에 맞춰 수정
+                              document.getElementById("storeNameCheck").value = "true";
+                              Toast.fire({
+                                  icon: 'success',
+                                  title: '사용 가능한 매장명입니다.'
+                              });
+                          } else {
+                              Toast.fire({
+                                  icon: 'error',
+                                  title: '이미 사용 중인 매장명입니다.'
+                              });
+                          }}
+                      })
+                      .catch(error => {
+                          console.error('Error:', error);
+                          Toast.fire({
+                              icon: 'error',
+                              title: '서버와의 통신 중 오류가 발생했습니다.'
+                          });
+                      });
+                      }else{
+                         Toast.fire({
+                         icon: 'error',
+                         title: '사용 불가능한 매장명입니다.'
+                      });
+                     }
+                  });
              $('#isIdExistBtn').click(function() {
               const inputId = document.getElementById("id").value;
               const isIdExistBtn = document.getElementById("isIdExistBtn");
-              const csrfToken = document.querySelector('meta[name="_csrf"]').getAttribute('content');
-              const csrfHeader = document.querySelector('meta[name="_csrf_header"]').getAttribute('content');
-              const Toast = Swal.mixin({
-              toast: true,
-              showConfirmButton: false,
-              timer: 800,
-              timerProgressBar: true
-          });
+              const regex = /^[a-zA-Z0-9]{6,12}$/;
+              if(regex.test(inputId)){
           fetch('/isExist/id', {
               method: 'POST',
               headers: {
@@ -216,5 +273,11 @@
           .catch(error => {
               console.error('Error:', error);
           });
+          }else{
+         Toast.fire({
+             icon: 'error',
+              title: '올바른 아이디를 입력해주세요.'
+            });
+          }
       });
   });

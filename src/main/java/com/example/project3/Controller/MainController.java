@@ -1,10 +1,9 @@
 package com.example.project3.Controller;
 
-import com.example.project3.DTO.CartItemDTO;
-import com.example.project3.DTO.OrderHistoryDTO;
-import com.example.project3.DTO.StoreDetailsDTO;
+import com.example.project3.DTO.*;
 import com.example.project3.Service.OrderHistoryService;
 import com.example.project3.Service.StoreDetailsService;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -13,7 +12,10 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.net.http.HttpRequest;
 import java.text.DecimalFormat;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -29,6 +31,7 @@ public class MainController {
 
     private final StoreDetailsService service;
     private final OrderHistoryService orderHistoryService;
+//    private final FoodsService foodsService;
 
     @GetMapping
     public String mainPage() {
@@ -71,8 +74,7 @@ public class MainController {
     public Map<String, Object> addToCart(@RequestBody CartItemDTO cartItem, HttpSession session) {
         Map<String, Object> response = new HashMap<>();
         try {
-            @SuppressWarnings("unchecked")
-            List<CartItemDTO> cartItems = (List<CartItemDTO>) session.getAttribute("cartItems");
+            @SuppressWarnings("unchecked") List<CartItemDTO> cartItems = (List<CartItemDTO>) session.getAttribute("cartItems");
             if (cartItems == null) {
                 cartItems = new ArrayList<>();
             }
@@ -86,6 +88,14 @@ public class MainController {
         return response;
     }
 
+    @PostMapping("/isExist/store")
+    @ResponseBody
+    public boolean isExistStore(@RequestBody StoreDetailsDTO storeDetailsDTO) {
+        String store = storeDetailsDTO.getStore();
+        System.out.println("store =========== " + store);
+        return service.isExistStore(store);
+    }
+
     @PostMapping("/deleteCartItem")
     @ResponseBody
     public Map<String, Object> deleteCartItem(@RequestBody String index, HttpSession session) {
@@ -93,8 +103,7 @@ public class MainController {
         try {
             String numericValue = index.replaceAll("[^0-9]", "");
             int itemIndex = Integer.parseInt(numericValue);
-            @SuppressWarnings("unchecked")
-            List<CartItemDTO> cartItems = (List<CartItemDTO>) session.getAttribute("cartItems");
+            @SuppressWarnings("unchecked") List<CartItemDTO> cartItems = (List<CartItemDTO>) session.getAttribute("cartItems");
 //            System.out.println("item index : "+itemIndex +" cartItems.size ====== "+cartItems.size());
             if (cartItems != null && itemIndex >= 0 && itemIndex <= cartItems.size()) {
                 // 장바구니에서 해당 아이템 삭제
@@ -123,7 +132,7 @@ public class MainController {
         String id = SecurityContextHolder.getContext().getAuthentication().getName();
         orderHistoryDTO.setId(id);
         orderHistoryDTO.setOrderDate(LocalDateTime.now());
-        service.IncreaseOrderCount(orderHistoryDTO.getStore());
+        service.increaseOrderCount(orderHistoryDTO.getStore());
         try {
             orderHistoryService.saveOrderHistory(orderHistoryDTO);
             response.put("message", "주문 목록 저장 성공");
@@ -133,5 +142,30 @@ public class MainController {
             response.put("error", e.getMessage());
         }
         return response;
+    }
+
+    @PostMapping("/edit/store")
+    public String changeStoreInfo(@ModelAttribute StoreDetailsDTO storeDetailsDTO) {
+        try {
+            service.changeStoreInfo(storeDetailsDTO);
+
+            return "redirect:/StoreDetails?sno=" + storeDetailsDTO.getSno();
+        } catch (Exception e) {
+            // 실패 시 오류 페이지로 리다이렉트
+            return "/Error404";
+        }
+    }
+
+    @PostMapping("/edit/foods")
+    public String addNewFood(@ModelAttribute FoodsDTO foodsDTO, MultipartFile multipartFile) {
+        try {
+            System.out.println("FOODName" + foodsDTO.getFood());
+            System.out.println("FOODName" + foodsDTO.getDescription());
+            System.out.println("FOODName" + foodsDTO.getPrice());
+            System.out.println("FOODName" + foodsDTO.getImageUrl());
+            return "redirect:/StoreDetails?sno=" + foodsDTO.getStore().getSno();
+        } catch (Exception e) {
+            return "/Error404";
+        }
     }
 }
