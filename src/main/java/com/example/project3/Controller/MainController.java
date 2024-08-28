@@ -1,6 +1,8 @@
 package com.example.project3.Controller;
 
 import com.example.project3.DTO.*;
+import com.example.project3.Entity.Stores;
+import com.example.project3.Service.FoodsService;
 import com.example.project3.Service.OrderHistoryService;
 import com.example.project3.Service.StoreDetailsService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.io.File;
 import java.net.http.HttpRequest;
 import java.text.DecimalFormat;
 import java.time.LocalDateTime;
@@ -31,7 +34,7 @@ public class MainController {
 
     private final StoreDetailsService service;
     private final OrderHistoryService orderHistoryService;
-//    private final FoodsService foodsService;
+    private final FoodsService foodsService;
 
     @GetMapping
     public String mainPage() {
@@ -157,14 +160,30 @@ public class MainController {
     }
 
     @PostMapping("/edit/foods")
-    public String addNewFood(@ModelAttribute FoodsDTO foodsDTO, MultipartFile multipartFile) {
+    public String addNewFood(@ModelAttribute FoodsDTO foodsDTO, MultipartFile multipartFile, @RequestParam("sno") Long sno) {
         try {
-            System.out.println("FOODName" + foodsDTO.getFood());
-            System.out.println("FOODName" + foodsDTO.getDescription());
-            System.out.println("FOODName" + foodsDTO.getPrice());
-            System.out.println("FOODName" + foodsDTO.getImageUrl());
+            String uploadDir = "C:\\Users\\hanso\\IdeaProjects\\SpringProject\\src\\main\\resources\\static\\img\\foodimg\\";
+            String originalFilename = multipartFile.getOriginalFilename();
+            String filePath = uploadDir + originalFilename;
+
+            File uploadFile = new File(filePath);
+            multipartFile.transferTo(uploadFile);
+
+            String imageUrl = "/img/foodimg/" + originalFilename;
+            foodsDTO.setImageUrl(imageUrl);
+            Stores stores = service.findBySno(sno);
+            foodsDTO.setStore(stores);
+//            System.out.println("FOODName" + foodsDTO.getFood());
+//            System.out.println("Description" + foodsDTO.getDescription());
+//            System.out.println("Price" + foodsDTO.getPrice());
+//            System.out.println("ImageUrl" + foodsDTO.getImageUrl());
+//            System.out.println("Store" + foodsDTO.getStore());
+
+            foodsService.addNewFood(foodsDTO);
+
             return "redirect:/StoreDetails?sno=" + foodsDTO.getStore().getSno();
         } catch (Exception e) {
+            System.out.println(e.getMessage());
             return "/Error404";
         }
     }

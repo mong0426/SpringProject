@@ -1,9 +1,8 @@
 package com.example.project3.Service;
 
-import org.springframework.stereotype.Service;
+import com.example.project3.DTO.FoodsDTO;
 
-//@Service
-//public interface FoodsService {
-//
-//    public void addNewFood();
-//}
+public interface FoodsService {
+
+    public void addNewFood(FoodsDTO foodsDTO);
+}

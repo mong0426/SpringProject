@@ -27,7 +27,7 @@ public class SecurityConfig {
                 )
                 .formLogin(formLogin ->
                         formLogin
-                                .loginPage("/login")  // 커스텀 로그인 페이지 설정
+                                .loginPage("/login").permitAll()  // 커스텀 로그인 페이지 설정
                                 .loginProcessingUrl("/loginTry")  // 로그인 처리 URL
                                 .defaultSuccessUrl("/LoginSuccess", true)  // 로그인 성공 시 메인 페이지로 리다이렉트
                                 .permitAll()

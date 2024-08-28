@@ -163,7 +163,7 @@ document.addEventListener('DOMContentLoaded', function() {      //모달 내용�
 });
 
 document.addEventListener("DOMContentLoaded", function() {
-         document.getElementById('imageUrl').addEventListener('change', function(event) {
+         document.getElementById('multipartFile').addEventListener('change', function(event) {
             const file = event.target.files[0];
             if (file) {
                 const reader = new FileReader();

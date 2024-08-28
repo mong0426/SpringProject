@@ -17,6 +17,8 @@ public interface StoreDetailsService {
 
     void changeStoreInfo(StoreDetailsDTO storeDetailsDTO);
 
+    Stores findBySno(Long sno);
+
     default Stores dtoToEntity(StoreDetailsDTO dto) {
         Stores entity = Stores.builder()
                 .sno(dto.getSno())

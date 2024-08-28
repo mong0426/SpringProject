@@ -85,6 +85,9 @@
                 <span class="DeliTipTitle">배달팁 </span><span th:text="${storeDetails.deliTip}"></span>
             </div>
             <!-- <div th:if="${session.authentication == storeDetails.sno}" class="seller-menu-div"> -->
+            <button type="button" class="seller-menu-btn" data-bs-toggle="modal"
+                    data-bs-target="#edit-store-img-modal">대표이미지 수정
+            </button>
             <button type="button" class="seller-menu-btn" data-bs-toggle="modal" data-bs-target="#edit-store-modal">
                 가게정보 수정
             </button>
@@ -92,6 +95,56 @@
             </button>
             <button type="button" class="seller-menu-btn">메뉴 삭제</button>
             <!-- </div> -->
+        </div>
+    </div>
+    <div class="modal" id="edit-store-img-modal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">대표 이미지</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form th:action="@{/edit/store-img}" enctype="multipart/form-data" method="post">
+                    <input type="hidden" name="sno" th:value="${storeDetails.sno}">
+                    <div class="modal-body">
+                        <div id="store-img-carousel" class="carousel store-img-carousel">
+                            <div class="carousel-indicators" style="bottom:10px;">
+                                <button th:each="image, iter : ${storeDetails.images}"
+                                        th:classappend="${iter.index == 0} ? 'active' : ''"
+                                        type="button"
+                                        data-bs-target="#store-img-carousel"
+                                        th:data-bs-slide-to="${iter.index}"
+                                        th:attr="aria-current=${iter.index == 0} ? 'true' : 'false'"
+                                >
+                                </button>
+                            </div>
+                            <div class="carousel-inner">
+                                <div th:each="image, iter : ${storeDetails.images}"
+                                     class="carousel-item" style=""
+                                     th:classappend="${iter.index == 0} ? ' active' : ''">
+                                    <img th:src="${image.imageUrl}" alt="Store Image">
+                                </div>
+                            </div>
+                            <button class="carousel-control-prev" type="button" data-bs-target="#store-img-carousel"
+                                    data-bs-slide="prev">
+                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Previous</span>
+                            </button>
+                            <button class="carousel-control-next" type="button" data-bs-target="#store-img-carousel"
+                                    data-bs-slide="next">
+                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Next</span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <input type="file" class="seller-menu-btn" style="width:100%;" id="add-store-img-btn" required>
+                        <button type="button" class="seller-menu-btn" data-bs-dismiss="modal">취소</button>
+                        <button class="seller-menu-btn">추가</button>
+                        <button class="delete-button seller-menu-btn" onclick="deleteSlide(${iter.index})">삭제</button>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
     <div class="modal" id="edit-store-modal" tabindex="-1">
@@ -162,8 +215,8 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
-                        <button type="submit" class="btn btn-primary" id="save-change-btn">저장</button>
+                        <button type="button" class="seller-menu-btn" data-bs-dismiss="modal">취소</button>
+                        <button type="submit" class="seller-menu-btn" id="save-change-btn">저장</button>
                     </div>
                 </form>
             </div>
@@ -176,7 +229,7 @@
                     <h5 class="modal-title">메뉴추가</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <form th:action="@{/edit/foods}" method="post">
+                <form th:action="@{/edit/foods}" enctype="multipart/form-data" method="post">
                     <input type="hidden" name="sno" th:value="${storeDetails.sno}">
                     <div class="modal-body">
                         <div class="store-info-div">
@@ -192,16 +245,18 @@
                             <input type="text" id="price" name="price" class="store-info-input" required>
                         </div>
                         <div class="store-info-div">
-                            <label class="store-info" for="imageUrl">메뉴사진</label>
-                            <input type="file" id="imageUrl" name="imageUrl" class="form-control store-info-input" accept="image/*" required>
+                            <label class="store-info" for="multipartFile">메뉴사진</label>
+                            <input type="file" id="multipartFile" name="multipartFile"
+                                   class="form-control store-info-input" accept="image/*" required>
                         </div>
                         <div class="store-info-div">
-                            <img id="imagePreview" class="preview" th:src="@{/img/default.jpg}" alt="Image Preview" style="width:300px;">
+                            <img id="imagePreview" class="preview" th:src="@{/img/default.jpg}" alt="Image Preview"
+                                 style="width:300px;">
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
-                        <button type="submit" class="btn btn-primary" id="add-food-btn">메뉴추가</button>
+                        <button type="button" class="seller-menu-btn" data-bs-dismiss="modal">취소</button>
+                        <button type="submit" class="seller-menu-btn" id="add-food-btn">메뉴추가</button>
                     </div>
                 </form>
             </div>

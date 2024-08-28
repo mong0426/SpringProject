@@ -119,7 +119,7 @@
 </div>
 <div class="BuyFoodDiv" id="buyFoodDiv" th:if="${session.cartItems != null and session.cartItems.size() > 0}">
     <button class="BuyBtn" id="buyBtnNotLoggedIn" th:if="${#authentication.principal == 'anonymousUser'}"
-            onclick="OnOrderClick()">
+            onclick="IsNotLogin()">
         주문하기
     </button>
     <button class="BuyBtn" id="buyBtnLoggedIn" th:if="${#authentication.principal != 'anonymousUser'}"

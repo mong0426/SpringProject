@@ -72,4 +72,9 @@ public class StoreDetailsServiceImpl implements StoreDetailsService {
             throw new EntityNotFoundException("Store not found with ID: " + sno);
         }
     }
+
+    @Override
+    public Stores findBySno(Long sno) {
+        return repository.findById(sno).orElse(null);
+    }
 }
