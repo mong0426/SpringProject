@@ -2,10 +2,8 @@ package com.example.project3.Controller;
 
 import com.example.project3.DTO.*;
 import com.example.project3.Entity.Stores;
-import com.example.project3.Service.FoodsService;
-import com.example.project3.Service.OrderHistoryService;
-import com.example.project3.Service.StoreDetailsService;
-import jakarta.servlet.http.HttpServletRequest;
+import com.example.project3.Entity.UserLikeStore;
+import com.example.project3.Service.*;
 import jakarta.servlet.http.HttpSession;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -15,10 +13,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.File;
-import java.net.http.HttpRequest;
 import java.text.DecimalFormat;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -35,6 +31,8 @@ public class MainController {
     private final StoreDetailsService service;
     private final OrderHistoryService orderHistoryService;
     private final FoodsService foodsService;
+    private final StoreImageService storeImageService;
+    private final UserService userService;
 
     @GetMapping
     public String mainPage() {
@@ -54,6 +52,9 @@ public class MainController {
         DecimalFormat df = new DecimalFormat("#.0");
         double averageRating = totalRating == 0 ? 0 : totalRating / dto.getReviews().size();
         averageRating = Double.parseDouble(df.format(averageRating));
+        String id = SecurityContextHolder.getContext().getAuthentication().getName();
+        boolean likeStore = userService.IsLikeStore(id, sno);
+        model.addAttribute("likeStore", likeStore);
         model.addAttribute("storeDetails", dto);
         model.addAttribute("averageRating", averageRating);
         return "StoreDetails";
@@ -160,16 +161,22 @@ public class MainController {
     }
 
     @PostMapping("/edit/foods")
-    public String addNewFood(@ModelAttribute FoodsDTO foodsDTO, MultipartFile multipartFile, @RequestParam("sno") Long sno) {
+    public String addNewFood(@ModelAttribute FoodsDTO foodsDTO, @RequestParam("multipartFile") MultipartFile multipartFile, @RequestParam("sno") Long sno) {
         try {
-            String uploadDir = "C:\\Users\\hanso\\IdeaProjects\\SpringProject\\src\\main\\resources\\static\\img\\foodimg\\";
+            String uploadDir = "D:\\Oseong\\SpringBoots\\SpringProject\\src\\main\\resources\\static\\img\\foodimg\\";
             String originalFilename = multipartFile.getOriginalFilename();
             String filePath = uploadDir + originalFilename;
+
+            File directory = new File(uploadDir);
+
+            if (!directory.exists()) {
+                directory.mkdirs();
+            }
 
             File uploadFile = new File(filePath);
             multipartFile.transferTo(uploadFile);
 
-            String imageUrl = "/img/foodimg/" + originalFilename;
+            String imageUrl = "img/foodimg/" + originalFilename;
             foodsDTO.setImageUrl(imageUrl);
             Stores stores = service.findBySno(sno);
             foodsDTO.setStore(stores);
@@ -181,10 +188,55 @@ public class MainController {
 
             foodsService.addNewFood(foodsDTO);
 
-            return "redirect:/StoreDetails?sno=" + foodsDTO.getStore().getSno();
+            return "redirect:/StoreDetails?sno=" + sno;
         } catch (Exception e) {
             System.out.println(e.getMessage());
             return "/Error404";
         }
+    }
+
+    @PostMapping("/edit/store-img")
+    public String addNewFood(@ModelAttribute StoreImagesDTO storeImagesDTO, @RequestParam("file") MultipartFile multipartFile, @RequestParam("sno") Long sno) {
+        try {
+            String uploadDir = "D:\\Oseong\\SpringBoots\\SpringProject\\src\\main\\resources\\static\\img\\storedetailimg\\";
+            String originalFilename = multipartFile.getOriginalFilename();
+            String filePath = uploadDir + originalFilename;
+
+            File directory = new File(uploadDir);
+            if (!directory.exists()) {
+                directory.mkdirs();
+            }
+
+            File uploadFile = new File(filePath);
+            multipartFile.transferTo(uploadFile);
+
+            String imageUrl = "img/storedetailimg/" + originalFilename;
+            storeImagesDTO.setImageUrl(imageUrl);
+            Stores stores = service.findBySno(sno);
+            storeImagesDTO.setStores(stores);
+
+            storeImageService.uploadStoreImage(storeImagesDTO);
+
+            return "redirect:/StoreDetails?sno=" + sno;
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return "/Error404";
+        }
+    }
+
+    @PostMapping("/change-like")
+    @ResponseBody
+    public Map<String, Object> changeLikeStatus(@RequestBody UserLikeStoreDTO userLikeStoreDTO) {
+        Map<String, Object> response = new HashMap<>();
+        try {
+            String id = SecurityContextHolder.getContext().getAuthentication().getName();
+            userLikeStoreDTO.setId(id);
+            userService.changeLikes(id, userLikeStoreDTO.getSno());
+            response.put("success", "good");
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            response.put("error", "error");
+        }
+        return response;
     }
 }

@@ -66,20 +66,28 @@
     <div class="flex-justify-center">
         <div class="hidden-content" id="user-order-div" style="display:block;">
             <div class="user-info-div">
-                <div class="user-order-list">
+                <div class="user-info-details">
                     <span>주문 내역</span>
                 </div>
-                <div th:each="orderHistory : ${orderHistories}" style="margin-bottom:20px;">
-                    <div>
-                        <span th:text="${orderHistory.formattedOrderDate}+' 일'"
-                              style="color: #acacac; font-size: 16px;"></span>
+                <div th:if="${not #lists.isEmpty(orderHistories)}">
+                    <div th:each="orderHistory : ${orderHistories}" style="margin-bottom:20px;">
+                        <div>
+            <span th:text="${orderHistory.formattedOrderDate} + ' 일'"
+                  style="color: #acacac; font-size: 16px;"></span>
+                        </div>
+                        <div class="store-name" th:text="${orderHistory.store}"></div>
+                        <div>
+                            <span th:text="${orderHistory.food}"></span>
+                            <span th:text="${orderHistory.totalPrice}"></span>원
+                        </div>
+                        <button class="review-btn" th:if="${orderHistory.reviewed != 'N'}">리뷰 쓰기</button>
                     </div>
-                    <div class="store-name" th:text="${orderHistory.store}"></div>
-                    <div>
-                        <span th:text="${orderHistory.food}"></span>
-                        <span th:text="${orderHistory.totalPrice}"></span>원
+                </div>
+                <!-- 주문 목록이 없을 때 -->
+                <div th:if="${#lists.isEmpty(orderHistories)}">
+                    <div style="width: 450px; height: 200px; text-align: center; align-content: center; margin-bottom: 50px;">
+                        <p style="font-weight:600;">주문 목록이 없습니다.</p>
                     </div>
-                    <button class="review-btn" th:if="${orderHistory.reviewed != 'N'}">리뷰 쓰기</button>
                 </div>
             </div>
         </div>
@@ -87,15 +95,19 @@
     <div class="flex-justify-center">
         <div class="hidden-content" id="user-likes-div">
             <div class="user-info-div">
-                <span>찜 목록
-                </span>
+                <div class="user-info-details">
+                    <span>찜 목록</span>
+                </div>
             </div>
         </div>
     </div>
     <div class="flex-justify-center">
         <div class="hidden-content" id="user-address-div">
             <div class="user-info-div">
-                <label for="user-address">현재 주소
+                <label for="user-address">
+                    <div class="user-info-details">
+                        현재 주소
+                    </div>
                     <input type="text" class="user-address-input" id="user-address" th:value="${session.userAddress}"
                            disabled>
                     <input type="text" class="user-address-input" id="user-detail-address" placeholder="상세주소" required>

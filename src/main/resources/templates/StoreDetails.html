@@ -51,8 +51,9 @@
     <div class="StoreContent">
         <div class="ContentHeader">
             <span class="StoreName" id="storeName" th:text="${storeDetails.store}"></span>
+            <input type="hidden" id="isLikedStore" th:value="${likeStore}">
             <button class="LikesBtn" id="LikesBtn">
-                <img class="LikesIcon" th:src="@{/img/storedetailimg/LikesIconBefore.png}">
+                <img id="likeIcon" class="LikesIcon" th:src="@{/img/storedetailimg/LikesIconBefore.png}" alt="Like Icon">
             </button>
         </div>
         <div class="RatingAndInfoDiv">
@@ -125,12 +126,14 @@
                                     <img th:src="${image.imageUrl}" alt="Store Image">
                                 </div>
                             </div>
-                            <button class="carousel-control-prev" type="button" data-bs-target="#store-img-carousel"
+                            <button class="carousel-control-prev" type="button" style="width:100px;"
+                                    data-bs-target="#store-img-carousel"
                                     data-bs-slide="prev">
                                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                                 <span class="visually-hidden">Previous</span>
                             </button>
-                            <button class="carousel-control-next" type="button" data-bs-target="#store-img-carousel"
+                            <button class="carousel-control-next" style="width:100px;" type="button"
+                                    data-bs-target="#store-img-carousel"
                                     data-bs-slide="next">
                                 <span class="carousel-control-next-icon" aria-hidden="true"></span>
                                 <span class="visually-hidden">Next</span>
@@ -138,7 +141,8 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <input type="file" class="seller-menu-btn" style="width:100%;" id="add-store-img-btn" required>
+                        <input type="file" name="file" class="seller-menu-btn" style="width:100%;"
+                               id="add-store-img-btn" required>
                         <button type="button" class="seller-menu-btn" data-bs-dismiss="modal">취소</button>
                         <button class="seller-menu-btn">추가</button>
                         <button class="delete-button seller-menu-btn" onclick="deleteSlide(${iter.index})">삭제</button>
@@ -230,7 +234,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <form th:action="@{/edit/foods}" enctype="multipart/form-data" method="post">
-                    <input type="hidden" name="sno" th:value="${storeDetails.sno}">
+                    <input type="hidden" id="sno" name="sno" th:value="${storeDetails.sno}">
                     <div class="modal-body">
                         <div class="store-info-div">
                             <label class="store-info" for="food">메뉴이름</label>
