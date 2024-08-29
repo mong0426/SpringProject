@@ -2,7 +2,6 @@ package com.example.project3.Controller;
 
 import com.example.project3.DTO.*;
 import com.example.project3.Entity.Stores;
-import com.example.project3.Entity.UserLikeStore;
 import com.example.project3.Service.*;
 import jakarta.servlet.http.HttpSession;
 import jakarta.transaction.Transactional;
@@ -33,6 +32,7 @@ public class MainController {
     private final FoodsService foodsService;
     private final StoreImageService storeImageService;
     private final UserService userService;
+    private static String UPLOAD_DIR = System.getProperty("user.dir") + "/src/main/resources/static/img/";
 
     @GetMapping
     public String mainPage() {
@@ -163,10 +163,10 @@ public class MainController {
     @PostMapping("/edit/foods")
     public String addNewFood(@ModelAttribute FoodsDTO foodsDTO, @RequestParam("multipartFile") MultipartFile multipartFile, @RequestParam("sno") Long sno) {
         try {
-            String uploadDir = "D:\\Oseong\\SpringBoots\\SpringProject\\src\\main\\resources\\static\\img\\foodimg\\";
+            String uploadDir = UPLOAD_DIR + "foodimg/";
             String originalFilename = multipartFile.getOriginalFilename();
             String filePath = uploadDir + originalFilename;
-
+            System.out.println("PATH ==============" + uploadDir);
             File directory = new File(uploadDir);
 
             if (!directory.exists()) {
@@ -198,7 +198,7 @@ public class MainController {
     @PostMapping("/edit/store-img")
     public String addNewFood(@ModelAttribute StoreImagesDTO storeImagesDTO, @RequestParam("file") MultipartFile multipartFile, @RequestParam("sno") Long sno) {
         try {
-            String uploadDir = "D:\\Oseong\\SpringBoots\\SpringProject\\src\\main\\resources\\static\\img\\storedetailimg\\";
+            String uploadDir = UPLOAD_DIR + "storedetailimg/";
             String originalFilename = multipartFile.getOriginalFilename();
             String filePath = uploadDir + originalFilename;
 

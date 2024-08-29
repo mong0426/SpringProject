@@ -70,13 +70,13 @@
                     <span>주문 내역</span>
                 </div>
                 <div th:if="${not #lists.isEmpty(orderHistories)}">
-                    <div th:each="orderHistory : ${orderHistories}" style="margin-bottom:20px;">
+                    <div th:each="orderHistory : ${orderHistories}" class="list-menu-div">
                         <div>
             <span th:text="${orderHistory.formattedOrderDate} + ' 일'"
                   style="color: #acacac; font-size: 16px;"></span>
                         </div>
                         <div class="store-name" th:text="${orderHistory.store}"></div>
-                        <div>
+                        <div style="margin-bottom:15px;">
                             <span th:text="${orderHistory.food}"></span>
                             <span th:text="${orderHistory.totalPrice}"></span>원
                         </div>
@@ -97,6 +97,27 @@
             <div class="user-info-div">
                 <div class="user-info-details">
                     <span>찜 목록</span>
+                </div>
+                <div th:if="${not #lists.isEmpty(userLikeStores)}">
+                    <div th:each="userLikeStores : ${userLikeStores}" class="like-store-list">
+                        <a class="like-store-link" th:href="@{/StoreDetails(sno=${userLikeStores.sno})}">
+                            <div class="store-name" th:text="${userLikeStores.store}"></div>
+                            <div>
+                                <span class="create-date-div">배달팁 </span><span
+                                    th:text="${userLikeStores.deliTip}"></span>
+                            </div>
+                            <div style="margin-bottom:15px;">
+                                <span class="create-date-div">최소주문 </span><span
+                                    th:text="${userLikeStores.minOrder}"></span>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <!-- 주문 목록이 없을 때 -->
+                <div th:if="${#lists.isEmpty(userLikeStores)}">
+                    <div style="width: 450px; height: 200px; text-align: center; align-content: center; margin-bottom: 50px;">
+                        <p style="font-weight:600;">찜 목록이 없습니다.</p>
+                    </div>
                 </div>
             </div>
         </div>

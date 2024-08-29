@@ -5,6 +5,7 @@ import com.example.project3.Entity.User;
 // Role Enum을 가져옵니다
 import com.example.project3.Entity.UserLikeStore;
 import com.example.project3.Repository.SellerRepository;
+import com.example.project3.Repository.StoresRepository;
 import com.example.project3.Repository.UserLikeStoreRepository;
 import com.example.project3.Repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -12,6 +13,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -43,8 +45,7 @@ public class UserService {
     }
 
     public User getUserInfo(String id) {
-        User user = userRepository.findByUserid(id);
-        return user;
+        return userRepository.findByUserid(id);
     }
 
     public boolean isExistId(String id) {
@@ -57,8 +58,7 @@ public class UserService {
     }
 
     public boolean isCoustomerUser(String id) {
-        boolean result = userRepository.findByUserid(id) != null;
-        return result;
+        return userRepository.findByUserid(id) != null;
     }
 
     public void updateAddress(String id, String address) {
@@ -85,5 +85,9 @@ public class UserService {
             newLike.setLikes("true"); // 좋아요 상태를 true로 설정
             userLikeStoreRepository.save(newLike);
         }
+    }
+
+    public List<UserLikeStore> findUserLikeStores(String id) {
+        return userLikeStoreRepository.findAllById(id);
     }
 }

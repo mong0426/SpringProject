@@ -1,11 +1,15 @@
 package com.example.project3.Controller;
 
 import com.example.project3.DTO.OrderHistoryDTO;
+import com.example.project3.DTO.StoreDetailsDTO;
 import com.example.project3.DTO.UserDTO;
 import com.example.project3.Entity.Seller;
+import com.example.project3.Entity.Stores;
 import com.example.project3.Entity.User;
+import com.example.project3.Entity.UserLikeStore;
 import com.example.project3.Service.OrderHistoryService;
 import com.example.project3.Service.SellerService;
+import com.example.project3.Service.StoreDetailsService;
 import com.example.project3.Service.UserService;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
@@ -19,6 +23,7 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -30,15 +35,28 @@ public class UserController {
     private final UserService userService;
     private final SellerService sellerService;
     private final OrderHistoryService orderHistoryService;
+    private final StoreDetailsService storeDetailsService;
 
     @GetMapping("/myPage")
     public String myPage(Model model) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String userid = authentication.getName();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
         List<OrderHistoryDTO> orderHistories = orderHistoryService.showOrderList(userid);
         orderHistories.forEach(dto -> dto.setFormattedOrderDate(dto.getOrderDate().format(formatter)));
+
+        List<UserLikeStore> userLikeStores = userService.findUserLikeStores(userid);
+        List<StoreDetailsDTO> storeDetailsDTOS = new ArrayList<>();
+        for (UserLikeStore userLikeStore : userLikeStores) {
+            Stores stores = storeDetailsService.findBySno(userLikeStore.getSno());
+            StoreDetailsDTO dto = storeDetailsService.entityToDto(stores);
+            storeDetailsDTOS.add(dto);
+        }
+
         model.addAttribute("orderHistories", orderHistories);
+        model.addAttribute("userLikeStores", storeDetailsDTOS);
+
         return "myPage";
     }
 

@@ -10,6 +10,19 @@ document.addEventListener('DOMContentLoaded', function() {
     // 지도 관련 변수 선언
     let map, geocoder, marker;
 
+     window.onload = function() {
+                // URL에서 파라미터 확인
+                const urlParams = new URLSearchParams(window.location.search);
+                const likeStores = urlParams.get('likeStores');
+
+                // likeStores 파라미터가 true라면 해당 요소 클릭
+                if (likeStores === 'true') {
+                    const likeButton = document.getElementById("likes-btn");
+                    if (likeButton) {
+                        likeButton.click();  // 자동 클릭
+                    }
+                }
+     }
     // 날짜 포맷팅
     const dateTimeStr = document.getElementById("create-date").textContent;
     if (dateTimeStr) {
