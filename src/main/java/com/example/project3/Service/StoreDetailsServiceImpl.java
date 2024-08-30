@@ -42,6 +42,10 @@ public class StoreDetailsServiceImpl implements StoreDetailsService {
     }
 
     @Override
+    @Transactional
+    public void increaseLikesBySno(Long sno,Integer value) {repository.increaseLikesBySno(sno,value);}
+
+    @Override
     public boolean isExistStore(String store) {
         boolean result = repository.findByStore(store) != null;
         return result;

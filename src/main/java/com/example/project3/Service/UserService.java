@@ -57,7 +57,7 @@ public class UserService {
         return result;
     }
 
-    public boolean isCoustomerUser(String id) {
+    public boolean isCustomerUser(String id) {
         return userRepository.findByUserid(id) != null;
     }
 
@@ -84,6 +84,20 @@ public class UserService {
             newLike.setSno(sno);
             newLike.setLikes("true"); // 좋아요 상태를 true로 설정
             userLikeStoreRepository.save(newLike);
+        }
+    }
+
+    public void editUser(UserDTO userDTO) {
+        User user = userRepository.findByUserid(userDTO.getUserid());
+        try {
+            user.setUserid(userDTO.getUserid());
+            user.setPassword(passwordEncoder.encode(userDTO.getPassword()));
+            user.setName(userDTO.getName());
+            user.setEmail(userDTO.getEmail());
+            user.setPhone(userDTO.getPhone());
+            userRepository.save(user);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
         }
     }
 

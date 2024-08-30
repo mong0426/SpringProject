@@ -26,10 +26,10 @@
     <div class="my-page-title">
         <div class="title-top-div">
             <img class="profile-icon" th:src="@{/img/mypageimg/default-profile-icon.png}" alt="profileIcon"/>
-            <div style="display:flex; height:70px; flex-direction: column; justify-content: space-around; margin-left: 15px;">
+            <div class="user-top-info">
                 <div style="display:flex;">
                     <span class="before-id-span">고마운 분,</span>
-                    <div>
+                    <div id="user-info-btn" style="cursor:pointer;">
                         <span class="userid-span" th:text="${#authentication.name}"></span>
                         <span class="id-right-arrow"> > </span>
                     </div>
@@ -38,7 +38,6 @@
                     <span>가입하신 날짜 : </span>
                     <span th:text="${session.userCreateDate}" id="create-date"></span>
                 </div>
-                <div>개인정보 수정</div>
             </div>
         </div>
     </div>
@@ -61,6 +60,64 @@
                 <img class="sub-menu-icon" th:src="@{/img/mypageimg/store-setting-icon.png}" alt="settingIcon"/>
                 <span>매장관리</span>
             </a>
+        </div>
+    </div>
+    <div class="flex-justify-center">
+        <div class="hidden-content" id="user-info-div">
+            <div class="user-info-div">
+                <div class="user-info-details">
+                    <span>개인정보 수정</span>
+                </div>
+                <form th:action="@{/edit/user-info}" id="edit-user-form" method="post" th:object="${userDTO}">
+                    <div class="user-info-content">
+                        <label class="user-info" for="userName">이름</label>
+                        <input type="text" id="userName" name="name" class="user-info-input" autocomplete="off" maxlength="5"
+                               th:value="${session.userName}"
+                               required>
+                    </div>
+
+                    <div class="user-info-content">
+                        <label class="user-info" for="userEmail">이메일</label>
+                        <input type="text" id="userEmail" name="email" class="user-info-input"
+                               th:value="${session.userEmail}" maxlength="20" required>
+                    </div>
+
+                    <div class="user-info-content">
+                        <label class="user-info" for="password">비밀번호 변경</label>
+                        <input type="password" id="password" name="password"
+                               class="user-info-input" maxlength="20" required>
+                    </div>
+
+                    <div class="user-info-content">
+                        <label class="user-info" for="passCheck">비밀번호 재확인</label>
+                        <input type="password" id="passCheck" name="passCheck"
+                               class="user-info-input" autocomplete="off" maxlength="20" required>
+                    </div>
+                    <div class="user-info-content">
+                        <label class="user-info" for="phone">전화번호</label>
+                        <input type="text" id="phone" name="phone" class="user-info-input"
+                               maxlength="13" autocomplete="off"
+                               th:value="${session.userPhone}" required>
+                    </div>
+                    <div style="display: flex; justify-content: center; align-items: center;">
+                        <input type="hidden" id="pass-check-status" value="false">
+                        <span class="icon cross" id="passCheckStatus" style="display:none;"></span>&nbsp;
+                        <span class="ValidWarningFont" id="valid-warning"></span><br/>
+                    </div>
+                    <div class="user-info-content">
+                        <button type="submit" id="change-user-info-btn" class="search-address-btn">
+                            저장
+                        </button>
+                    </div>
+                </form>
+            </div>
+            <div class="bottom-menu-div">
+                <form th:action="@{/logout}" method="post">
+                    <button type="submit" class="myPage-logout-btn">로그아웃
+                    </button>
+                </form>
+                <button type="button" class="myPage-logout-btn">회원탈퇴</button>
+            </div>
         </div>
     </div>
     <div class="flex-justify-center">

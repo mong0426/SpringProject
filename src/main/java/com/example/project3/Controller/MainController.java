@@ -96,7 +96,6 @@ public class MainController {
     @ResponseBody
     public boolean isExistStore(@RequestBody StoreDetailsDTO storeDetailsDTO) {
         String store = storeDetailsDTO.getStore();
-        System.out.println("store =========== " + store);
         return service.isExistStore(store);
     }
 
@@ -232,6 +231,15 @@ public class MainController {
             String id = SecurityContextHolder.getContext().getAuthentication().getName();
             userLikeStoreDTO.setId(id);
             userService.changeLikes(id, userLikeStoreDTO.getSno());
+            if (userLikeStoreDTO.getLikes().equals("false")) {
+                service.increaseLikesBySno(userLikeStoreDTO.getSno(), -1);
+
+            } else {
+                service.increaseLikesBySno(userLikeStoreDTO.getSno(), 1);
+            }
+            Stores store = service.findBySno(userLikeStoreDTO.getSno());
+            int updateLikes = store.getLikes();
+            response.put("likes",updateLikes);
             response.put("success", "good");
         } catch (Exception e) {
             System.out.println(e.getMessage());

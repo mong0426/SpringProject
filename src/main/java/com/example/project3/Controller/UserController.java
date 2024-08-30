@@ -69,7 +69,7 @@ public class UserController {
     public String loginSuccess(HttpSession session, Model model) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String userid = authentication.getName();
-        if (userService.isCoustomerUser(userid)) {
+        if (userService.isCustomerUser(userid)) {
             User user = userService.getUserInfo(userid);
             session.setAttribute("userName", user.getName());
             session.setAttribute("userEmail", user.getEmail());
@@ -120,6 +120,27 @@ public class UserController {
         }
     }
 
+    @PostMapping("/edit/user-info")
+    @ResponseBody
+    public Map<String, Object> editUserInfo(@ModelAttribute UserDTO userDTO, HttpSession httpSession) {
+        Map<String, Object> response = new HashMap<>();
+        try {
+            String id = SecurityContextHolder.getContext().getAuthentication().getName();
+            userDTO.setUserid(id);
+            System.out.println("userDTO ============== "+userDTO);
+            userService.editUser(userDTO);
+            httpSession.setAttribute("userName", userDTO.getName());
+            httpSession.setAttribute("userEmail", userDTO.getEmail());
+            httpSession.setAttribute("userPhone", userDTO.getPhone());
+
+            response.put("success", true);
+        } catch (Exception e) {
+            response.put("success", false);
+            response.put("error", e.getMessage());
+        }
+        return response;
+    }
+
     @PostMapping("/isExist/id")
     @ResponseBody
     public boolean isExistId(@RequestBody UserDTO userDTO) {
@@ -130,7 +151,7 @@ public class UserController {
 
     @PostMapping("/changeAddress")
     @ResponseBody
-    public Map<String, Object> changeAddress(@RequestBody User userDTO, HttpSession session) {
+    public Map<String, Object> changeAddress(@RequestBody UserDTO userDTO, HttpSession session) {
         Map<String, Object> response = new HashMap<>();
         String id = SecurityContextHolder.getContext().getAuthentication().getName();
         String address = userDTO.getAddress();

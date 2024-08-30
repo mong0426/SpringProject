@@ -13,6 +13,8 @@ public interface StoreDetailsService {
 
     void increaseOrderCount(String store);
 
+    void increaseLikesBySno(Long sno,Integer value);
+
     boolean isExistStore(String store);
 
     void changeStoreInfo(StoreDetailsDTO storeDetailsDTO);

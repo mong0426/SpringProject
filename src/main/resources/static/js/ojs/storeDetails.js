@@ -173,6 +173,7 @@ document.addEventListener("DOMContentLoaded", function() {
     const statusInput = document.getElementById("isLikedStore");
     const likeIcon = document.getElementById('likeIcon');
     const sno = document.getElementById('sno').value;
+    let likeCount = document.getElementById("user-likes").textContent;
 
     // 상태에 따라 아이콘 이미지 설정
     function updateLikeIcon() {
@@ -184,8 +185,8 @@ document.addEventListener("DOMContentLoaded", function() {
     updateLikeIcon();
 
     likesBtn.addEventListener("click", function() {
-        const status = statusInput.value === 'true'; // 현재 상태를 불리언으로 변환
-        const newStatus = !status; // 상태 반전
+        const status = statusInput.value === 'true';
+        const newStatus = !status;
 
         fetch('/change-like', {
             method: 'POST',
@@ -201,6 +202,8 @@ document.addEventListener("DOMContentLoaded", function() {
         .then(response => response.json())
         .then(data => {
             if (data.success) { // 서버에서 반환한 성공 여부에 따라 처리
+                document.getElementById("user-likes").textContent = data.likes;
+
                 statusInput.value = newStatus; // 상태 업데이트
                 updateLikeIcon(); // 아이콘 업데이트
             } else {

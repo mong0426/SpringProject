@@ -19,6 +19,13 @@
     width:100px;
     height:100px;
 }
+.user-top-info{
+    display:flex;
+    height:70px;
+    flex-direction: column;
+    justify-content: space-around;
+    margin-left: 15px;
+}
 .before-id-span{
     font-size:25px;
 }
@@ -140,3 +147,48 @@
 .like-store-list:hover{
     background-color: #f5f5f5;
 }
+  .user-info-content{
+     display:flex;
+     justify-content: space-around;
+     margin:15px;
+     align-items: center;
+  }
+  .user-info{
+    width:50%;
+    height:40px;
+    align-content: center;
+  }
+  .user-info-input{
+    width:100%;
+    border-radius: 5px;
+    border: 1px solid #c9c9c9;
+    height: 40px;
+    font-size:14px;
+    padding:10px;
+  }
+  .bottom-menu-div{
+    display: flex;
+    justify-content: center;
+    margin-bottom: 30px;
+    align-items: center;
+  }
+
+ .check::before {
+    content: '✔'; /* 체크 표시 */
+    color: green;
+ }
+ .cross::before {
+    content: '✘'; /* 엑스 표시 */
+    color: red;
+ }
+ .ValidWarningFont{
+    font-size:14px;
+    color:#979797;
+  }
+  .myPage-logout-btn{
+    border: none;
+    font-size: 12px;
+    background-color: transparent;
+    padding: 12px 16px;
+    color: #c9c9c9;
+  }

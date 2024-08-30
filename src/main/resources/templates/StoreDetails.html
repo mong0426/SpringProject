@@ -333,7 +333,7 @@
             <h5>가게 통계</h5>
             <span class="StoreInfoCate">주문수</span><span th:text="${storeDetails.orderCount}"></span><br/>
             <span class="StoreInfoCate">리뷰수</span><span th:text="${#lists.size(storeDetails.reviews)}"></span><br/>
-            <span class="StoreInfoCate">찜</span><span th:text="${storeDetails.likes}"></span><br/>
+            <span class="StoreInfoCate">찜</span><span id="user-likes" th:text="${storeDetails.likes}"></span><br/>
             <hr>
             <h5>배달팁 안내</h5>
             <li>거리,시간대,지역,배달방식,할인,클럽 혜택,사장님이 사용하는 요금제 등에 따라 배달팁이 달라져요.</li>

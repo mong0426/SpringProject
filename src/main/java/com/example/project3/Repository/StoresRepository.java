@@ -21,5 +21,9 @@ public interface StoresRepository extends JpaRepository<Stores, Long> {
     @Query("UPDATE Stores s SET s.orderCount = s.orderCount + 1 WHERE s.store = :store")
     void incrementCounterByStore(@Param("store") String store);
 
+    @Modifying
+    @Query("UPDATE Stores s SET s.likes = s.likes + :value WHERE s.sno = :sno")
+    void increaseLikesBySno(@Param("sno") Long sno, @Param("value") Integer value);
+
     Stores findByStore(String store);
 }
