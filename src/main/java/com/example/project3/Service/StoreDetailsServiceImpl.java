@@ -1,12 +1,20 @@
 package com.example.project3.Service;
 
+import com.example.project3.DTO.PageableReviewsDTO;
+import com.example.project3.DTO.ReviewsDTO;
 import com.example.project3.DTO.StoreDetailsDTO;
+import com.example.project3.Entity.Reviews;
 import com.example.project3.Entity.Stores;
+import com.example.project3.Repository.ReviewsRepository;
 import com.example.project3.Repository.StoresRepository;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,6 +27,7 @@ import java.util.stream.Collectors;
 public class StoreDetailsServiceImpl implements StoreDetailsService {
 
     private final StoresRepository repository;
+    private final ReviewsRepository reviewsRepository;
 
     @Override
     @Transactional
@@ -43,7 +52,9 @@ public class StoreDetailsServiceImpl implements StoreDetailsService {
 
     @Override
     @Transactional
-    public void increaseLikesBySno(Long sno,Integer value) {repository.increaseLikesBySno(sno,value);}
+    public void increaseLikesBySno(Long sno, Integer value) {
+        repository.increaseLikesBySno(sno, value);
+    }
 
     @Override
     public boolean isExistStore(String store) {
@@ -80,5 +91,31 @@ public class StoreDetailsServiceImpl implements StoreDetailsService {
     @Override
     public Stores findBySno(Long sno) {
         return repository.findById(sno).orElse(null);
+    }
+
+    @Override
+    public PageableReviewsDTO getReviews(Stores store, int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        Page<Reviews> reviews = reviewsRepository.findAllByStore(store, pageable);
+        List<ReviewsDTO> reviewsDTO = reviews.stream()
+                .map(review -> new ReviewsDTO(
+                        review.getRno(),
+                        review.getStore().getStore(),
+                        review.getFood().getFood(),
+                        review.getRating(),
+                        review.getTitle(),
+                        review.getContent(),
+                        review.getWriter()))
+                .collect(Collectors.toList());
+        return new PageableReviewsDTO(
+                reviewsDTO,
+                reviews.getTotalPages(),
+                reviews.getTotalElements(),
+                reviews.getNumber());
+    }
+
+    @Override
+    public Stores findStoresByStore(String storeName) {
+        return repository.findByStore(storeName);
     }
 }

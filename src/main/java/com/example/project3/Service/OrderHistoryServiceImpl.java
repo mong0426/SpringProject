@@ -40,6 +40,12 @@ public class OrderHistoryServiceImpl implements OrderHistoryService {
                 .collect(Collectors.toList());
     }
 
+    @Override
+    public void deleteOrderHistory(String id) {
+        List<OrderHistory> orderHistory = orderHistoryRepository.findAllById(id);
+        orderHistoryRepository.deleteAll(orderHistory);
+    }
+
     private OrderHistoryDTO convertToDTO(OrderHistory orderHistory) {
         OrderHistoryDTO dto = new OrderHistoryDTO();
         dto.setOno(orderHistory.getOno());

@@ -1,5 +1,7 @@
 document.addEventListener('DOMContentLoaded', function() {
     // 요소 선택
+    const csrfToken = document.querySelector('meta[name="_csrf"]').getAttribute('content');
+    const csrfHeader = document.querySelector('meta[name="_csrf_header"]').getAttribute('content');
     const addressBtn = document.getElementById("address-btn");
     const addressDiv = document.getElementById("user-address-div");
     const hiddenContents = document.querySelectorAll('.hidden-content');
@@ -9,6 +11,13 @@ document.addEventListener('DOMContentLoaded', function() {
     const userLikesDiv = document.getElementById("user-likes-div");
     const userInfoBtn = document.getElementById("user-info-btn");
     const userInfoDiv = document.getElementById("user-info-div");
+    const Toast = Swal.mixin({
+          toast: true,
+          showConfirmButton: false,
+          timer: 800,
+          timerProgressBar: true,
+     });
+
     // 지도 관련 변수 선언
     let map, geocoder, marker;
 
@@ -79,9 +88,6 @@ document.addEventListener('DOMContentLoaded', function() {
         const inputAddress = document.getElementById("user-address").value;
         const inputDetailAddress = document.getElementById("user-detail-address").value;
         const fullAddress = inputAddress + ' ' + inputDetailAddress;
-        const csrfToken = document.querySelector('meta[name="_csrf"]').getAttribute('content');
-        const csrfHeader = document.querySelector('meta[name="_csrf_header"]').getAttribute('content');
-
         if (inputDetailAddress) {
             fetch('/changeAddress', {
                 method: 'POST',
@@ -123,6 +129,7 @@ document.addEventListener('DOMContentLoaded', function() {
             userLikesDiv.style.display = 'block';
         });
     // 이벤트 리스너 등록
+    if(addressBtn != null){
     addressBtn.addEventListener("click", function() {
         const inputAddress = document.getElementById("user-address").value;
         document.querySelectorAll('.sub-menu-div').forEach(btn => btn.classList.remove('SelectMenu'));
@@ -136,6 +143,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
         updateMapWithAddress(inputAddress);
     });
+    }
     userInfoBtn.addEventListener("click",function(){
         document.querySelectorAll('.sub-menu-div').forEach(btn => btn.classList.remove('SelectMenu'));
         this.classList.add('SelectMenu');
@@ -235,12 +243,6 @@ function validateForm() {
 
     document.getElementById("change-user-info-btn").addEventListener('click', function(event) {
         event.preventDefault(); // 기본 폼 제출 방지
-        const Toast = Swal.mixin({
-                    toast: true,
-                    showConfirmButton: false,
-                    timer: 500,
-                    timerProgressBar: true,
-                });
         if (validateForm()) {
             const form = document.getElementById("edit-user-form");
             const formData = new FormData(form);
@@ -282,4 +284,58 @@ function validateForm() {
                 });
         }
        });
+
+       const modal = document.getElementById('delete-account-modal');
+       const closeModalBtn = document.getElementById('closeModal');
+       const cancelBtn = document.getElementById('cancel-btn');
+       const openModalBtn = document.getElementById("openModal");
+       closeModalBtn.addEventListener('click', function() {
+            modal.style.display = 'none';
+          });
+       cancelBtn.addEventListener('click', function() {
+                  modal.style.display = 'none';
+                });
+       openModalBtn.addEventListener("click",function(){
+            modal.style.display = 'block';
+       });
+       const deleteBtn = document.getElementById("delete-account-btn");
+
+        deleteBtn.addEventListener("click",function(){
+        const pass = document.getElementById("delete-passCheck").value;
+        fetch('/delete/account', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                [csrfHeader]: csrfToken
+            },
+            body: JSON.stringify({
+                password: pass
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            // 서버 응답 처리
+            if (data.success) {
+           Swal.fire({
+               icon: 'success',
+               title: '탈퇴되었습니다.',
+               text: '메인페이지로 이동합니다.',
+               timer: 2000,
+               timerProgressBar: true, //
+               willClose: () => {
+                   window.location.href = '/';
+               }
+           });
+            } else {
+                 Toast.fire({
+                      icon: 'warning',
+                      title: '비밀번호가 틀렸습니다.'
+                  });
+            }
+        })
+        .catch(error => {
+            console.error('에러 발생:', error);
+            alert('오류가 발생했습니다. 다시 시도해주세요.');
+        });
     });
+});

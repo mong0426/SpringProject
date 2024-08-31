@@ -27,7 +27,6 @@ div {
 .page-header__title {
     display: inline-block;
     position: relative;
-    color: #f986bd;
     font-family: var(--font-family-scoop), serif;
     font-weight: 700;
     font-size: 90px;
@@ -208,7 +207,6 @@ body, button, dl, dt, dd, figure, h1, h2, h3, h4, h5, h6, ol, ul, li, p, table, 
 .page-header__text {
     display: inline-block;
     padding: 0 25px;
-    color: #f986bd;
     font-weight: var(--font-weight-sd-bold);
     font-size: 20px;
     line-height: 1.5;

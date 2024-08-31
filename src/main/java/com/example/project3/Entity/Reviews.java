@@ -19,6 +19,10 @@ public class Reviews {
     @JoinColumn(name = "sno")
     private Stores store;
 
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "fno")
+    private Foods food;
+
     @Column(nullable = false)
     private double rating;
 

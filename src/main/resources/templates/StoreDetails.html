@@ -53,7 +53,8 @@
             <span class="StoreName" id="storeName" th:text="${storeDetails.store}"></span>
             <input type="hidden" id="isLikedStore" th:value="${likeStore}">
             <button class="LikesBtn" id="LikesBtn">
-                <img id="likeIcon" class="LikesIcon" th:src="@{/img/storedetailimg/LikesIconBefore.png}" alt="Like Icon">
+                <img id="likeIcon" class="LikesIcon" th:src="@{/img/storedetailimg/LikesIconBefore.png}"
+                     alt="Like Icon">
             </button>
         </div>
         <div class="RatingAndInfoDiv">
@@ -94,7 +95,6 @@
             </button>
             <button type="button" class="seller-menu-btn" data-bs-toggle="modal" data-bs-target="#add-food-modal">메뉴 추가
             </button>
-            <button type="button" class="seller-menu-btn">메뉴 삭제</button>
             <!-- </div> -->
         </div>
     </div>
@@ -307,7 +307,7 @@
                             <span class="CountFont">수량</span>
                         </div>
                         <div class="CountDiv" style="">
-                            <button type="button" class="PlusMinusBtn" id="minusBtn" data-bs-dismiss="modal">-</button>
+                            <button type="button" class="PlusMinusBtn" id="minusBtn">-</button>
                             <span id="OrderQuantity">1</span>&nbsp;개
                             <button type="button" class="PlusMinusBtn" id="plusBtn">+</button>
                             <br/>
@@ -345,8 +345,43 @@
                 <span class="StoreInfoCate">사업자주소</span> <span th:text="${storeDetails.addr}"></span><br/>
         </div>
         <div class="ReviewDiv HiddenContent" id="ReviewDiv">
-            <div class="ReviewContentDiv">
-                머시랭 리뷰 슬거임.
+            <div class="ReviewContentDiv" id="reviews-container">
+                <div th:each="review, iterStat : ${reviews}"
+                     class="FoodMenuDiv"
+                     th:id="'FoodMenuDiv' + ${iterStat.index}">
+                    <div class="FoodContentDiv">
+                        <span class="FoodNameFont" th:text="${review.writer}">작성자</span><br/>
+                        <span th:text="${review.title}">제목</span><br/>
+                        <div class="rating-star-div">
+                            <span th:text="${review.rating}" style="margin-right:10px;">평점</span>
+                            <img class="rating-star" th:src="@{/img/storedetailimg/star-filled.png}"
+                                 th:each="i : ${#numbers.sequence(0, review.rating-1)}" alt="Star"/>
+                            <img class="rating-star" th:src="@{/img/storedetailimg/star-empty.png}"
+                                 th:each="i : ${#numbers.sequence(1, 5 - review.rating)}"
+                                 th:if="${review.rating < 5}" alt="Star"/><br/>
+                        </div>
+                        <p th:text="${review.content}">내용</p>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination" style="justify-content: center; margin-top: 16px;">
+                        <li th:classappend="${currentPage == 0} ? 'disabled' : ''" class="page-item">
+                            <a class="page-link" th:href="@{'/your-url?page=' + (${currentPage} - 1)}">Previous</a>
+                        </li>
+                        <li th:each="i : ${#numbers.sequence(0, totalPages - 1)}"
+                            th:classappend="${i == currentPage} ? 'active' : ''" class="page-item">
+                            <a class="page-link" th:href="@{'/your-url?page=' + ${i}}"
+                               th:text="${i + 1}">1</a>
+                        </li>
+                        <li th:classappend="${currentPage + 1 == totalPages} ? 'disabled' : ''"
+                            class="page-item">
+                            <a class="page-link"
+                               th:href="@{'/your-url?page=' + (${currentPage}+1)}">Next</a>
+                        </li>
+                    </ul>
+                </nav>
             </div>
         </div>
     </div>

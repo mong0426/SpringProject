@@ -275,5 +275,12 @@ margin-bottom:0px;
     line-height: 1.25em;
     background-image: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#f2f2f2));
    }
-
+.rating-star{
+    width:15px;
+    margin-right:2px;
+}
+.rating-star-div{
+    display:flex;
+    align-items:center;
+}
 

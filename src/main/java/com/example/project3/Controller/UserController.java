@@ -127,7 +127,7 @@ public class UserController {
         try {
             String id = SecurityContextHolder.getContext().getAuthentication().getName();
             userDTO.setUserid(id);
-            System.out.println("userDTO ============== "+userDTO);
+            System.out.println("userDTO ============== " + userDTO);
             userService.editUser(userDTO);
             httpSession.setAttribute("userName", userDTO.getName());
             httpSession.setAttribute("userEmail", userDTO.getEmail());
@@ -163,6 +163,30 @@ public class UserController {
             e.printStackTrace();
             response.put("error", "주소 수정 실패");
         }
+        return response;
+    }
+
+    @PostMapping("/delete/account")
+    @ResponseBody
+    public Map<String, Object> deleteAccount(@RequestBody UserDTO userDTO, HttpSession session) {
+        Map<String, Object> response = new HashMap<>();
+        String id = SecurityContextHolder.getContext().getAuthentication().getName();
+        String inputPass = userDTO.getPassword();
+        if (userService.isPasswordMatch(inputPass, id)) {
+            if (userService.isCustomerUser(id)) {
+                userService.deleteUser(id);
+            } else {
+                sellerService.deleteSeller(id);
+            }
+            orderHistoryService.deleteOrderHistory(id);
+            userService.deleteUserLikeStore(id);
+
+            session.invalidate();
+            response.put("success", true);
+        } else {
+            response.put("success", false);
+        }
+
         return response;
     }
 }

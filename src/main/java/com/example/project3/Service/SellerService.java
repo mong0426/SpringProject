@@ -9,4 +9,5 @@ public interface SellerService {
 
     void createStoreAndSeller(SellerDTO sellerDTO);
 
+    void deleteSeller(String id);
 }

@@ -41,7 +41,9 @@ public class MainController {
 
     @GetMapping("/StoreDetails")
     @Transactional
-    public String storeDetails(@RequestParam("sno") long sno, Model model) {
+    public String storeDetails(@RequestParam("sno") long sno,
+                               @RequestParam(defaultValue = "0") int page,
+                               @RequestParam(defaultValue = "10") int size, Model model) {
         StoreDetailsDTO dto = service.showStore(sno);
         double totalRating = 0;
         if (dto.getReviews() != null) {
@@ -54,10 +56,41 @@ public class MainController {
         averageRating = Double.parseDouble(df.format(averageRating));
         String id = SecurityContextHolder.getContext().getAuthentication().getName();
         boolean likeStore = userService.IsLikeStore(id, sno);
+        Stores store = service.findBySno(sno);
+        PageableReviewsDTO pageableReviews = service.getReviews(store, page, size);
+
+        for (int i = 0; i < pageableReviews.getReviews().size(); i++) {
+            int value = (int) pageableReviews.getReviews().get(i).getRating();
+            pageableReviews.getReviews().get(i).setRating(value);
+        }
+        System.out.println("rating =================" + pageableReviews.getReviews().get(0).getRating());
         model.addAttribute("likeStore", likeStore);
         model.addAttribute("storeDetails", dto);
         model.addAttribute("averageRating", averageRating);
+        model.addAttribute("reviews", pageableReviews.getReviews());
+        model.addAttribute("totalPages", pageableReviews.getTotalPages());
+        model.addAttribute("currentPage", pageableReviews.getNumber());
         return "StoreDetails";
+    }
+
+    @PostMapping("/review/page")
+    @ResponseBody
+    public Map<String, Object> getReviewPage(@RequestBody ReviewPageRequestDTO pageRequestDTO) {
+        Map<String, Object> response = new HashMap<>();
+        try {
+            int page = pageRequestDTO.getPage();
+            Stores store = service.findStoresByStore(pageRequestDTO.getStore());
+            int size = 10;
+            PageableReviewsDTO pageableReviews = service.getReviews(store, page, size);
+
+            System.out.println("pageableReviews ====================" + pageableReviews);
+            response.put("reviews", pageableReviews.getReviews());
+            response.put("currentPage", page);
+            response.put("totalPages", pageableReviews.getTotalPages());
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return response;
     }
 
     @GetMapping("/myCart")
@@ -239,7 +272,7 @@ public class MainController {
             }
             Stores store = service.findBySno(userLikeStoreDTO.getSno());
             int updateLikes = store.getLikes();
-            response.put("likes",updateLikes);
+            response.put("likes", updateLikes);
             response.put("success", "good");
         } catch (Exception e) {
             System.out.println(e.getMessage());

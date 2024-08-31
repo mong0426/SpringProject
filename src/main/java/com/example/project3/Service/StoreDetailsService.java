@@ -1,5 +1,7 @@
 package com.example.project3.Service;
 
+import com.example.project3.DTO.PageableReviewsDTO;
+import com.example.project3.DTO.ReviewsDTO;
 import com.example.project3.DTO.StoreDetailsDTO;
 import com.example.project3.Entity.Stores;
 
@@ -22,7 +24,7 @@ public interface StoreDetailsService {
     Stores findBySno(Long sno);
 
     default Stores dtoToEntity(StoreDetailsDTO dto) {
-        Stores entity = Stores.builder()
+        return Stores.builder()
                 .sno(dto.getSno())
                 .store(dto.getStore())
                 .ceo(dto.getCeo())
@@ -39,12 +41,11 @@ public interface StoreDetailsService {
                 .foods(dto.getFoods())
                 .reviews(dto.getReviews())
                 .build();
-        return entity;
     }
 
     default StoreDetailsDTO entityToDto(Stores entity) {
 
-        StoreDetailsDTO dto = StoreDetailsDTO.builder()
+        return StoreDetailsDTO.builder()
                 .sno(entity.getSno())
                 .store(entity.getStore())
                 .ceo(entity.getCeo())
@@ -61,6 +62,9 @@ public interface StoreDetailsService {
                 .foods(entity.getFoods())
                 .reviews(entity.getReviews())
                 .build();
-        return dto;
     }
+
+    PageableReviewsDTO getReviews(Stores store,int page, int size);
+
+    Stores findStoresByStore(String storeName);
 }

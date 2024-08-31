@@ -1,6 +1,7 @@
 package com.example.project3.Service;
 
 import com.example.project3.DTO.UserDTO;
+import com.example.project3.Entity.Seller;
 import com.example.project3.Entity.User;
 // Role Enum을 가져옵니다
 import com.example.project3.Entity.UserLikeStore;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -103,5 +105,32 @@ public class UserService {
 
     public List<UserLikeStore> findUserLikeStores(String id) {
         return userLikeStoreRepository.findAllById(id);
+    }
+
+    public boolean isPasswordMatch(String inputPass, String id) {
+        User user = userRepository.findByUserid(id);
+        Seller seller = sellerRepository.findById(id);
+        Boolean isMatch = false;
+        String dbPass = null;
+        if (user != null) {
+            dbPass = user.getPassword();
+        }
+        if (seller != null) {
+            dbPass = seller.getPassword();
+        }
+        if (dbPass != null) {
+            return passwordEncoder.matches(inputPass, dbPass);
+        }
+        return isMatch;
+    }
+
+    public void deleteUser(String id) {
+        User user = userRepository.findByUserid(id);
+        userRepository.delete(user);
+    }
+
+    public void deleteUserLikeStore(String id) {
+        List<UserLikeStore> userLikeStore = userLikeStoreRepository.findAllById(id);
+        userLikeStoreRepository.deleteAll(userLikeStore);
     }
 }

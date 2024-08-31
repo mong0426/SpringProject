@@ -192,3 +192,43 @@
     padding: 12px 16px;
     color: #c9c9c9;
   }
+ .modal-title{
+    font-weight:600;
+ }
+ .modal-content{
+    min-width:500px;
+    min-height:300px;
+ }
+ .modal-footer{
+    justify-content:space-between;
+    padding-left:30px;
+    padding-right:30px;
+ }
+   .seller-menu-btn{
+    display: inline-block;
+    padding: .5em 1em;
+    margin: .4em .15em;
+    border: 1px solid #ccc;
+    border-color: #dbdbdb #d2d2d2 #b2b2b2 #d2d2d3;
+    cursor: pointer;
+    color: #464646;
+    border-radius: .2em;
+    vertical-align: middle;
+    font-size: 1em;
+    line-height: 1.25em;
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#f2f2f2));
+}
+.modal-body{
+    display: flex;
+    height: 200px;
+    flex-direction: column;
+    justify-content: space-around;
+}
+.store-info-input {
+    width: 100%;
+    border-radius: 5px;
+    border: 1px solid #c9c9c9;
+    height: 40px;
+    font-size: 14px;
+    padding: 10px;
+}

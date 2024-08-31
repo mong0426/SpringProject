@@ -215,4 +215,96 @@ document.addEventListener("DOMContentLoaded", function() {
             window.location.href = "login.html";
         });
     });
+
+function addPageBtn(){
+document.querySelectorAll('.page-link').forEach(item => {
+    item.addEventListener('click', function(e) {
+        e.preventDefault();
+        const activePageLink = document.querySelector('.pagination .page-item.active .page-link');
+        const pageNumber = this.getAttribute('href').split('=')[1];
+        const storeName = document.getElementById("storeName").textContent;
+        console.log("pageNumber=================="+pageNumber);
+        fetch('/review/page', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                [csrfHeader]: csrfToken
+            },
+            body: JSON.stringify({
+                page: parseInt(pageNumber),
+                store : storeName
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            updateReviews(data.reviews);
+            updatePagination(data.currentPage, data.totalPages);
+        })
+        .catch(error => console.error('Error:', error));
+    });
+});
+}
+addPageBtn();
+function updateReviews(reviews) {
+    const container = document.getElementById('reviews-container');
+    container.innerHTML = '';
+
+  reviews.forEach(review => {
+         const reviewDiv = document.createElement('div');
+         reviewDiv.className = 'FoodMenuDiv';
+         reviewDiv.id = 'FoodMenuDiv' + review.id;
+
+         // Generate star images
+         let starsHtml = '';
+         const filledStars = Math.floor(review.rating);
+         const emptyStars = 5 - filledStars;
+
+         for (let i = 0; i < filledStars; i++) {
+             starsHtml += '<img class="rating-star" src="/img/storedetailimg/star-filled.png" alt="Star"/>';
+         }
+         for (let i = 0; i < emptyStars; i++) {
+             starsHtml += '<img class="rating-star" src="/img/storedetailimg/star-empty.png" alt="Star"/>';
+         }
+
+         reviewDiv.innerHTML = `
+             <div class="FoodContentDiv">
+                 <span class="FoodNameFont">${review.writer}</span><br/>
+                 <span>${review.title}</span><br/>
+                 <div class="rating-star-div">
+                     <span style="margin-right:10px;">${review.rating}.0</span>
+                     ${starsHtml}<br/>
+                 </div>
+                 <p>${review.content}</p>
+             </div>
+         `;
+        container.appendChild(reviewDiv);
+    });
+}
+
+function updatePagination(currentPage, totalPages) {
+        const paginationContainer = document.querySelector('.pagination');
+        paginationContainer.innerHTML = '';
+
+        const prevDisabled = currentPage === 0 ? 'disabled' : '';
+        paginationContainer.innerHTML += `
+            <li class="page-item ${prevDisabled}">
+                <a class="page-link" href="?page=${currentPage - 1}">Previous</a>
+            </li>
+        `;
+        for (let i = 0; i < totalPages; i++) {
+            const activeClass = i === currentPage ? 'active' : '';
+            paginationContainer.innerHTML += `
+                <li class="page-item ${activeClass}">
+                    <a class="page-link" href="?page=${i}">${i + 1}</a>
+                </li>
+            `;
+        }
+        const nextDisabled = currentPage + 1 === totalPages ? 'disabled' : '';
+        paginationContainer.innerHTML += `
+            <li class="page-item ${nextDisabled}">
+                <a class="page-link" href="?page=${currentPage + 1}">Next</a>
+            </li>
+        `;
+        addPageBtn();
+    }
 });

@@ -71,17 +71,8 @@ select {
     transition: all 0.2s;
     align-items: center;
     justify-content: center;
+    background-color: black;
 }
-
-.btnBlueGreen {
-    background: #737272;
-}
-
-.btnFade.btnBlueGreen:hover {
-    background: #333333;
-}
-
-
 
 .post_list{
     width: 980px;
@@ -111,7 +102,6 @@ div {
 .page-header__title {
     display: inline-block;
     position: relative;
-    color: #f986bd;
     font-family: var(--font-family-scoop), serif;
     font-weight: 700;
     font-size: 50px;

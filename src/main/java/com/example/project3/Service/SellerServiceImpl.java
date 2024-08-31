@@ -46,7 +46,13 @@ public class SellerServiceImpl implements SellerService {
     }
 
     @Override
-    public Seller getSellerInfo(String userid){
+    public void deleteSeller(String id) {
+        Seller seller = sellerRepository.findById(id);
+        sellerRepository.delete(seller);
+    }
+
+    @Override
+    public Seller getSellerInfo(String userid) {
         Seller seller = sellerRepository.findById(userid);
         return seller;
     }

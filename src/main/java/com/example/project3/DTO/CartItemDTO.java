@@ -1,5 +1,6 @@
 package com.example.project3.DTO;
 
+import lombok.Builder;
 import lombok.Data;
 
 @Data

@@ -7,4 +7,8 @@ import java.util.List;
 
 public interface OrderHistoryRepository extends JpaRepository<OrderHistory, Long> {
     List<OrderHistory> findByIdOrderByOrderDateDesc(String id);
+
+    OrderHistory findById(String id);
+
+    List<OrderHistory> findAllById(String id);
 }

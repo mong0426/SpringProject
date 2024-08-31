@@ -71,7 +71,8 @@
                 <form th:action="@{/edit/user-info}" id="edit-user-form" method="post" th:object="${userDTO}">
                     <div class="user-info-content">
                         <label class="user-info" for="userName">이름</label>
-                        <input type="text" id="userName" name="name" class="user-info-input" autocomplete="off" maxlength="5"
+                        <input type="text" id="userName" name="name" class="user-info-input" autocomplete="off"
+                               maxlength="5"
                                th:value="${session.userName}"
                                required>
                     </div>
@@ -116,7 +117,7 @@
                     <button type="submit" class="myPage-logout-btn">로그아웃
                     </button>
                 </form>
-                <button type="button" class="myPage-logout-btn">회원탈퇴</button>
+                <button type="button" id="openModal" class="myPage-logout-btn">회원탈퇴</button>
             </div>
         </div>
     </div>
@@ -137,7 +138,7 @@
                             <span th:text="${orderHistory.food}"></span>
                             <span th:text="${orderHistory.totalPrice}"></span>원
                         </div>
-                        <button class="review-btn" th:if="${orderHistory.reviewed != 'N'}">리뷰 쓰기</button>
+                        <button class="review-btn" id="review-btn" th:if="${orderHistory.reviewed == 'N'}">리뷰 쓰기</button>
                     </div>
                 </div>
                 <!-- 주문 목록이 없을 때 -->
@@ -149,6 +150,31 @@
             </div>
         </div>
     </div>
+    <div class="modal" id="delete-account-modal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">정말 탈퇴하시겠습니까?</h5>
+                    <button type="button" class="btn-close" id="closeModal" data-bs-dismiss="modal"
+                            aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <span>회원탈퇴 시 서비스를 더 이상 이용하실 수 없으며,</span>
+                    <span>정보가 삭제되고 복구 하실 수 없습니다.</span>
+                    <div class="store-info-div">
+                        <label class="store-info" for="delete-passCheck">비밀번호 입력해주세요.</label>
+                        <input type="password" id="delete-passCheck" name="password" class="store-info-input" required>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="cancel-btn" class="seller-menu-btn" data-bs-dismiss="modal">취소
+                    </button>
+                    <button type="button" class="seller-menu-btn" id="delete-account-btn">탈퇴</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="flex-justify-center">
         <div class="hidden-content" id="user-likes-div">
             <div class="user-info-div">
@@ -186,9 +212,11 @@
                     <div class="user-info-details">
                         현재 주소
                     </div>
-                    <input type="text" class="user-address-input" id="user-address" th:value="${session.userAddress}"
+                    <input type="text" class="user-address-input" id="user-address"
+                           th:value="${session.userAddress}"
                            disabled>
-                    <input type="text" class="user-address-input" id="user-detail-address" placeholder="상세주소" required>
+                    <input type="text" class="user-address-input" id="user-detail-address" placeholder="상세주소"
+                           required>
                     <div class="map-div" id="map"></div>
                     <input type="button" class="search-address-btn" id="search-address-btn" value="주소검색"><br>
                     <input type="button" id="change-address-btn" class="search-address-btn" value="저장"><br>
