@@ -35,7 +35,8 @@ public class MainController {
     private static String UPLOAD_DIR = System.getProperty("user.dir") + "/src/main/resources/static/img/";
 
     @GetMapping
-    public String mainPage() {
+    public String mainPage(Model model) {
+
         return "MainPage";
     }
 
@@ -63,13 +64,13 @@ public class MainController {
             int value = (int) pageableReviews.getReviews().get(i).getRating();
             pageableReviews.getReviews().get(i).setRating(value);
         }
-        System.out.println("rating =================" + pageableReviews.getReviews().get(0).getRating());
         model.addAttribute("likeStore", likeStore);
         model.addAttribute("storeDetails", dto);
         model.addAttribute("averageRating", averageRating);
         model.addAttribute("reviews", pageableReviews.getReviews());
         model.addAttribute("totalPages", pageableReviews.getTotalPages());
         model.addAttribute("currentPage", pageableReviews.getNumber());
+        System.out.println(pageableReviews.getReviews());
         return "StoreDetails";
     }
 
@@ -114,12 +115,42 @@ public class MainController {
             @SuppressWarnings("unchecked") List<CartItemDTO> cartItems = (List<CartItemDTO>) session.getAttribute("cartItems");
             if (cartItems == null) {
                 cartItems = new ArrayList<>();
+            } else {
+                String currentStore = "";
+                for (CartItemDTO item : cartItems) {
+                    currentStore = item.getStoreName();
+                }
+                if (!currentStore.equals(cartItem.getStoreName())) {
+                    System.out.println("다른 매장");
+                    response.put("otherStore", "다른 매장 상품");
+                    return response;
+                }
             }
+            System.out.println("cartItemName =============" + cartItem.getStoreName());
             cartItems.add(cartItem);
+            System.out.println("cartItems ===========" + cartItems);
             session.setAttribute("cartItems", cartItems);
-            response.put("message", "장바구니에 추가되었습니다.");
+            response.put("success", "장바구니에 추가되었습니다.");
             response.put("cartItemsSize", cartItems.size());
         } catch (Exception e) {
+            System.out.println(e.getMessage());
+            response.put("error", "장바구니에 아이템을 추가하는 중 오류가 발생했습니다.");
+        }
+        return response;
+    }
+    @PostMapping("/addToCart/otherStore")
+    @ResponseBody
+    public Map<String, Object> refreshCart(@RequestBody CartItemDTO cartItem, HttpSession session) {
+        Map<String, Object> response = new HashMap<>();
+        try {
+            session.removeAttribute("cartItems");
+            List<CartItemDTO> cartItems = new ArrayList<>();
+            cartItems.add(cartItem);
+            session.setAttribute("cartItems", cartItems);
+            response.put("success", "장바구니에 추가되었습니다.");
+            response.put("cartItemsSize", cartItems.size());
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
             response.put("error", "장바구니에 아이템을 추가하는 중 오류가 발생했습니다.");
         }
         return response;

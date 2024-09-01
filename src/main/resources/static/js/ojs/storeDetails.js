@@ -128,6 +128,7 @@ document.addEventListener("DOMContentLoaded", function() {
         })
         .then(response => response.json())
         .then(data => {
+            if(data.success){
             const container = document.getElementById("notification");
             if (data.cartItemsSize === 1) {
                 const span = document.createElement('span');
@@ -148,11 +149,69 @@ document.addEventListener("DOMContentLoaded", function() {
                 icon: 'success',
                 title: '장바구니에 추가 되었습니다.'
             });
+           }else if(data.otherStore){
+Swal.fire({
+    title: '장바구니엔 같은 가게의 메뉴만 담을 수 있습니다.',
+    text: '선택하신 메뉴를 장바구니에 담을 경우 이전에 담은 메뉴가 삭제됩니다.',
+    showCancelButton: true,
+    confirmButtonText: '담기',
+    cancelButtonText: '취소'
+}).then((result) => {
+    if (result.isConfirmed) {
+        fetch('/addToCart/otherStore', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                [csrfHeader]: csrfToken
+            },
+            body: JSON.stringify({
+                storeName: storeName,
+                foodName: foodName,
+                quantity: quantity,
+                foodDesc: foodDesc,
+                price: price,
+                imgSrc: imgSrc
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.error) {
+                Swal.fire({
+                    title: '오류',
+                    text: data.error,
+                    icon: 'error'
+                });
+            } else if (data.success) {
+                Swal.fire({
+                    title: '성공',
+                    text: data.success,
+                    icon: 'success'
+                });
+            const container = document.getElementById("notification");
+            const notification = document.querySelector(".notification-bubble");
+            notification.textContent = "1";
+            modal.style.display = 'none';
+            }
         })
         .catch(error => {
-            console.error('오류 발생:', error);
+            Swal.fire({
+                title: '오류',
+                text: '서버 요청 중 오류가 발생했습니다.',
+                icon: 'error'
+            });
         });
-    });
+    } else if (result.dismiss === Swal.DismissReason.cancel) {  // 사용자가 "취소"를 선택한 경우
+        Swal.fire({
+            title: '취소됨',
+            text: '장바구니 추가가 취소되었습니다.',
+            icon: 'info'
+        });
+       modal.style.display = 'none';
+    }
+});
+}
+});
+});
 
     // 이미지 미리보기
     document.getElementById('multipartFile').addEventListener('change', function(event) {

@@ -338,4 +338,27 @@ function validateForm() {
             alert('오류가 발생했습니다. 다시 시도해주세요.');
         });
     });
+    const addReviewBtn = document.getElementById("review-btn");
+    document.querySelectorAll('.review-btn').forEach(button => {
+    button.addEventListener('click', function() {
+    const store = this.getAttribute('data-store');
+    const food = this.getAttribute('data-food');
+    const modal = document.getElementById("add-review-modal");
+    const closeModalBtn = document.getElementById('btn-close');
+    const modalBody = document.getElementById('add-review-modal-body');
+    modal.style.display = 'block';
+    closeModalBtn.addEventListener('click', function() {
+            modal.style.display = 'none';
+     });
+    window.addEventListener('click', function(event) {
+        if (event.target === modal) {
+            modal.style.display = 'none';
+        }
+    });
+    modalBody.textContent = store+"의 음식은 어떠셨나요?";
+    });
+   });
+   function setRating(value){
+    console.log("value============"+value);
+   }
 });

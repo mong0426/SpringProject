@@ -133,12 +133,37 @@
             <span th:text="${orderHistory.formattedOrderDate} + ' 일'"
                   style="color: #acacac; font-size: 16px;"></span>
                         </div>
-                        <div class="store-name" th:text="${orderHistory.store}"></div>
+                        <div class="store-name" id="storeName" th:text="${orderHistory.store}"></div>
                         <div style="margin-bottom:15px;">
                             <span th:text="${orderHistory.food}"></span>
                             <span th:text="${orderHistory.totalPrice}"></span>원
                         </div>
-                        <button class="review-btn" id="review-btn" th:if="${orderHistory.reviewed == 'N'}">리뷰 쓰기</button>
+                        <button class="review-btn"
+                                id="review-btn"
+                                th:if="${orderHistory.reviewed == 'N'}"
+                                th:data-store="${orderHistory.store}"
+                                th:data-food="${orderHistory.food}">
+                            리뷰 쓰기
+                        </button>
+                    </div>
+                </div>
+                <div class="modal" id="add-review-modal" tabindex="-1">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" id="btn-close" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                            </div>
+                            <div class="" id="add-review-modal-body" style="display:flex; height:100%; justify-content: space-around; margin-top:auto;">
+                            </div>
+                            <div style="display:flex; justify-content:center; margin:auto;">
+                                <img class="rating-star" th:each="i : ${#numbers.sequence(1,5)}"
+                                     th:src="@{/img/storedetailimg/star-empty.png}"
+                                     th:data-value="${i}"
+                                     th:onclick="|setRating(${i})|"
+                                     style="cursor: pointer; height:60px; margin:10px;">
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <!-- 주문 목록이 없을 때 -->
@@ -163,7 +188,8 @@
                     <span>정보가 삭제되고 복구 하실 수 없습니다.</span>
                     <div class="store-info-div">
                         <label class="store-info" for="delete-passCheck">비밀번호 입력해주세요.</label>
-                        <input type="password" id="delete-passCheck" name="password" class="store-info-input" required>
+                        <input type="password" id="delete-passCheck" name="password" class="store-info-input"
+                               required>
                     </div>
                 </div>
                 <div class="modal-footer">
