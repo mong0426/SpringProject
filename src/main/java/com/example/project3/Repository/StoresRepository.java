@@ -1,6 +1,7 @@
 package com.example.project3.Repository;
 
 import com.example.project3.Entity.Stores;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -11,15 +12,15 @@ import java.util.List;
 
 public interface StoresRepository extends JpaRepository<Stores, Long> {
 
-    @Query("SELECT * FROM Store s WHERE (:searchText IS NULL OR s.name LIKE %:searchText%) AND "
-            + "(:deliveryTip IS NULL OR s.deliveryTip =< :deliveryTip) AND "
-            + "(:rating IS NULL OR s.rating >= :rating) AND "
-            + "(:minOrder IS NULL OR s.minOrder <= :minOrder)")
-    List<Stores> searchStores(@Param("searchText") String searchText,
-                            @Param("deliveryTip") String deliveryTip,
-                            @Param("rating") String rating,
-                            @Param("minOrder") String minOrder,
-                            Pageable pageable);
+    @Query("SELECT DISTINCT s FROM Stores s " +
+            "LEFT JOIN s.foods f " +
+            "WHERE (LOWER(s.store) LIKE LOWER(CONCAT('%', :searchText, '%')) " +
+            "OR LOWER(f.food) LIKE LOWER(CONCAT('%', :searchText, '%')) " +
+            "OR LOWER(f.description) LIKE LOWER(CONCAT('%', :searchText, '%'))) " +
+            "AND (:minOrder IS NULL OR s.minOrder <= :minOrder)")
+    Page<Stores> searchStores(@Param("searchText") String searchText,
+                              @Param("minOrder") Integer minOrder,
+                              Pageable pageable);
 
     @Modifying
     @Query("UPDATE Stores s SET s.orderCount = s.orderCount + 1 WHERE s.store = :store")

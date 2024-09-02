@@ -36,7 +36,7 @@ public class Stores {
     private String closedDays;
 
     @Column
-    private String minOrder;
+    private Integer minOrder;
 
     @Column
     private String deliTime;

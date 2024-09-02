@@ -280,7 +280,12 @@ document.querySelectorAll('.page-link').forEach(item => {
     item.addEventListener('click', function(e) {
         e.preventDefault();
         const activePageLink = document.querySelector('.pagination .page-item.active .page-link');
-        const pageNumber = this.getAttribute('href').split('=')[1];
+        var pageNumber = this.getAttribute('href').split('=')[1];
+        const isNumber = /^\d+$/.test(pageNumber);
+        if(!isNumber){
+            pageNumber = 1;
+        }
+
         const storeName = document.getElementById("storeName").textContent;
         console.log("pageNumber=================="+pageNumber);
         fetch('/review/page', {

@@ -23,7 +23,7 @@ public class StoreDetailsDTO {
     private String addr;
     private String openingHours;
     private String closedDays;
-    private String minOrder;
+    private Integer minOrder;
     private String deliTime;
     private String deliTip;
     private Integer likes;

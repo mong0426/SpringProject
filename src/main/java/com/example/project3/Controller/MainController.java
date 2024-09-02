@@ -7,6 +7,7 @@ import jakarta.servlet.http.HttpSession;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.data.domain.Page;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -60,6 +61,8 @@ public class MainController {
         Stores store = service.findBySno(sno);
         PageableReviewsDTO pageableReviews = service.getReviews(store, page, size);
 
+        int currentPage = pageableReviews != null ? pageableReviews.getNumber() : 0;
+
         for (int i = 0; i < pageableReviews.getReviews().size(); i++) {
             int value = (int) pageableReviews.getReviews().get(i).getRating();
             pageableReviews.getReviews().get(i).setRating(value);
@@ -79,9 +82,13 @@ public class MainController {
     public Map<String, Object> getReviewPage(@RequestBody ReviewPageRequestDTO pageRequestDTO) {
         Map<String, Object> response = new HashMap<>();
         try {
-            int page = pageRequestDTO.getPage();
+            int page = 0;
+            if (pageRequestDTO != null && pageRequestDTO.getPage() != null) {
+                page = pageRequestDTO.getPage();
+            }
             Stores store = service.findStoresByStore(pageRequestDTO.getStore());
             int size = 10;
+            System.out.println("store == " + store + " page = " + page + " size = " + size);
             PageableReviewsDTO pageableReviews = service.getReviews(store, page, size);
 
             System.out.println("pageableReviews ====================" + pageableReviews);
@@ -122,10 +129,18 @@ public class MainController {
                             @RequestParam(value = "rating", required = false) String rating,
                             @RequestParam(value = "minOrder", required = false) String minOrder,
                             @RequestParam(defaultValue = "0") int page,
-                            @RequestParam(defaultValue = "10") int size,
+                            @RequestParam(defaultValue = "1") int size,
                             Model model) {
-        List<StoreDetailsDTO> stores = service.searchStore(searchText, sort, deliveryTip, rating, minOrder, page, size);
+        int minOrderInteger = 99999999;
+        if (minOrder != null) {
+            if (!minOrder.equals("all")) {
+                minOrderInteger = Integer.parseInt(minOrder);
+            }
+        }
+        Page<Stores> stores = service.searchStore(searchText, sort, deliveryTip, rating, minOrderInteger, page, size);
         model.addAttribute("stores", stores);
+        model.addAttribute("currentPage", page);
+        model.addAttribute("totalPages", stores.getTotalPages());
 
         return "StoreList";
     }
@@ -218,7 +233,8 @@ public class MainController {
 
     @PostMapping("/add-to-order-history")
     @ResponseBody
-    public Map<String, Object> addToOrderHistory(@RequestBody OrderHistoryDTO orderHistoryDTO, HttpSession httpSession) {
+    public Map<String, Object> addToOrderHistory(@RequestBody OrderHistoryDTO orderHistoryDTO, HttpSession
+            httpSession) {
         Map<String, Object> response = new HashMap<>();
         String id = SecurityContextHolder.getContext().getAuthentication().getName();
         orderHistoryDTO.setId(id);
@@ -248,7 +264,8 @@ public class MainController {
     }
 
     @PostMapping("/edit/foods")
-    public String addNewFood(@ModelAttribute FoodsDTO foodsDTO, @RequestParam("multipartFile") MultipartFile multipartFile, @RequestParam("sno") Long sno) {
+    public String addNewFood(@ModelAttribute FoodsDTO foodsDTO, @RequestParam("multipartFile") MultipartFile
+            multipartFile, @RequestParam("sno") Long sno) {
         try {
             String uploadDir = UPLOAD_DIR + "foodimg/";
             String originalFilename = multipartFile.getOriginalFilename();
@@ -283,7 +300,8 @@ public class MainController {
     }
 
     @PostMapping("/edit/store-img")
-    public String addNewFood(@ModelAttribute StoreImagesDTO storeImagesDTO, @RequestParam("file") MultipartFile multipartFile, @RequestParam("sno") Long sno) {
+    public String addNewFood(@ModelAttribute StoreImagesDTO storeImagesDTO, @RequestParam("file") MultipartFile
+            multipartFile, @RequestParam("sno") Long sno) {
         try {
             String uploadDir = UPLOAD_DIR + "storedetailimg/";
             String originalFilename = multipartFile.getOriginalFilename();

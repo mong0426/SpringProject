@@ -80,19 +80,39 @@
                          alt="Store Thumbnail"/>
                 </div>
                 <div class="StoreInfo">
-                    <h2 th:text="${store.store}">가게 이름</h2><br/>
+                    <h2 th:text="${store.store}" style="font-size: 35px; font-weight: 600;">가게 이름</h2><br/>
                     <!--    <img th:src="@{/img/storedetailimg/StarIcon.png}" style="width:20px; height:20px;">
                         <span class="StarRating" th:text="${averageRating}"></span><br/>  평점 부분 나중에 추가-->
                     배달시간 <span th:text="${store.deliTime}"></span>&nbsp; 배달팁 <span
                         th:text="${store.deliTip}"></span><br/>
                     최소주문 <span th:text="${store.minOrder}"></span>원
                 </div>
-                <!--                <div class="SubInfo">-->
-                <!--                    SubInfo-->
-                <!--                </div>-->
+                <div class="SubInfo">
+                </div>
             </a>
-
         </div>
+    </div>
+    <div th:if="${totalPages != 0}">
+        <nav aria-label="Page navigation example">
+            <ul class="pagination" style="justify-content: center; margin-top: 16px;">
+                <li th:classappend="${currentPage == 0} ? 'disabled' : ''" class="page-item">
+                    <th:block th:with="nextPage=${currentPage - 1}">
+                        <a class="page-link" th:href="@{'/your-url?page=' + ${nextPage}}">이전</a>
+                    </th:block>
+                </li>
+                <li th:each="i : ${#numbers.sequence(0, totalPages - 1)}"
+                    th:classappend="${i == currentPage} ? 'active' : ''" class="page-item">
+                    <a class="page-link" th:href="@{'/your-url?page=' + ${i}}"
+                       th:text="${i + 1}">1</a>
+                </li>
+                <li th:classappend="${currentPage + 1 == totalPages} ? 'disabled' : ''"
+                    class="page-item">
+                    <th:block th:with="nextPage=${currentPage + 1}">
+                        <a class="page-link" th:href="@{'/your-url?page=' + ${nextPage}}">다음</a>
+                    </th:block>
+                </li>
+            </ul>
+        </nav>
     </div>
 </div>
 <div th:replace="~{Footer :: body}"></div>

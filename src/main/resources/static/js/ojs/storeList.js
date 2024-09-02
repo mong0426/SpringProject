@@ -6,8 +6,6 @@
             // 현재 URL과 파라미터 가져오기
             var currentUrl = new URL(window.location.href);
             var params = new URLSearchParams(currentUrl.search);
-            console.log("currentURL ====================  "+currentUrl);
-            console.log("params ====================  "+params);
             // 드롭다운 항목에서 데이터 추출
             var sort = this.getAttribute('data-sort');
             var deliveryTip = this.getAttribute('data-delivery-tip');
@@ -20,8 +18,27 @@
             if (rating) params.set('rating', rating);
             if (minOrder) params.set('minOrder', minOrder);
 
+            params.set('page',0);
+            var newUrl = new URL(currentUrl);
+            newUrl = currentUrl.pathname+ '?' + params.toString();
+
             // 새 URL로 리다이렉트
-            window.location.href = currentUrl.pathname + '?' + params.toString();
+            window.location.href = newUrl;
         });
     });
+    document.querySelectorAll('.page-link').forEach(item => {
+        item.addEventListener('click', function(e) {
+            e.preventDefault();
+                   var pageNumber = this.getAttribute('href').split('=')[1];
+                   const isNumber = /^\d+$/.test(pageNumber);
+                        if(!isNumber){
+                            pageNumber = 1;
+                        }
+                   const url = new URL(pageNumber, window.location.origin);
+                   const currentUrl = new URL(window.location.href);
+                   const newUrl = new URL(currentUrl);
+                   newUrl.searchParams.set('page', pageNumber);
+                   window.location.href = newUrl.href;
+        });
+     });
   });

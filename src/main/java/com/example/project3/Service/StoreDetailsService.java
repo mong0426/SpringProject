@@ -4,6 +4,7 @@ import com.example.project3.DTO.PageableReviewsDTO;
 import com.example.project3.DTO.ReviewsDTO;
 import com.example.project3.DTO.StoreDetailsDTO;
 import com.example.project3.Entity.Stores;
+import org.springframework.data.domain.Page;
 
 import java.util.List;
 
@@ -11,11 +12,11 @@ public interface StoreDetailsService {
 
     StoreDetailsDTO showStore(Long sno);
 
-    List<StoreDetailsDTO> searchStore(String searchText, String sort, String deliveryTip, String rating, String minOrder, int page, int size);
+    Page<Stores> searchStore(String searchText, String sort, String deliveryTip, String rating, Integer minOrder, int page, int size);
 
     void increaseOrderCount(String store);
 
-    void increaseLikesBySno(Long sno,Integer value);
+    void increaseLikesBySno(Long sno, Integer value);
 
     boolean isExistStore(String store);
 
@@ -64,7 +65,7 @@ public interface StoreDetailsService {
                 .build();
     }
 
-    PageableReviewsDTO getReviews(Stores store,int page, int size);
+    PageableReviewsDTO getReviews(Stores store, int page, int size);
 
     Stores findStoresByStore(String storeName);
 

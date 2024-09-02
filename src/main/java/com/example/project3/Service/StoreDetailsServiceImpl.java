@@ -40,12 +40,10 @@ public class StoreDetailsServiceImpl implements StoreDetailsService {
     }
 
     @Override
-    public List<StoreDetailsDTO> searchStore(String searchText, String sort, String deliveryTip, String rating, String minOrder, int page, int size) {
+    @Transactional
+    public Page<Stores> searchStore(String searchText, String sort, String deliveryTip, String rating, Integer minOrder, int page, int size) {
         Pageable pageable = PageRequest.of(page, size);
-        List<Stores> stores = repository.searchStores(searchText, deliveryTip, rating, minOrder, pageable);
-        return stores.stream()
-                .map(this::entityToDto)
-                .collect(Collectors.toList());
+        return repository.searchStores(searchText, minOrder, pageable);
     }
 
     @Override
