@@ -1,14 +1,14 @@
 package com.example.project3.DTO;
 
-import com.example.project3.Entity.Foods;
-import com.example.project3.Entity.Stores;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @Builder
 @AllArgsConstructor
+@NoArgsConstructor
 public class ReviewsDTO {
     private Long rno;
     private String storeName;

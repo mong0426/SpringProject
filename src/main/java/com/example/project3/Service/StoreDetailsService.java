@@ -11,7 +11,7 @@ public interface StoreDetailsService {
 
     StoreDetailsDTO showStore(Long sno);
 
-    List<StoreDetailsDTO> searchStore(String searchText);
+    List<StoreDetailsDTO> searchStore(String searchText, String sort, String deliveryTip, String rating, String minOrder, int page, int size);
 
     void increaseOrderCount(String store);
 
@@ -67,4 +67,6 @@ public interface StoreDetailsService {
     PageableReviewsDTO getReviews(Stores store,int page, int size);
 
     Stores findStoresByStore(String storeName);
+
+    void registerReview(ReviewsDTO reviewsDTO);
 }

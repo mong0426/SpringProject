@@ -46,6 +46,14 @@ public class OrderHistoryServiceImpl implements OrderHistoryService {
         orderHistoryRepository.deleteAll(orderHistory);
     }
 
+    @Override
+    public void changeReviewed(Long ono) {
+        OrderHistory orderHistory = orderHistoryRepository.findById(ono)
+                .orElseThrow(() -> new IllegalArgumentException("OrderHistory not found with id: " + ono));
+        orderHistory.setReviewed("Y");
+        orderHistoryRepository.save(orderHistory);
+    }
+
     private OrderHistoryDTO convertToDTO(OrderHistory orderHistory) {
         OrderHistoryDTO dto = new OrderHistoryDTO();
         dto.setOno(orderHistory.getOno());

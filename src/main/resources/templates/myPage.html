@@ -142,7 +142,8 @@
                                 id="review-btn"
                                 th:if="${orderHistory.reviewed == 'N'}"
                                 th:data-store="${orderHistory.store}"
-                                th:data-food="${orderHistory.food}">
+                                th:data-food="${orderHistory.food}"
+                                th:data-orderHistory="${orderHistory.ono}">
                             리뷰 쓰기
                         </button>
                     </div>
@@ -150,19 +151,27 @@
                 <div class="modal" id="add-review-modal" tabindex="-1">
                     <div class="modal-dialog modal-dialog-centered">
                         <div class="modal-content">
-                            <div class="modal-header">
-                                <button type="button" id="btn-close" class="btn-close" data-bs-dismiss="modal"
-                                        aria-label="Close"></button>
-                            </div>
-                            <div class="" id="add-review-modal-body" style="display:flex; height:100%; justify-content: space-around; margin-top:auto;">
-                            </div>
-                            <div style="display:flex; justify-content:center; margin:auto;">
-                                <img class="rating-star" th:each="i : ${#numbers.sequence(1,5)}"
-                                     th:src="@{/img/storedetailimg/star-empty.png}"
-                                     th:data-value="${i}"
-                                     th:onclick="|setRating(${i})|"
-                                     style="cursor: pointer; height:60px; margin:10px;">
-                            </div>
+                            <form th:action="@{/review/write}" method="post">
+                                <input type="hidden" name="storeName" id="review-store">
+                                <input type="hidden" name="foodName" id="review-food">
+                                <input type="hidden" id="review-rating" name="rating">
+                                <input type="hidden" id="orderHistory-ono" name="ono">
+                                <div class="modal-header">
+                                    <div class="modal-title" id="add-review-modal-title" style="width:100%;"></div>
+                                    <button type="button" id="btn-close" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                </div>
+                                <div class="" id="add-review-modal-body"
+                                     style="display: flex; height: 100%; margin-top: auto; flex-direction: column;">
+                                </div>
+                                <div style="display:flex; justify-content:center; margin:auto;" id="review-rating-div">
+                                    <img class="rating-star" th:each="i : ${#numbers.sequence(1,5)}"
+                                         th:src="@{/img/storedetailimg/star-filled.png}"
+                                         th:data-rating="${i}"
+                                         style="cursor: pointer; height:60px; margin:10px;">
+                                    <!--                                     th:onclick="|setRating(${i})|"-->
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>

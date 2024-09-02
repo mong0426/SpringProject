@@ -11,4 +11,6 @@ public interface OrderHistoryService {
     public List<OrderHistoryDTO> showOrderList(String id);
 
     void deleteOrderHistory(String id);
+
+    void changeReviewed(Long ono);
 }

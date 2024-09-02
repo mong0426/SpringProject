@@ -11,15 +11,16 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link th:href="@{/css/ocss/mainpage.css}" rel="stylesheet"/>
     <link th:href="@{/css/ocss/storelist.css}" rel="stylesheet"/>
+    <script th:src="@{/js/ojs/storeList.js}"></script>
 </head>
 <body>
 <header th:replace="~{Header :: body}"></header>
 <div class="StoreList">
     <div class="Category_Div">
         <div class="StoreCategory" style="">
-<!--            <a th:href="@{/StoreList?searchText=피자}">-->
-<!--                <img class="CategoryIcon" th:src="@{/img/storelistimg/FoodCate_Pizza.png}" alt="..."/>-->
-<!--            </a>-->
+            <!--            <a th:href="@{/StoreList?searchText=피자}">-->
+            <!--                <img class="CategoryIcon" th:src="@{/img/storelistimg/FoodCate_Pizza.png}" alt="..."/>-->
+            <!--            </a>-->
         </div>
     </div>
 
@@ -30,42 +31,43 @@
                 기본순
             </button>
             <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="#">배달 빠른 순</a></li>
-                <li><a class="dropdown-item" href="#">배달팁 낮은 순</a></li>
-                <li><a class="dropdown-item" href="#">기본순</a></li>
-                <li><a class="dropdown-item" href="#">별점 높은 순</a></li>
-                <li><a class="dropdown-item" href="#">찜 많은 순</a></li>
+                <li><a class="dropdown-item" href="#" data-sort="deliverySpeed">배달 빠른 순</a></li>
+                <li><a class="dropdown-item" href="#" data-sort="deliveryTipLow">배달팁 낮은 순</a></li>
+                <li><a class="dropdown-item" href="#" data-sort="default">기본순</a></li>
+                <li><a class="dropdown-item" href="#" data-sort="ratingHigh">별점 높은 순</a></li>
+                <li><a class="dropdown-item" href="#" data-sort="favoritesHigh">찜 많은 순</a></li>
             </ul>
             <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
                     aria-expanded="false">
                 배달팁
             </button>
             <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="#">전체</a></li>
-                <li><a class="dropdown-item" href="#">무료</a></li>
-                <li><a class="dropdown-item" href="#">1000원 이하</a></li>
-                <li><a class="dropdown-item" href="#">2,000원 이하</a></li>
-                <li><a class="dropdown-item" href="#">3,000원 이하</a></li>
+                <li><a class="dropdown-item" href="#" data-delivery-tip="all">전체</a></li>
+                <li><a class="dropdown-item" href="#" data-delivery-tip="free">무료</a></li>
+                <li><a class="dropdown-item" href="#" data-delivery-tip="1000">1000원 이하</a></li>
+                <li><a class="dropdown-item" href="#" data-delivery-tip="2000">2,000원 이하</a></li>
+                <li><a class="dropdown-item" href="#" data-delivery-tip="3000">3,000원 이하</a></li>
             </ul>
             <button class="btn btn-outline-secondary" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                 ☆별점
             </button>
             <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="#">★★★★☆ 4점 이상</a></li>
-                <li><a class="dropdown-item" href="#">★★★☆ 3점 이상</a></li>
-                <li><a class="dropdown-item" href="#">★★☆ 2점 이상</a></li>
+                <li><a class="dropdown-item" href="#" data-rating="all">전체</a></li>
+                <li><a class="dropdown-item" href="#" data-rating="4">★★★★☆ 4점 이상</a></li>
+                <li><a class="dropdown-item" href="#" data-rating="3">★★★☆ 3점 이상</a></li>
+                <li><a class="dropdown-item" href="#" data-rating="2">★★☆ 2점 이상</a></li>
             </ul>
             <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
                     aria-expanded="false">
                 최소주문금액
             </button>
             <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="#">전체</a></li>
-                <li><a class="dropdown-item" href="#">5,000원 이하</a></li>
-                <li><a class="dropdown-item" href="#">10,000원 이하</a></li>
-                <li><a class="dropdown-item" href="#">12,000원 이하</a></li>
-                <li><a class="dropdown-item" href="#">15,000원 이하</a></li>
-                <li><a class="dropdown-item" href="#">20,000원 이하</a></li>
+                <li><a class="dropdown-item" href="#" data-min-order="all">전체</a></li>
+                <li><a class="dropdown-item" href="#" data-min-order="5000">5,000원 이하</a></li>
+                <li><a class="dropdown-item" href="#" data-min-order="10000">10,000원 이하</a></li>
+                <li><a class="dropdown-item" href="#" data-min-order="12000">12,000원 이하</a></li>
+                <li><a class="dropdown-item" href="#" data-min-order="15000">15,000원 이하</a></li>
+                <li><a class="dropdown-item" href="#" data-min-order="20000">20,000원 이하</a></li>
             </ul>
         </div>
 
@@ -79,15 +81,15 @@
                 </div>
                 <div class="StoreInfo">
                     <h2 th:text="${store.store}">가게 이름</h2><br/>
-                <!--    <img th:src="@{/img/storedetailimg/StarIcon.png}" style="width:20px; height:20px;">
-                    <span class="StarRating" th:text="${averageRating}"></span><br/>  평점 부분 나중에 추가-->
+                    <!--    <img th:src="@{/img/storedetailimg/StarIcon.png}" style="width:20px; height:20px;">
+                        <span class="StarRating" th:text="${averageRating}"></span><br/>  평점 부분 나중에 추가-->
                     배달시간 <span th:text="${store.deliTime}"></span>&nbsp; 배달팁 <span
                         th:text="${store.deliTip}"></span><br/>
                     최소주문 <span th:text="${store.minOrder}"></span>원
                 </div>
-                <div class="SubInfo">
-                    SubInfo
-                </div>
+                <!--                <div class="SubInfo">-->
+                <!--                    SubInfo-->
+                <!--                </div>-->
             </a>
 
         </div>

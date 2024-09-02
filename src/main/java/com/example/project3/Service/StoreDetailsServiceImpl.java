@@ -3,8 +3,10 @@ package com.example.project3.Service;
 import com.example.project3.DTO.PageableReviewsDTO;
 import com.example.project3.DTO.ReviewsDTO;
 import com.example.project3.DTO.StoreDetailsDTO;
+import com.example.project3.Entity.Foods;
 import com.example.project3.Entity.Reviews;
 import com.example.project3.Entity.Stores;
+import com.example.project3.Repository.FoodsRepository;
 import com.example.project3.Repository.ReviewsRepository;
 import com.example.project3.Repository.StoresRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -28,6 +30,7 @@ public class StoreDetailsServiceImpl implements StoreDetailsService {
 
     private final StoresRepository repository;
     private final ReviewsRepository reviewsRepository;
+    private final FoodsRepository foodsRepository;
 
     @Override
     @Transactional
@@ -37,8 +40,9 @@ public class StoreDetailsServiceImpl implements StoreDetailsService {
     }
 
     @Override
-    public List<StoreDetailsDTO> searchStore(String searchText) {
-        List<Stores> stores = repository.searchStores(searchText);
+    public List<StoreDetailsDTO> searchStore(String searchText, String sort, String deliveryTip, String rating, String minOrder, int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        List<Stores> stores = repository.searchStores(searchText, deliveryTip, rating, minOrder, pageable);
         return stores.stream()
                 .map(this::entityToDto)
                 .collect(Collectors.toList());
@@ -117,5 +121,23 @@ public class StoreDetailsServiceImpl implements StoreDetailsService {
     @Override
     public Stores findStoresByStore(String storeName) {
         return repository.findByStore(storeName);
+    }
+
+    @Override
+    public void registerReview(ReviewsDTO reviewsDTO) {
+        // DTO를 엔티티로 변환
+        Stores store = repository.findByStore(reviewsDTO.getStoreName());
+        Foods food = foodsRepository.findByStoreAndFood(store, reviewsDTO.getFoodName());
+        Reviews review = new Reviews(
+                reviewsDTO.getRno(),
+                store,
+                food,
+                reviewsDTO.getRating(),
+                reviewsDTO.getTitle(),
+                reviewsDTO.getContent(),
+                reviewsDTO.getWriter()
+        );
+        // 엔티티를 데이터베이스에 저장
+        reviewsRepository.save(review);
     }
 }

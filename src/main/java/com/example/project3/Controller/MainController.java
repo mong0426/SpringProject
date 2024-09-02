@@ -70,7 +70,7 @@ public class MainController {
         model.addAttribute("reviews", pageableReviews.getReviews());
         model.addAttribute("totalPages", pageableReviews.getTotalPages());
         model.addAttribute("currentPage", pageableReviews.getNumber());
-        System.out.println(pageableReviews.getReviews());
+        System.out.println("pageableReview =================" + pageableReviews.getReviews());
         return "StoreDetails";
     }
 
@@ -94,14 +94,37 @@ public class MainController {
         return response;
     }
 
+    @PostMapping("/review/write")
+    public String writeReview(@ModelAttribute ReviewsDTO dto, OrderHistoryDTO orderHistoryDTO, Model model) {
+        String id = SecurityContextHolder.getContext().getAuthentication().getName();
+        dto.setWriter(id);
+        Long ono = orderHistoryDTO.getOno();
+        try {
+            service.registerReview(dto);
+            orderHistoryService.changeReviewed(ono);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return "Error404";
+        }
+        return "redirect:/myPage";
+    }
+
+
     @GetMapping("/myCart")
     public String myCart() {
         return "myCart";
     }
 
     @GetMapping("/StoreList")
-    public String StoreList(@RequestParam(name = "searchText", required = false, defaultValue = "") String searchText, Model model) {
-        List<StoreDetailsDTO> stores = service.searchStore(searchText);
+    public String StoreList(@RequestParam(value = "searchText", required = false) String searchText,
+                            @RequestParam(value = "sort", required = false) String sort,
+                            @RequestParam(value = "deliveryTip", required = false) String deliveryTip,
+                            @RequestParam(value = "rating", required = false) String rating,
+                            @RequestParam(value = "minOrder", required = false) String minOrder,
+                            @RequestParam(defaultValue = "0") int page,
+                            @RequestParam(defaultValue = "10") int size,
+                            Model model) {
+        List<StoreDetailsDTO> stores = service.searchStore(searchText, sort, deliveryTip, rating, minOrder, page, size);
         model.addAttribute("stores", stores);
 
         return "StoreList";
@@ -138,6 +161,7 @@ public class MainController {
         }
         return response;
     }
+
     @PostMapping("/addToCart/otherStore")
     @ResponseBody
     public Map<String, Object> refreshCart(@RequestBody CartItemDTO cartItem, HttpSession session) {
