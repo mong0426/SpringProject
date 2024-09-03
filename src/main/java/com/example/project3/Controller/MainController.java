@@ -312,7 +312,7 @@ public class MainController {
             File uploadFile = new File(filePath);
             multipartFile.transferTo(uploadFile);
 
-            String imageUrl = "img/foodimg/" + originalFilename;
+            String imageUrl = "/img/foodimg/" + originalFilename;
             foodsDTO.setImageUrl(imageUrl);
             Stores stores = service.findBySno(sno);
             foodsDTO.setStore(stores);
@@ -347,7 +347,7 @@ public class MainController {
             File uploadFile = new File(filePath);
             multipartFile.transferTo(uploadFile);
 
-            String imageUrl = "img/storedetailimg/" + originalFilename;
+            String imageUrl = "/img/storedetailimg/" + originalFilename;
             storeImagesDTO.setImageUrl(imageUrl);
             Stores stores = service.findBySno(sno);
             storeImagesDTO.setStores(stores);
