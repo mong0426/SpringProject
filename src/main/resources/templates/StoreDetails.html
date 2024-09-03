@@ -84,7 +84,7 @@
             </div>
             <div>
                 <span th:text="${storeDetails.deliTime}"></span><br/>
-                <span class="DeliTipTitle">배달팁 </span><span th:text="${storeDetails.deliTip}"></span>
+                <span class="DeliTipTitle">배달팁 </span><span id="deliTip-value" th:text="${storeDetails.deliTip}"></span>원
             </div>
             <!-- <div th:if="${session.authentication == storeDetails.sno}" class="seller-menu-div"> -->
             <button type="button" class="seller-menu-btn" data-bs-toggle="modal"

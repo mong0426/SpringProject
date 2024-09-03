@@ -25,7 +25,7 @@ public class StoreDetailsDTO {
     private String closedDays;
     private Integer minOrder;
     private String deliTime;
-    private String deliTip;
+    private Integer deliTip;
     private Integer likes;
     private Integer orderCount;
     private List<StoreImages> images;

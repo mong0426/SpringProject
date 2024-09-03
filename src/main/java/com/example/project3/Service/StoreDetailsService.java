@@ -12,7 +12,7 @@ public interface StoreDetailsService {
 
     StoreDetailsDTO showStore(Long sno);
 
-    Page<Stores> searchStore(String searchText, String sort, String deliveryTip, String rating, Integer minOrder, int page, int size);
+    Page<Stores> searchStore(String searchText, String sort, String sortDirection, Integer deliveryTip, Integer minOrder, Integer orderCount, int page, int size);
 
     void increaseOrderCount(String store);
 
@@ -70,4 +70,8 @@ public interface StoreDetailsService {
     Stores findStoresByStore(String storeName);
 
     void registerReview(ReviewsDTO reviewsDTO);
+
+    List<Double> getAverageRatings(Page<Stores> stores);
+
+    List<Stores> findAllByStoreAndFood(String category);
 }

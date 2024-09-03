@@ -46,7 +46,7 @@
         </div>
         <div class="carousel-line"></div>
         <div class="CategoryDiv">
-            <a class="Category" th:href="@{/StoreList}">
+            <a class="Category" th:href="@{/StoreList?searchText=&deliveryTip=0&page=0}">
                 <img class="CategoryImg" th:src="@{/img/mainpageimg/SubMenuIcon1.png}" alt="배달팁무료"/>
             </a>
             <a class="Category" th:href="@{/StoreList?searchText=삼계탕}">
@@ -63,7 +63,7 @@
         <div class="MainLine">
             <div class="InnerLine">
                 <span class="MiniTitle">치킨 브랜드</span>
-                <a class="MiniTitle">전체보기></a>
+                <a class="MiniTitle" th:href="@{/StoreList?searchText=치킨}">전체보기></a>
             </div>
         </div>
 
@@ -72,24 +72,20 @@
                 <img class="ScrollBtnImage" th:src="@{/img/mainpageimg/LeftArrowIcon.png}" alt="..."/>
             </button>
 
-            <div class="card BrandCard">
-                <a th:href="@{/StoreDetails(sno = 1)}" class="CardAtagStyle">
+            <div class="card BrandCard" th:each="store : ${category1}">
+                <a th:href="@{/StoreDetails(sno=${store.sno})}" class="CardAtagStyle">
                     <img th:src="@{/img/mainpageimg/CardItem1.png}" class="card-img-top" alt="...">
                     <div class="card-body">
-                        <h5 class="card-title">육연식당 의정부점</h5>
-                        <p class="card-text">39 ~ 54분 배달팁 무료 <br> 최소주문 13,000원</p>
+                        <h5 class="card-title" th:text="${store.store}"></h5>
+                        <span>배달시간</span> <span class="card-text" th:text="${store.deliTime}"></span><br/>
+                        <div style="font-size: 14px; color: #8b8b8b;">
+                            <span>최소주문금액</span> <span th:if="${store.minOrder == 0}">없음</span>
+                            <span th:unless="${store.minOrder == 0}" th:text="${store.minOrder + '원'}"></span>
+                        </div>
                     </div>
                 </a>
             </div>
-            <div class="card BrandCard">
-                <a th:href="@{/StoreDetails(sno = 2)}" class="CardAtagStyle">
-                    <img th:src="@{/img/mainpageimg/CardItem2.png}" class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title">피자마루 장암신곡점</h5>
-                        <p class="card-text">29 ~ 44분 배달팁 무료 <br> 최소주문 15,000원</p>
-                    </div>
-                </a>
-            </div>
+
             <button class="ScrollBtn" id="btnRight">
                 <img class="ScrollBtnImage" th:src="@{/img/mainpageimg/RightArrowIcon.png}" alt="..."/>
             </button>
@@ -98,17 +94,33 @@
         <div class="MainLine">
             <div class="InnerLine">
                 <span class="MiniTitle">주문 수 많은 가게</span>
-                <a class="MiniTitle">전체보기></a>
+                <a class="MiniTitle"
+                   th:href="@{/StoreList?searchText=&sort=orderCount&sortDirection=DESC&page=0}">전체보기></a>
             </div>
         </div>
 
-        <div>
-            <div class="SubContentsDiv">
-                <button class="SubContents">a</button>
-                <button class="SubContents">b</button>
-                <button class="SubContents">c</button>
-                <button class="SubContents">d</button>
+        <div class="CardContainerDiv" id="q">
+            <button class="ScrollBtn" id="s">
+                <img class="ScrollBtnImage" th:src="@{/img/mainpageimg/LeftArrowIcon.png}" alt="..."/>
+            </button>
+
+            <div class="card BrandCard" th:each="store : ${category1}">
+                <a th:href="@{/StoreDetails(sno=${store.sno})}" class="CardAtagStyle">
+                    <img th:src="@{/img/mainpageimg/CardItem1.png}" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title" th:text="${store.store}"></h5>
+                        <span>배달시간</span> <span class="card-text" th:text="${store.deliTime}"></span><br/>
+                        <div style="font-size: 14px; color: #8b8b8b;">
+                            <span>최소주문금액</span> <span th:if="${store.minOrder == 0}">없음</span>
+                            <span th:unless="${store.minOrder == 0}" th:text="${store.minOrder + '원'}"></span>
+                        </div>
+                    </div>
+                </a>
             </div>
+
+            <button class="ScrollBtn" id="br">
+                <img class="ScrollBtnImage" th:src="@{/img/mainpageimg/RightArrowIcon.png}" alt="..."/>
+            </button>
         </div>
     </div>
 </div>

@@ -1,6 +1,5 @@
 package com.example.project3.DTO;
 
-import lombok.Builder;
 import lombok.Data;
 
 @Data
@@ -12,4 +11,5 @@ public class CartItemDTO {
     private String foodDesc;
     private int price;
     private String imgSrc;
+    private Integer deliTip;
 }

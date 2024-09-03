@@ -19,7 +19,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.text.DecimalFormat;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -36,14 +38,18 @@ public class StoreDetailsServiceImpl implements StoreDetailsService {
     @Transactional
     public StoreDetailsDTO showStore(Long sno) {
         Optional<Stores> result = repository.findById(sno);
-        return result.isPresent() ? entityToDto(result.get()) : null;
+        return result.map(this::entityToDto).orElse(null);
     }
 
     @Override
     @Transactional
-    public Page<Stores> searchStore(String searchText, String sort, String deliveryTip, String rating, Integer minOrder, int page, int size) {
+    public Page<Stores> searchStore(String searchText, String sort, String sortDirection, Integer deliveryTip, Integer minOrder, Integer orderCount, int page, int size) {
         Pageable pageable = PageRequest.of(page, size);
-        return repository.searchStores(searchText, minOrder, pageable);
+        if (sort != null && sortDirection != null) {
+            Sort sortResult = Sort.by(Sort.Direction.fromString(sortDirection), sort);
+            pageable = PageRequest.of(page, size, sortResult);
+        }
+        return repository.searchStores(searchText, minOrder, deliveryTip, orderCount, pageable);
     }
 
     @Override
@@ -60,8 +66,7 @@ public class StoreDetailsServiceImpl implements StoreDetailsService {
 
     @Override
     public boolean isExistStore(String store) {
-        boolean result = repository.findByStore(store) != null;
-        return result;
+        return repository.findByStore(store) != null;
     }
 
     @Override
@@ -137,5 +142,28 @@ public class StoreDetailsServiceImpl implements StoreDetailsService {
         );
         // 엔티티를 데이터베이스에 저장
         reviewsRepository.save(review);
+    }
+
+    @Override
+    public List<Double> getAverageRatings(Page<Stores> storesPage) {
+        List<Long> storeSno = storesPage.stream()
+                .map(Stores::getSno)
+                .collect(Collectors.toList());
+        List<Object[]> results = reviewsRepository.findAverageRatingsByStoreSno(storeSno);
+        DecimalFormat decimalFormat = new DecimalFormat("#.#");
+        return results.stream()
+                .map(row -> {
+                    Double rating = (Double) row[1];
+                    if (row[1] == null) {
+                        rating = 0.0;
+                    }
+                    return Double.parseDouble(decimalFormat.format(rating));
+                })
+                .toList();
+    }
+
+    @Override
+    public List<Stores> findAllByStoreAndFood(String category) {
+        return repository.findAllByStoreAndFood(category);
     }
 }

@@ -22,7 +22,14 @@ document.addEventListener('DOMContentLoaded', function() {
     totalPrice += foodTotal;
     });
     var TotalPriceElement = document.getElementById("allTotalPrice");
-    TotalPriceElement.textContent = "총 상품 가격 = " + totalPrice;
+    const deliTip = document.getElementById("deliTip").value;
+    const numericValue = deliTip.match(/\d+/g);
+    const tip = numericValue ? parseInt(numericValue[0], 10) : 0;
+    if(tip === 0){
+    TotalPriceElement.textContent = "총 상품 가격 "+totalPrice+"원 - 배달비 무료 = "+totalPrice+"원";
+    }else{
+    TotalPriceElement.textContent = "총 상품 가격 "+totalPrice+"원 - 배달비 "+ deliTip+"원 = "+(totalPrice-deliTip)+"원";
+    }
    }
   }
 function deleteItem(index) {
@@ -122,9 +129,9 @@ function OnOrderClick() {
             IMP.init("imp71404515");
             const merchantUid = `payment-${crypto.randomUUID()}`;
             var totalPriceText = document.getElementById("allTotalPrice").textContent;
-            let numbersArray = totalPriceText.match(/\d+/g);
-            let totalPrice = numbersArray.join('');
-            totalPrice = parseInt(totalPrice);
+            let numbersString = totalPriceText.split('=')[1].trim();
+            let totalPrice = numbersString.replace(/[^0-9]/g, '');
+            totalPrice = parseInt(totalPrice,10);
             var cartItems = document.querySelectorAll('tr.TableContentRow');
             var row = document.getElementById('row-0');
             var foodNameSpan = row.querySelector('td.FoodImgNInfo .NameNDescDiv .card-title');

@@ -13,8 +13,8 @@
         </div>
         <div class="SearchDiv">
             <form class="SearchForm" id="searchForm" name="searchForm" th:action="@{/StoreList}" method="get">
-                <input class="SearchText" type="text" id="searchText" name="searchText">
-                <button type="button" class="SearchBtn" id="searchBtn" name="searchBtn">
+                <input class="SearchText" type="text" id="searchText" name="searchText" placeholder="검색어를 입력해주세요.">
+                <button type="submit" class="SearchBtn" id="searchBtn">
                     <img class="HeaderMenuImage" th:src="@{/img/headerimg/SearchIcon.png}" alt="searchIcon"/>
                 </button>
             </form>
@@ -55,20 +55,5 @@
         </div>
     </div>
 </div>
-<script>
-    $(document).ready(function(){
-    const searchForm = document.getElementById("searchForm");
-    const searchBtn = document.getElementById("searchBtn");
-    searchBtn.addEventListener("click", function(event){
-    const searchText = document.getElementById("searchText").value.trim();
-    if (searchText !== "") {
-      searchForm.submit();
-    }else {
-      event.preventDefault();
-      document.getElementById("searchText").placeholder = "검색어를 입력해주세요.";
-    }
- });
-});
-</script>
 </body>
 </html>

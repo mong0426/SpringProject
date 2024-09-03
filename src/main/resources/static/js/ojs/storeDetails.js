@@ -110,7 +110,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     orderBtn.addEventListener('click', () => {
         const storeName = document.getElementById("storeName").textContent;
-
+        const deliTip = document.getElementById("deliTip-value").textContent;
         fetch('/addToCart', {
             method: 'POST',
             headers: {
@@ -123,7 +123,8 @@ document.addEventListener("DOMContentLoaded", function() {
                 quantity: quantity,
                 foodDesc: foodDesc,
                 price: price,
-                imgSrc: imgSrc
+                imgSrc: imgSrc,
+                deliTip: deliTip
             })
         })
         .then(response => response.json())
@@ -170,7 +171,8 @@ Swal.fire({
                 quantity: quantity,
                 foodDesc: foodDesc,
                 price: price,
-                imgSrc: imgSrc
+                imgSrc: imgSrc,
+                deliTip: deliTip
             })
         })
         .then(response => response.json())

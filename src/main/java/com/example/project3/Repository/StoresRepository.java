@@ -17,9 +17,14 @@ public interface StoresRepository extends JpaRepository<Stores, Long> {
             "WHERE (LOWER(s.store) LIKE LOWER(CONCAT('%', :searchText, '%')) " +
             "OR LOWER(f.food) LIKE LOWER(CONCAT('%', :searchText, '%')) " +
             "OR LOWER(f.description) LIKE LOWER(CONCAT('%', :searchText, '%'))) " +
-            "AND (:minOrder IS NULL OR s.minOrder <= :minOrder)")
+            "AND (:minOrder IS NULL OR s.minOrder <= :minOrder) " +
+            "AND (:deliTip IS NULL OR s.deliTip <= :deliTip) " +
+            "AND (:orderCount IS NULL OR s.orderCount <= :orderCount)"
+    )
     Page<Stores> searchStores(@Param("searchText") String searchText,
                               @Param("minOrder") Integer minOrder,
+                              @Param("deliTip") Integer deliTip,
+                              @Param("orderCount") Integer orderCount,
                               Pageable pageable);
 
     @Modifying
@@ -31,4 +36,11 @@ public interface StoresRepository extends JpaRepository<Stores, Long> {
     void increaseLikesBySno(@Param("sno") Long sno, @Param("value") Integer value);
 
     Stores findByStore(String store);
+
+    @Query("SELECT DISTINCT s FROM Stores s " +
+            "LEFT JOIN s.foods f " +
+            "WHERE (:category IS NULL " +
+            "OR LOWER(s.store) LIKE LOWER(CONCAT('%', :category, '%')) " +
+            "OR LOWER(f.food) LIKE LOWER(CONCAT('%', :category, '%')))")
+    List<Stores> findAllByStoreAndFood(@Param("category") String category);
 }

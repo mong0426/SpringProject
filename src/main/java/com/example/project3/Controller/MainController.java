@@ -37,15 +37,21 @@ public class MainController {
 
     @GetMapping
     public String mainPage(Model model) {
+        String category1 = "치킨";
+        List<Stores> categoryStore1 = service.findAllByStoreAndFood(category1);
+        String category2 = "";
 
+        model.addAttribute("category1", categoryStore1);
         return "MainPage";
     }
 
     @GetMapping("/StoreDetails")
     @Transactional
-    public String storeDetails(@RequestParam("sno") long sno,
-                               @RequestParam(defaultValue = "0") int page,
-                               @RequestParam(defaultValue = "10") int size, Model model) {
+    public String getStoreDetails(
+            @RequestParam(name = "sno") long sno,
+            @RequestParam(name = "page", defaultValue = "0") Integer page,
+            @RequestParam(name = "size", defaultValue = "10") Integer size,
+            Model model) {
         StoreDetailsDTO dto = service.showStore(sno);
         double totalRating = 0;
         if (dto.getReviews() != null) {
@@ -73,7 +79,6 @@ public class MainController {
         model.addAttribute("reviews", pageableReviews.getReviews());
         model.addAttribute("totalPages", pageableReviews.getTotalPages());
         model.addAttribute("currentPage", pageableReviews.getNumber());
-        System.out.println("pageableReview =================" + pageableReviews.getReviews());
         return "StoreDetails";
     }
 
@@ -125,11 +130,12 @@ public class MainController {
     @GetMapping("/StoreList")
     public String StoreList(@RequestParam(value = "searchText", required = false) String searchText,
                             @RequestParam(value = "sort", required = false) String sort,
+                            @RequestParam(value = "sortDirection", required = false) String sortDirection,
                             @RequestParam(value = "deliveryTip", required = false) String deliveryTip,
-                            @RequestParam(value = "rating", required = false) String rating,
+                            @RequestParam(value = "orderCount", required = false) Integer orderCount,
                             @RequestParam(value = "minOrder", required = false) String minOrder,
-                            @RequestParam(defaultValue = "0") int page,
-                            @RequestParam(defaultValue = "1") int size,
+                            @RequestParam(name = "page", defaultValue = "0") Integer page,
+                            @RequestParam(name = "size", defaultValue = "10") Integer size,
                             Model model) {
         int minOrderInteger = 99999999;
         if (minOrder != null) {
@@ -137,10 +143,33 @@ public class MainController {
                 minOrderInteger = Integer.parseInt(minOrder);
             }
         }
-        Page<Stores> stores = service.searchStore(searchText, sort, deliveryTip, rating, minOrderInteger, page, size);
+        int deliTipInteger = 99999999;
+        if (deliveryTip != null) {
+            if (!deliveryTip.equals("all")) {
+                deliTipInteger = Integer.parseInt(deliveryTip);
+            }
+        }
+
+        if (sort != null) {
+            switch (sort) {
+                case "deliveryTipLow":
+                    sort = "deliTip";
+                    break;
+                case "default":
+                    sort = "sno";
+                    break;
+                case "favoritesHigh":
+                    sort = "likes";
+                    break;
+            }
+        }
+        Page<Stores> stores = service.searchStore(searchText, sort, sortDirection, deliTipInteger, minOrderInteger, orderCount, page, size);
+        List<Double> averageRatings = service.getAverageRatings(stores);
+
         model.addAttribute("stores", stores);
         model.addAttribute("currentPage", page);
         model.addAttribute("totalPages", stores.getTotalPages());
+        model.addAttribute("averageRating", averageRatings);
 
         return "StoreList";
     }
@@ -151,22 +180,20 @@ public class MainController {
         Map<String, Object> response = new HashMap<>();
         try {
             @SuppressWarnings("unchecked") List<CartItemDTO> cartItems = (List<CartItemDTO>) session.getAttribute("cartItems");
+            System.out.println("cartItems ==============" + cartItems);
             if (cartItems == null) {
                 cartItems = new ArrayList<>();
             } else {
                 String currentStore = "";
-                for (CartItemDTO item : cartItems) {
-                    currentStore = item.getStoreName();
-                }
-                if (!currentStore.equals(cartItem.getStoreName())) {
+                currentStore = cartItems.get(0).getStoreName();
+                if (!currentStore.equals(cartItem.getStoreName()) && !cartItem.getStoreName().isEmpty()) {
                     System.out.println("다른 매장");
                     response.put("otherStore", "다른 매장 상품");
                     return response;
                 }
+
             }
-            System.out.println("cartItemName =============" + cartItem.getStoreName());
             cartItems.add(cartItem);
-            System.out.println("cartItems ===========" + cartItems);
             session.setAttribute("cartItems", cartItems);
             response.put("success", "장바구니에 추가되었습니다.");
             response.put("cartItemsSize", cartItems.size());
@@ -210,12 +237,15 @@ public class MainController {
             String numericValue = index.replaceAll("[^0-9]", "");
             int itemIndex = Integer.parseInt(numericValue);
             @SuppressWarnings("unchecked") List<CartItemDTO> cartItems = (List<CartItemDTO>) session.getAttribute("cartItems");
-//            System.out.println("item index : "+itemIndex +" cartItems.size ====== "+cartItems.size());
             if (cartItems != null && itemIndex >= 0 && itemIndex <= cartItems.size()) {
                 // 장바구니에서 해당 아이템 삭제
                 cartItems.remove(itemIndex);
                 // 세션에 업데이트된 장바구니 다시 저장
                 session.setAttribute("cartItems", cartItems);
+
+                if (cartItems.isEmpty()) {
+                    session.removeAttribute("cartItems");
+                }
                 response.put("cartItemsSize", cartItems.size());
                 response.put("success", true);
                 response.put("empty", cartItems.isEmpty());
@@ -264,8 +294,8 @@ public class MainController {
     }
 
     @PostMapping("/edit/foods")
-    public String addNewFood(@ModelAttribute FoodsDTO foodsDTO, @RequestParam("multipartFile") MultipartFile
-            multipartFile, @RequestParam("sno") Long sno) {
+    public String addNewFood(@ModelAttribute FoodsDTO foodsDTO, @RequestParam(name = "multipartFile") MultipartFile
+            multipartFile, @RequestParam(name = "sno") Long sno) {
         try {
             String uploadDir = UPLOAD_DIR + "foodimg/";
             String originalFilename = multipartFile.getOriginalFilename();
@@ -300,8 +330,8 @@ public class MainController {
     }
 
     @PostMapping("/edit/store-img")
-    public String addNewFood(@ModelAttribute StoreImagesDTO storeImagesDTO, @RequestParam("file") MultipartFile
-            multipartFile, @RequestParam("sno") Long sno) {
+    public String addNewFood(@ModelAttribute StoreImagesDTO storeImagesDTO, @RequestParam(name = "file") MultipartFile
+            multipartFile, @RequestParam(name = "sno") Long sno) {
         try {
             String uploadDir = UPLOAD_DIR + "storedetailimg/";
             String originalFilename = multipartFile.getOriginalFilename();

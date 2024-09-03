@@ -42,7 +42,7 @@ public class Stores {
     private String deliTime;
 
     @Column
-    private String deliTip;
+    private Integer deliTip;
 
     @Column
     private Integer likes;
