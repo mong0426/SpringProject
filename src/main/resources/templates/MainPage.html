@@ -52,11 +52,11 @@
             <a class="Category" th:href="@{/StoreList?searchText=삼계탕}">
                 <img class="CategoryImg" th:src="@{/img/mainpageimg/SubMenuIcon2.png}" alt="삼계탕"/>
             </a>
-            <a class="Category" th:href="@{/StoreList}">
-                <img class="CategoryImg" th:src="@{/img/mainpageimg/SubMenuIcon3.png}" alt="재주문순"/>
+            <a class="Category" th:href="@{/StoreList?searchText=마라}">
+                <img class="CategoryImg" th:src="@{/img/mainpageimg/SubMenuIcon3.png}" alt="마라"/>
             </a>
-            <a class="Category" th:href="@{/StoreList}">
-                <img class="CategoryImg" th:src="@{/img/mainpageimg/SubMenuIcon4.png}" alt="여름면요리"/>
+            <a class="Category" th:href="@{/StoreList?searchText=초밥}">
+                <img class="CategoryImg" th:src="@{/img/mainpageimg/SubMenuIcon4.png}" alt="초밥"/>
             </a>
         </div>
 
@@ -74,7 +74,8 @@
 
             <div class="card BrandCard" th:each="store : ${category1}">
                 <a th:href="@{/StoreDetails(sno=${store.sno})}" class="CardAtagStyle">
-                    <img th:src="@{/img/mainpageimg/CardItem1.png}" class="card-img-top" alt="...">
+                    <img th:src="${store.images.size() > 0 ? store.images[0].imageUrl : '/img/default.jpg'}"
+                         class="card-img-top" alt="...">
                     <div class="card-body">
                         <h5 class="card-title" th:text="${store.store}"></h5>
                         <span>배달시간</span> <span class="card-text" th:text="${store.deliTime}"></span><br/>
@@ -93,18 +94,18 @@
 
         <div class="MainLine">
             <div class="InnerLine">
-                <span class="MiniTitle">주문 수 많은 가게</span>
+                <span class="MiniTitle">맛잇는 밥집</span>
                 <a class="MiniTitle"
-                   th:href="@{/StoreList?searchText=&sort=orderCount&sortDirection=DESC&page=0}">전체보기></a>
+                   th:href="@{/StoreList?searchText=밥}">전체보기></a>
             </div>
         </div>
 
-        <div class="CardContainerDiv" id="q">
-            <button class="ScrollBtn" id="s">
+        <div class="CardContainerDiv" id="cate-div2">
+            <button class="ScrollBtn" id="cate-div2-leftBtn">
                 <img class="ScrollBtnImage" th:src="@{/img/mainpageimg/LeftArrowIcon.png}" alt="..."/>
             </button>
 
-            <div class="card BrandCard" th:each="store : ${category1}">
+            <div class="card BrandCard" th:each="store : ${category2}">
                 <a th:href="@{/StoreDetails(sno=${store.sno})}" class="CardAtagStyle">
                     <img th:src="@{/img/mainpageimg/CardItem1.png}" class="card-img-top" alt="...">
                     <div class="card-body">
@@ -118,7 +119,7 @@
                 </a>
             </div>
 
-            <button class="ScrollBtn" id="br">
+            <button class="ScrollBtn" id="cate-div2-rightBtn">
                 <img class="ScrollBtnImage" th:src="@{/img/mainpageimg/RightArrowIcon.png}" alt="..."/>
             </button>
         </div>

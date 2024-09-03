@@ -39,9 +39,11 @@ public class MainController {
     public String mainPage(Model model) {
         String category1 = "치킨";
         List<Stores> categoryStore1 = service.findAllByStoreAndFood(category1);
-        String category2 = "";
+        String category2 = "밥";
+        List<Stores> categoryStore2 = service.findAllByStoreAndFood(category2);
 
         model.addAttribute("category1", categoryStore1);
+        model.addAttribute("category2", categoryStore2);
         return "MainPage";
     }
 
