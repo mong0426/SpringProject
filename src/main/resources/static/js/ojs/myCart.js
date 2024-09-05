@@ -127,8 +127,9 @@ function IsNotLogin() {
         }
 function OnOrderClick() {
             IMP.init("imp71404515");
-            const merchantUid = `payment-${crypto.randomUUID()}`;
-            var totalPriceText = document.getElementById("allTotalPrice").textContent;
+            const uuid = document.getElementById("uuid");
+            const merchantUid = uuid;
+            var totalPriceText = document.getElementById("allTotalPrice").textContent;  
             let numbersString = totalPriceText.split('=')[1].trim();
             let totalPrice = numbersString.replace(/[^0-9]/g, '');
             totalPrice = parseInt(totalPrice,10);

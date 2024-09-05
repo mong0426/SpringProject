@@ -17,10 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.text.DecimalFormat;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Controller
 @RequestMapping("/")
@@ -125,7 +122,10 @@ public class MainController {
 
 
     @GetMapping("/myCart")
-    public String myCart() {
+    public String myCart(Model model) {
+        UUID uuid = UUID.randomUUID();
+
+        model.addAttribute("uuid", uuid);
         return "myCart";
     }
 

@@ -220,8 +220,9 @@
         font-size:14px;
        }
        .BrandCard{
-        margin:30px;
-        min-width:320px;
+        margin: 30px;
+        min-width: 320px;
+        width: 320px;
        }
        .ScrollBtn{
        position: sticky;

@@ -150,9 +150,6 @@ input {
 }
 
 .login__link {
-    margin-right: 30px;
-    padding-right: 32px;
-    border-right: 1px solid #000;
     color: #444;
     font-weight: var(--font-weight-sd-bold);
     font-size: 17px;
